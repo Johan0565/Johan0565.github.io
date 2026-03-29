@@ -6,11 +6,13 @@
     <title>Magomedov | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Базовые настройки и 3 цвета: Белый, Графитовый (#1e293b), Оранжевый (#f97316) */
+        /* Базовые настройки и цвета */
         :root {
-            --bg-color: #f8fafc; /* Легкий оттенок для контраста с белыми карточками */
+            --bg-color: #f1f5f9; /* Чуть более плотный серый фон, чтобы белое стекло лучше выделялось */
             --text-dark: #1e293b;
-            --accent-orange: #f97316; /* ГЛАВНЫЙ АКЦЕНТНЫЙ ЦВЕТ */
+            --accent-orange: #f97316; 
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
             --white: #ffffff;
         }
 
@@ -23,11 +25,21 @@
         /* Основной контент */
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
+        /* Эффект Глассморфизма (Стекла) для карточек */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(30, 41, 59, 0.08);
+            border-radius: 12px;
+        }
+
         /* Шапка с кнопками */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid var(--text-dark); margin-bottom: 30px; }
         .logo-text { font-size: 1.2rem; }
         .nav-btns button, .lang-btn {
-            background: var(--white); border: 2px solid var(--text-dark); color: var(--text-dark);
+            background: var(--glass-bg); backdrop-filter: blur(5px); border: 2px solid var(--text-dark); color: var(--text-dark);
             padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
         }
         .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active {
@@ -35,11 +47,8 @@
         }
 
         /* Карточка профиля */
-        .profile-card { background: var(--white); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
-        
-        /* Стили для нового Логотипа-изображения */
+        .profile-card { padding: 30px; margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
         .profile-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: var(--white); }
-        
         .profile-info h1 { margin-bottom: 5px; color: var(--text-dark); font-size: 1.8rem; }
         .profile-info h3 { color: var(--accent-orange); margin-bottom: 15px; font-weight: 500; }
         .bio-text p { margin-bottom: 8px; font-size: 15px; color: #475569; }
@@ -47,7 +56,7 @@
         /* Социальные ссылки */
         .social-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
         .social-links a { color: var(--white); background: var(--text-dark); padding: 10px 18px; border-radius: 8px; text-decoration: none; transition: 0.3s; font-size: 14px; font-weight: 500; }
-        .social-links a:hover { background: var(--accent-orange); transform: translateY(-2px); }
+        .social-links a:hover { background: var(--accent-orange); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3); }
 
         /* Секции */
         .section { display: none; animation: fadeIn 0.5s; }
@@ -57,17 +66,17 @@
         /* Графики навыков */
         .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
-        .skill-box { background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); }
+        .skill-box { padding: 25px; }
         .skill-item { margin-bottom: 18px; }
         .skill-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: var(--text-dark); }
-        .progress-bar { width: 100%; background: #e2e8f0; border-radius: 10px; height: 10px; overflow: hidden; }
+        .progress-bar { width: 100%; background: rgba(226, 232, 240, 0.6); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.5); }
         .progress { height: 100%; background: var(--accent-orange); width: 0; transition: width 1.5s ease-in-out; border-radius: 10px; }
-        .extra-skills { margin-top: 20px; font-size: 14px; color: #64748b; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+        .extra-skills { margin-top: 20px; font-size: 14px; color: #475569; padding-top: 15px; border-top: 1px solid rgba(30, 41, 59, 0.1); }
 
         /* Портфолио */
         .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .project-card { background: var(--white); border-left: 5px solid var(--accent-orange); padding: 25px; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); transition: 0.3s; }
-        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 10px 25px rgba(30, 41, 59, 0.08); }
+        .project-card { padding: 25px; border-left: 5px solid var(--accent-orange); cursor: pointer; transition: 0.3s; }
+        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.12); background: rgba(255, 255, 255, 0.85); }
         .project-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text-dark); }
         .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #475569; font-size: 14px; }
         .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
@@ -92,8 +101,8 @@
     </header>
 
     <section id="about" class="section active">
-        <div class="profile-card">
-            <img src="Logo.png" alt="Moscow Poly Logo" class="profile-logo">
+        <div class="profile-card glass-panel">
+            <img src="Logo.png" alt="Logo" class="profile-logo">
             <div class="profile-info">
                 <h1 data-i18n="name">Магомед Расулович Магомедов</h1>
                 <h3>@Johan0565</h3>
@@ -113,7 +122,7 @@
 
         <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="skills_title">Технический стек</h2>
         <div class="skills-grid">
-            <div class="skill-box">
+            <div class="skill-box glass-panel">
                 <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_1">Databases & Backend</h3>
                 <div class="skill-item"><div class="skill-header"><span>SQL / PostgreSQL</span><span>90%</span></div><div class="progress-bar"><div class="progress" style="width: 90%;"></div></div></div>
                 <div class="skill-item"><div class="skill-header"><span>Spring Boot</span><span>75%</span></div><div class="progress-bar"><div class="progress" style="width: 75%;"></div></div></div>
@@ -121,7 +130,7 @@
                 <div class="skill-item"><div class="skill-header"><span>1C:Предприятие</span><span>50%</span></div><div class="progress-bar"><div class="progress" style="width: 50%;"></div></div></div>
             </div>
 
-            <div class="skill-box">
+            <div class="skill-box glass-panel">
                 <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_2">Tools & Frontend</h3>
                 <div class="skill-item"><div class="skill-header"><span>Dart</span><span>70%</span></div><div class="progress-bar"><div class="progress" style="width: 70%;"></div></div></div>
                 <div class="skill-item"><div class="skill-header"><span>Git</span><span>65%</span></div><div class="progress-bar"><div class="progress" style="width: 65%;"></div></div></div>
@@ -137,7 +146,7 @@
         <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="portfolio_title">Мои проекты</h2>
         <div class="portfolio-grid">
             
-            <div class="project-card" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
                 <h3><i class="fas fa-city" style="color: var(--accent-orange);"></i> <span data-i18n="proj1_title">Street Retail Aggregator</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Java, Spring Boot, Spring Security (JWT), PostgreSQL, Yandex MapKit</p>
@@ -146,17 +155,17 @@
                 </div>
             </div>
 
-            <div class="project-card" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
                 <h3><i class="fas fa-hard-hat" style="color: var(--accent-orange);"></i> <span data-i18n="proj2_title">Aetas: Construction control system</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Dart, Flutter (Cross-platform), Offline-first, PDF Generation</p>
                     <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj2_desc">Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.</p>
-                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: #fef2f2;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
+                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: rgba(254, 242, 242, 0.7); border-radius: 0 4px 4px 0;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
                     <a href="https://github.com/Johan0565/AetasApp" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
                 </div>
             </div>
 
-            <div class="project-card" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
                 <h3><i class="fas fa-code-branch" style="color: var(--accent-orange);"></i> <span data-i18n="proj3_title">Учебные CRM и Pet-проекты</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Java, C#, HTML/CSS/JS, Cisco</p>
@@ -171,21 +180,21 @@
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    // Инициализация частиц
+    // Инициализация частиц - СДЕЛАЛ ИХ ШИРЕ И ЗАМЕТНЕЕ
     particlesJS("particles-js", {
         "particles": {
             "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#f97316" }, // ОРАНЖЕВЫЕ ЧАСТИЦЫ
+            "color": { "value": "#f97316" }, 
             "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": true },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 150, "color": "#f97316", "opacity": 0.15, "width": 1 },
+            "opacity": { "value": 0.6, "random": true },
+            "size": { "value": 5, "random": true }, // Увеличил размер частиц (было 3)
+            "line_linked": { "enable": true, "distance": 160, "color": "#f97316", "opacity": 0.3, "width": 2 }, // Увеличил ширину линий (было 1)
             "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
         },
         "interactivity": {
             "detect_on": "canvas",
             "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } }, "push": { "particles_nb": 4 } }
+            "modes": { "grab": { "distance": 160, "line_linked": { "opacity": 0.6, "width": 3 } }, "push": { "particles_nb": 4 } }
         },
         "retina_detect": true
     });
