@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magomedov | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Базовые настройки и 3 цвета: Белый, Графитовый (#1e293b), Оранжевый (#f97316) */
+        :root {
+            --bg-color: #f8fafc; /* Легкий оттенок для контраста с белыми карточками */
+            --text-dark: #1e293b;
+            --accent-orange: #f97316; /* ГЛАВНЫЙ АКЦЕНТНЫЙ ЦВЕТ */
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+
+        /* Контейнер для частиц */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+
+        /* Основной контент */
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        /* Шапка с кнопками */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid var(--text-dark); margin-bottom: 30px; }
+        .logo-text { font-size: 1.2rem; }
+        .nav-btns button, .lang-btn {
+            background: var(--white); border: 2px solid var(--text-dark); color: var(--text-dark);
+            padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
+        }
+        .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active {
+            background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange);
+        }
+
+        /* Карточка профиля */
+        .profile-card { background: var(--white); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
+        
+        /* Стили для нового Логотипа-изображения */
+        .profile-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: var(--white); }
+        
+        .profile-info h1 { margin-bottom: 5px; color: var(--text-dark); font-size: 1.8rem; }
+        .profile-info h3 { color: var(--accent-orange); margin-bottom: 15px; font-weight: 500; }
+        .bio-text p { margin-bottom: 8px; font-size: 15px; color: #475569; }
+        
+        /* Социальные ссылки */
+        .social-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .social-links a { color: var(--white); background: var(--text-dark); padding: 10px 18px; border-radius: 8px; text-decoration: none; transition: 0.3s; font-size: 14px; font-weight: 500; }
+        .social-links a:hover { background: var(--accent-orange); transform: translateY(-2px); }
+
+        /* Секции */
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Графики навыков */
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
+        .skill-box { background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); }
+        .skill-item { margin-bottom: 18px; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: var(--text-dark); }
+        .progress-bar { width: 100%; background: #e2e8f0; border-radius: 10px; height: 10px; overflow: hidden; }
+        .progress { height: 100%; background: var(--accent-orange); width: 0; transition: width 1.5s ease-in-out; border-radius: 10px; }
+        .extra-skills { margin-top: 20px; font-size: 14px; color: #64748b; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+
+        /* Портфолио */
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .project-card { background: var(--white); border-left: 5px solid var(--accent-orange); padding: 25px; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); transition: 0.3s; }
+        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 10px 25px rgba(30, 41, 59, 0.08); }
+        .project-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text-dark); }
+        .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #475569; font-size: 14px; }
+        .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
+        .gh-link { display: inline-block; margin-top: 15px; color: var(--accent-orange); text-decoration: none; font-weight: bold; font-size: 14px; }
+        .gh-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container">
+    <header>
+        <div class="logo-text"><strong>Johan0565</strong></div>
+        <div>
+            <span class="nav-btns">
+                <button class="active" onclick="switchTab('about', this)" data-i18n="nav_about">Обо мне</button>
+                <button onclick="switchTab('portfolio', this)" data-i18n="nav_portfolio">Портфолио</button>
+            </span>
+            <button class="lang-btn" onclick="toggleLang()">RU / EN</button>
+        </div>
+    </header>
+
+    <section id="about" class="section active">
+        <div class="profile-card">
+            <img src="Logo.png" alt="Moscow Poly Logo" class="profile-logo">
+            <div class="profile-info">
+                <h1 data-i18n="name">Магомед Расулович Магомедов</h1>
+                <h3>@Johan0565</h3>
+                <div class="bio-text">
+                    <p>🎓 <span data-i18n="bio_student">Студент 2-го курса Московского Политеха</span></p>
+                    <p>📚 <span data-i18n="bio_spec">Прикладная информатика • Разработка и интеграция бизнес-приложений</span></p>
+                    <p>💡 <span data-i18n="bio_age">18 лет. В программировании с 13 лет.</span></p>
+                    <p>🌍 <span data-i18n="bio_location">Базируюсь в Москве</span></p>
+                </div>
+                <div class="social-links">
+                    <a href="https://t.me/Magomedov2026" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="mailto:magomedxaxa_000@mail.ru"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="https://github.com/Johan0565" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="skills_title">Технический стек</h2>
+        <div class="skills-grid">
+            <div class="skill-box">
+                <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_1">Databases & Backend</h3>
+                <div class="skill-item"><div class="skill-header"><span>SQL / PostgreSQL</span><span>90%</span></div><div class="progress-bar"><div class="progress" style="width: 90%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Spring Boot</span><span>75%</span></div><div class="progress-bar"><div class="progress" style="width: 75%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Java</span><span>70%</span></div><div class="progress-bar"><div class="progress" style="width: 70%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>1C:Предприятие</span><span>50%</span></div><div class="progress-bar"><div class="progress" style="width: 50%;"></div></div></div>
+            </div>
+
+            <div class="skill-box">
+                <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_2">Tools & Frontend</h3>
+                <div class="skill-item"><div class="skill-header"><span>Dart</span><span>70%</span></div><div class="progress-bar"><div class="progress" style="width: 70%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Git</span><span>65%</span></div><div class="progress-bar"><div class="progress" style="width: 65%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>HTML / CSS</span><span>40%</span></div><div class="progress-bar"><div class="progress" style="width: 40%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>JavaScript</span><span>20%</span></div><div class="progress-bar"><div class="progress" style="width: 20%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Flutter</span><span>10%</span></div><div class="progress-bar"><div class="progress" style="width: 10%;"></div></div></div>
+                <div class="extra-skills" data-i18n="extra_skills">Также есть опыт работы с: Python, PHP, C#</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section">
+        <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="portfolio_title">Мои проекты</h2>
+        <div class="portfolio-grid">
+            
+            <div class="project-card" onclick="this.classList.toggle('expanded')">
+                <h3><i class="fas fa-city" style="color: var(--accent-orange);"></i> <span data-i18n="proj1_title">Street Retail Aggregator</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Java, Spring Boot, Spring Security (JWT), PostgreSQL, Yandex MapKit</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj1_desc">КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.</p>
+                    <a href="https://github.com/Johan0565/SpringBootProject" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="this.classList.toggle('expanded')">
+                <h3><i class="fas fa-hard-hat" style="color: var(--accent-orange);"></i> <span data-i18n="proj2_title">Aetas: Construction control system</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Dart, Flutter (Cross-platform), Offline-first, PDF Generation</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj2_desc">Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.</p>
+                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: #fef2f2;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
+                    <a href="https://github.com/Johan0565/AetasApp" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="this.classList.toggle('expanded')">
+                <h3><i class="fas fa-code-branch" style="color: var(--accent-orange);"></i> <span data-i18n="proj3_title">Учебные CRM и Pet-проекты</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Java, C#, HTML/CSS/JS, Cisco</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj3_desc">Коллекция учебных проектов, включая разработку CRM-систем (EsoftCrm), реализацию паттернов проектирования на Java, верстку маркетплейса и настройку сетей в Cisco Packet Tracer.</p>
+                    <a href="https://github.com/Johan0565?tab=repositories" target="_blank" class="gh-link"><i class="fab fa-github"></i> Все репозитории</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Инициализация частиц
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#f97316" }, // ОРАНЖЕВЫЕ ЧАСТИЦЫ
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5, "random": true },
+            "size": { "value": 3, "random": true },
+            "line_linked": { "enable": true, "distance": 150, "color": "#f97316", "opacity": 0.15, "width": 1 },
+            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } }, "push": { "particles_nb": 4 } }
+        },
+        "retina_detect": true
+    });
+
+    // Переключение вкладок
+    function switchTab(tabId, btnEl) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-btns button').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btnEl.classList.add('active');
+    }
+
+    // Мультиязычность
+    let currentLang = 'ru';
+    const translations = {
+        'ru': {
+            'nav_about': 'Обо мне', 'nav_portfolio': 'Портфолио',
+            'name': 'Магомед Расулович Магомедов',
+            'bio_student': 'Студент 2-го курса Московского Политеха',
+            'bio_spec': 'Прикладная информатика • Разработка и интеграция бизнес-приложений',
+            'bio_age': '18 лет. В программировании с 13 лет.',
+            'bio_location': 'Базируюсь в Москве',
+            'skills_title': 'Технический стек',
+            'skill_group_1': 'Databases & Backend', 'skill_group_2': 'Tools & Frontend',
+            'extra_skills': 'Также есть опыт работы с: Python, PHP, C#',
+            'portfolio_title': 'Мои проекты',
+            'stack': 'Стек:',
+            'proj1_title': '🏙️ Street Retail Aggregator',
+            'proj1_desc': 'КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.',
+            'proj2_title': '🏗️ Aetas: Construction control system',
+            'proj2_desc': 'Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.',
+            'proj2_license': '🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.',
+            'proj3_title': '📂 Учебные CRM и Pet-проекты',
+            'proj3_desc': 'Коллекция учебных проектов, включая разработку CRM-систем (EsoftCrm), реализацию паттернов проектирования на Java, верстку маркетплейса и настройку сетей в Cisco Packet Tracer.'
+        },
+        'en': {
+            'nav_about': 'About Me', 'nav_portfolio': 'Portfolio',
+            'name': 'Magomed Rasulovich Magomedov',
+            'bio_student': '2nd-year student at Moscow Polytechnic University',
+            'bio_spec': 'Applied Informatics • Business App Development & Integration',
+            'bio_age': '18 years old. Programming since 13.',
+            'bio_location': 'Based in Moscow',
+            'skills_title': 'Tech Stack',
+            'skill_group_1': 'Databases & Backend', 'skill_group_2': 'Tools & Frontend',
+            'extra_skills': 'Also experienced with: Python, PHP, C#',
+            'portfolio_title': 'My Projects',
+            'stack': 'Stack:',
+            'proj1_title': '🏙️ Street Retail Aggregator',
+            'proj1_desc': 'Corporate Information System for finding and renting street retail commercial real estate. Features a smart recommendation algorithm based on spatial analysis (Yandex MapKit) that evaluates infrastructure and downranks locations with direct competitors nearby.',
+            'proj2_title': '🏗️ Aetas: Construction control system',
+            'proj2_desc': 'Cross-platform construction control ecosystem. Allows placing defect markers on 2D blueprints, attaching photos, and generating GOST-compliant PDF reports. Works offline with smart synchronization.',
+            'proj2_license': '🚫 Proprietary License (Closed Source). The exclusive intellectual property of the author.',
+            'proj3_title': '📂 Educational CRMs & Pet Projects',
+            'proj3_desc': 'A collection of educational projects including CRM system development (EsoftCrm), Java design patterns implementation, marketplace frontend, and Cisco Packet Tracer networking.'
+        }
+    };
+
+    function toggleLang() {
+        currentLang = currentLang === 'ru' ? 'en' : 'ru';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[currentLang][key]) {
+                el.textContent = translations[currentLang][key];
+            }
+        });
+    }
+</script>
+</body>
+</html>
