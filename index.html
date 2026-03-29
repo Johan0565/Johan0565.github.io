@@ -8,16 +8,24 @@
     <style>
         /* Базовые настройки и цвета */
         :root {
-            --bg-color: #f1f5f9; /* Чуть более плотный серый фон, чтобы белое стекло лучше выделялось */
             --text-dark: #1e293b;
             --accent-orange: #f97316; 
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            /* Делаем заливку карточек более прозрачной для эффекта стекла */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            /* Рамка для имитации граней стекла */
+            --glass-border: rgba(255, 255, 255, 0.7);
             --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+        
+        /* Добавил легкий градиент на фон, чтобы стекло выделялось */
+        body { 
+            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); 
+            color: var(--text-dark); 
+            overflow-x: hidden; 
+            min-height: 100vh;
+        }
 
         /* Контейнер для частиц */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
@@ -25,22 +33,38 @@
         /* Основной контент */
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* Эффект Глассморфизма (Стекла) для карточек */
+        /* НАСТОЯЩИЙ ЭФФЕКТ СТЕКЛА + ФИКС БРАУЗЕРНОГО БАГА */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(30, 41, 59, 0.08);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2); /* Сделал еще прозрачнее для эффекта */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(30, 41, 59, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            
+            /* Фикс: жестко привязываем слой к видеокарте, чтобы размытие не пропадало */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform, backdrop-filter;
+            
+            position: relative;
+            z-index: 10;
         }
 
         /* Шапка с кнопками */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid var(--text-dark); margin-bottom: 30px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid rgba(30, 41, 59, 0.2); margin-bottom: 30px; }
         .logo-text { font-size: 1.2rem; }
         .nav-btns button, .lang-btn {
-            background: var(--glass-bg); backdrop-filter: blur(5px); border: 2px solid var(--text-dark); color: var(--text-dark);
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            color: var(--text-dark);
             padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05);
+            /* Фикс для кнопок */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
         .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active {
             background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange);
@@ -48,10 +72,10 @@
 
         /* Карточка профиля */
         .profile-card { padding: 30px; margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
-        .profile-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: var(--white); }
+        .profile-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: rgba(255, 255, 255, 0.8); }
         .profile-info h1 { margin-bottom: 5px; color: var(--text-dark); font-size: 1.8rem; }
         .profile-info h3 { color: var(--accent-orange); margin-bottom: 15px; font-weight: 500; }
-        .bio-text p { margin-bottom: 8px; font-size: 15px; color: #475569; }
+        .bio-text p { margin-bottom: 8px; font-size: 15px; color: #334155; }
         
         /* Социальные ссылки */
         .social-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
@@ -69,16 +93,16 @@
         .skill-box { padding: 25px; }
         .skill-item { margin-bottom: 18px; }
         .skill-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: var(--text-dark); }
-        .progress-bar { width: 100%; background: rgba(226, 232, 240, 0.6); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.5); }
+        .progress-bar { width: 100%; background: rgba(255, 255, 255, 0.5); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
         .progress { height: 100%; background: var(--accent-orange); width: 0; transition: width 1.5s ease-in-out; border-radius: 10px; }
         .extra-skills { margin-top: 20px; font-size: 14px; color: #475569; padding-top: 15px; border-top: 1px solid rgba(30, 41, 59, 0.1); }
 
         /* Портфолио */
         .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         .project-card { padding: 25px; border-left: 5px solid var(--accent-orange); cursor: pointer; transition: 0.3s; }
-        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.12); background: rgba(255, 255, 255, 0.85); }
+        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
         .project-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text-dark); }
-        .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #475569; font-size: 14px; }
+        .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #334155; font-size: 14px; }
         .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
         .gh-link { display: inline-block; margin-top: 15px; color: var(--accent-orange); text-decoration: none; font-weight: bold; font-size: 14px; }
         .gh-link:hover { text-decoration: underline; }
