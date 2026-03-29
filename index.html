@@ -32,13 +32,42 @@
         /* Шапка с кнопками */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid rgba(30, 41, 59, 0.2); margin-bottom: 30px; }
         .logo-text { font-size: 1.2rem; }
-        .nav-btns button, .lang-btn {
+        .nav-btns button {
             background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5); color: var(--text-dark);
             padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
             box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); transform: translateZ(0); -webkit-transform: translateZ(0);
         }
-        .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
+        .nav-btns button:hover, .nav-btns button.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
+
+        /* --- НОВЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ --- */
+        .lang-switch {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05);
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+        .lang-opt {
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        .lang-opt.active {
+            background: #f97316; /* Желтый цвет */
+            color: #1e293b; 
+            box-shadow: 0 0 12px rgba(255, 163, 34, 0.8); /* Желтое свечение */
+        }
 
         /* Карточка профиля */
         .profile-card { padding: 30px; margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
@@ -95,16 +124,15 @@
         .ContributionCalendar-day[data-level="1"] { background-color: rgba(249, 115, 22, 0.3); }
         .ContributionCalendar-day[data-level="2"] { background-color: rgba(249, 115, 22, 0.6); }
         .ContributionCalendar-day[data-level="3"] { background-color: rgba(249, 115, 22, 0.85); }
-        .ContributionCalendar-day[data-level="4"] { background-color: #ea580c; } /* Чуть темнее для контраста */
+        .ContributionCalendar-day[data-level="4"] { background-color: #ea580c; }
         
         /* Скрытие лишнего мусора из сырого HTML GitHub */
-        /* Скрытие лишнего мусора из сырого HTML GitHub (ссылки, Less/More, легенда) */
         .sr-only, .js-calendar-graph-bottom { display: none !important; }
-        .gh-graph-container a { display: none !important; } /* Убирает фиолетовую ссылку */
+        .gh-graph-container a { display: none !important; } 
         .gh-graph-container .ContributionCalendar-footer,
         .gh-graph-container .float-right, 
         .gh-graph-container .float-left,
-        .gh-graph-container .color-fg-muted { display: none !important; } /* Убирает Less / More и кривые квадратики */
+        .gh-graph-container .color-fg-muted { display: none !important; } 
 
         /* Блок стриков */
         .streak-container { text-align: center; margin-top: 15px; }
@@ -115,35 +143,29 @@
         .cert-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-decoration: none; transition: 0.3s; text-align: center; }
         .cert-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
         .cert-icon { font-size: 40px; color: var(--accent-orange); margin-bottom: 15px; }
+
         /* =========================================
-           МОБИЛЬНАЯ АДАПТАЦИЯ (Включается только на телефонах)
+           МОБИЛЬНАЯ АДАПТАЦИЯ
            ========================================= */
         @media (max-width: 768px) {
-            /* 1. Шапка: центрируем логотип и переносим кнопки на новую строку */
             header { flex-direction: column; gap: 15px; padding: 15px 0; }
             .nav-btns { display: flex; justify-content: center; width: 100%; margin-left: 0; }
-            .nav-btns button, .lang-btn { margin: 0 5px; padding: 6px 12px; font-size: 13px; }
+            .nav-btns button { margin: 0 5px; padding: 6px 12px; font-size: 13px; }
             div:has(> .nav-btns) { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
 
-            /* 2. Главная карточка: складываем фото и текст сверху вниз, всё по центру */
             .profile-card { flex-direction: column; text-align: center; padding: 20px; gap: 15px; }
-            .profile-logo { width: 140px; height: 140px; } /* Чуть уменьшаем фото */
+            .profile-logo { width: 140px; height: 140px; } 
             .profile-info h1 { font-size: 1.5rem; }
             
-            /* Соцсети тоже по центру */
             .social-links { justify-content: center; }
 
-            /* 3. Уменьшаем внутренние отступы стеклянных карточек, чтобы сэкономить место */
             .skill-box, .project-card, .cert-card { padding: 15px; }
             
-            /* 4. Настройки заголовков и шапки GitHub для телефона */
             .gh-header-row { justify-content: center; text-align: center; flex-direction: column; }
             .gh-years { justify-content: center; width: 100%; }
             
-            /* 5. Фикс для графика GitHub: разрешаем ему горизонтальный скролл без поломки сайта */
             .gh-graph-container { padding: 15px 5px; overflow-x: scroll; -webkit-overflow-scrolling: touch; }
             
-            /* 6. Карточки сертификатов на всю ширину */
             .certificates-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -160,7 +182,10 @@
                 <button class="active" onclick="switchTab('about', this)" data-i18n="nav_about">Обо мне</button>
                 <button onclick="switchTab('portfolio', this)" data-i18n="nav_portfolio">Портфолио</button>
             </span>
-            <button class="lang-btn" onclick="toggleLang()">RU / EN</button>
+            <div class="lang-switch" onclick="toggleLang()">
+                <span class="lang-opt active" id="lang-ru">RU</span>
+                <span class="lang-opt" id="lang-en">EN</span>
+            </div>
         </div>
     </header>
 
@@ -293,22 +318,18 @@
         const langWait = currentLang === 'ru' ? 'Синхронизация с серверами GitHub...' : 'Syncing with GitHub servers...';
         container.innerHTML = `<p style="padding-top: 50px; color: #64748b;">${langWait}</p>`;
 
-        // Обновляем активную кнопку
         document.querySelectorAll('.gh-year-btn').forEach(b => b.classList.remove('active'));
         document.querySelector(`.gh-year-btn[data-year="${year}"]`).classList.add('active');
 
-        // URL профиля с фильтрацией по нужному году
         const url = `https://github.com/users/Johan0565/contributions?from=${year}-01-01&to=${year}-12-31`;
         
-        // Два разных прокси-сервера для надежности
         const proxy1 = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
         const proxy2 = `https://corsproxy.io/?${encodeURIComponent(url)}`;
 
-        // Функция для попытки парсинга
         async function fetchGraph(proxyUrl) {
             const response = await fetch(proxyUrl);
             if (!response.ok) throw new Error('Proxy HTTP status error');
-            const html = await response.text(); // Забираем сырой HTML напрямую
+            const html = await response.text(); 
             
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
@@ -321,19 +342,15 @@
         try {
             let calendarGraph;
             try {
-                // Пробуем первый прокси
                 calendarGraph = await fetchGraph(proxy1);
             } catch (e) {
                 console.log("Первый прокси недоступен, пробуем резервный...");
-                // Если ошибка, пробуем второй прокси
                 calendarGraph = await fetchGraph(proxy2);
             }
 
-            // Успешно скачали — встраиваем в сайт
             container.innerHTML = '';
             container.appendChild(calendarGraph);
             
-            // Достаем текст для всплывающих подсказок (tooltips)
             container.querySelectorAll('.ContributionCalendar-day').forEach(day => {
                 const hiddenText = day.querySelector('.sr-only');
                 if (hiddenText) {
@@ -346,11 +363,8 @@
         }
     }
 
-    // Запускаем загрузку 2026 года при старте страницы
     window.onload = () => loadGitHubData(2026);
 
-
-    // Переключение вкладок
     function switchTab(tabId, btnEl) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.nav-btns button').forEach(b => b.classList.remove('active'));
@@ -415,13 +429,19 @@
 
     function toggleLang() {
         currentLang = currentLang === 'ru' ? 'en' : 'ru';
+        
+        // Перемещаем желтый светящийся фон на выбранный язык
+        document.getElementById('lang-ru').classList.toggle('active', currentLang === 'ru');
+        document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+
+        // Меняем текст на сайте
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (translations[currentLang][key]) {
                 el.textContent = translations[currentLang][key];
             }
         });
-        // Переводим текст загрузки, если график еще грузится
+        
         const loadingText = document.querySelector('#gh-target p');
         if (loadingText) loadingText.textContent = translations[currentLang]['loading_git'];
     }
