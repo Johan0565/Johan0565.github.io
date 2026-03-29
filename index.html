@@ -115,6 +115,37 @@
         .cert-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-decoration: none; transition: 0.3s; text-align: center; }
         .cert-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
         .cert-icon { font-size: 40px; color: var(--accent-orange); margin-bottom: 15px; }
+        /* =========================================
+           МОБИЛЬНАЯ АДАПТАЦИЯ (Включается только на телефонах)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* 1. Шапка: центрируем логотип и переносим кнопки на новую строку */
+            header { flex-direction: column; gap: 15px; padding: 15px 0; }
+            .nav-btns { display: flex; justify-content: center; width: 100%; margin-left: 0; }
+            .nav-btns button, .lang-btn { margin: 0 5px; padding: 6px 12px; font-size: 13px; }
+            div:has(> .nav-btns) { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+
+            /* 2. Главная карточка: складываем фото и текст сверху вниз, всё по центру */
+            .profile-card { flex-direction: column; text-align: center; padding: 20px; gap: 15px; }
+            .profile-logo { width: 140px; height: 140px; } /* Чуть уменьшаем фото */
+            .profile-info h1 { font-size: 1.5rem; }
+            
+            /* Соцсети тоже по центру */
+            .social-links { justify-content: center; }
+
+            /* 3. Уменьшаем внутренние отступы стеклянных карточек, чтобы сэкономить место */
+            .skill-box, .project-card, .cert-card { padding: 15px; }
+            
+            /* 4. Настройки заголовков и шапки GitHub для телефона */
+            .gh-header-row { justify-content: center; text-align: center; flex-direction: column; }
+            .gh-years { justify-content: center; width: 100%; }
+            
+            /* 5. Фикс для графика GitHub: разрешаем ему горизонтальный скролл без поломки сайта */
+            .gh-graph-container { padding: 15px 5px; overflow-x: scroll; -webkit-overflow-scrolling: touch; }
+            
+            /* 6. Карточки сертификатов на всю ширину */
+            .certificates-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
