@@ -10,74 +10,42 @@
         :root {
             --text-dark: #1e293b;
             --accent-orange: #f97316; 
-            /* Делаем заливку карточек более прозрачной для эффекта стекла */
             --glass-bg: rgba(255, 255, 255, 0.25);
-            /* Рамка для имитации граней стекла */
             --glass-border: rgba(255, 255, 255, 0.7);
             --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         
-        /* Добавил легкий градиент на фон, чтобы стекло выделялось */
-        body { 
-            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); 
-            color: var(--text-dark); 
-            overflow-x: hidden; 
-            min-height: 100vh;
-        }
-
-        /* Контейнер для частиц */
+        body { background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); color: var(--text-dark); overflow-x: hidden; min-height: 100vh; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
-
-        /* Основной контент */
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* НАСТОЯЩИЙ ЭФФЕКТ СТЕКЛА + ФИКС БРАУЗЕРНОГО БАГА */
+        /* НАСТОЯЩИЙ ЭФФЕКТ СТЕКЛА */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.2); /* Сделал еще прозрачнее для эффекта */
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px rgba(30, 41, 59, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            
-            /* Фикс: жестко привязываем слой к видеокарте, чтобы размытие не пропадало */
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            will-change: transform, backdrop-filter;
-            
-            position: relative;
-            z-index: 10;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 32px rgba(30, 41, 59, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+            border-radius: 16px; transform: translateZ(0); -webkit-transform: translateZ(0); will-change: transform, backdrop-filter;
+            position: relative; z-index: 10;
         }
 
         /* Шапка с кнопками */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid rgba(30, 41, 59, 0.2); margin-bottom: 30px; }
         .logo-text { font-size: 1.2rem; }
         .nav-btns button, .lang-btn {
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5); 
-            color: var(--text-dark);
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5); color: var(--text-dark);
             padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05);
-            /* Фикс для кнопок */
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); transform: translateZ(0); -webkit-transform: translateZ(0);
         }
-        .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active {
-            background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange);
-        }
+        .nav-btns button:hover, .lang-btn:hover, .nav-btns button.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
 
         /* Карточка профиля */
         .profile-card { padding: 30px; margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
-        .profile-logo { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: rgba(255, 255, 255, 0.8); }
+        .profile-logo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: rgba(255, 255, 255, 0.8); }
         .profile-info h1 { margin-bottom: 5px; color: var(--text-dark); font-size: 1.8rem; }
         .profile-info h3 { color: var(--accent-orange); margin-bottom: 15px; font-weight: 500; }
         .bio-text p { margin-bottom: 8px; font-size: 15px; color: #334155; }
-        
-        /* Социальные ссылки */
         .social-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
         .social-links a { color: var(--white); background: var(--text-dark); padding: 10px 18px; border-radius: 8px; text-decoration: none; transition: 0.3s; font-size: 14px; font-weight: 500; }
         .social-links a:hover { background: var(--accent-orange); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3); }
@@ -106,6 +74,47 @@
         .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
         .gh-link { display: inline-block; margin-top: 15px; color: var(--accent-orange); text-decoration: none; font-weight: bold; font-size: 14px; }
         .gh-link:hover { text-decoration: underline; }
+
+        /* --- КАСТОМНЫЙ GITHUB ГРАФИК --- */
+        .gh-header-row { display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px; flex-wrap: wrap; gap: 10px; }
+        .gh-header-row h2 { margin: 0; color: var(--text-dark); }
+        .gh-years { display: flex; gap: 8px; }
+        .gh-year-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--text-dark); font-weight: bold; transition: 0.3s; font-size: 13px; }
+        .gh-year-btn:hover, .gh-year-btn.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
+        
+        .gh-graph-container { padding: 25px; margin-bottom: 20px; overflow-x: auto; text-align: center; min-height: 180px; }
+        
+        /* Стилизация сырого HTML от GitHub */
+        .js-calendar-graph { min-width: 700px; }
+        .ContributionCalendar-grid { border-collapse: separate; border-spacing: 3px; margin: 0 auto; }
+        .ContributionCalendar-day { width: 11px; height: 11px; border-radius: 2px; outline: 1px solid rgba(27,31,35,0.06); outline-offset: -1px; cursor: pointer; }
+        .ContributionCalendar-label { font-size: 10px; fill: var(--text-dark); color: #475569; }
+        
+        /* Замена стандартных цветов GitHub на оранжевую палитру */
+        .ContributionCalendar-day[data-level="0"] { background-color: rgba(255, 255, 255, 0.4); }
+        .ContributionCalendar-day[data-level="1"] { background-color: rgba(249, 115, 22, 0.3); }
+        .ContributionCalendar-day[data-level="2"] { background-color: rgba(249, 115, 22, 0.6); }
+        .ContributionCalendar-day[data-level="3"] { background-color: rgba(249, 115, 22, 0.85); }
+        .ContributionCalendar-day[data-level="4"] { background-color: #ea580c; } /* Чуть темнее для контраста */
+        
+        /* Скрытие лишнего мусора из сырого HTML GitHub */
+        /* Скрытие лишнего мусора из сырого HTML GitHub (ссылки, Less/More, легенда) */
+        .sr-only, .js-calendar-graph-bottom { display: none !important; }
+        .gh-graph-container a { display: none !important; } /* Убирает фиолетовую ссылку */
+        .gh-graph-container .ContributionCalendar-footer,
+        .gh-graph-container .float-right, 
+        .gh-graph-container .float-left,
+        .gh-graph-container .color-fg-muted { display: none !important; } /* Убирает Less / More и кривые квадратики */
+
+        /* Блок стриков */
+        .streak-container { text-align: center; margin-top: 15px; }
+        .streak-container img { max-width: 100%; height: auto; border-radius: 8px; filter: drop-shadow(0 4px 10px rgba(30,41,59,0.05)); }
+
+        /* Доска сертификатов */
+        .certificates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .cert-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-decoration: none; transition: 0.3s; text-align: center; }
+        .cert-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
+        .cert-icon { font-size: 40px; color: var(--accent-orange); margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -164,12 +173,37 @@
                 <div class="extra-skills" data-i18n="extra_skills">Также есть опыт работы с: Python, PHP, C#</div>
             </div>
         </div>
+
+        <div class="gh-header-row">
+            <h2 data-i18n="github_activity">Активность GitHub</h2>
+            <div class="gh-years">
+                <button class="gh-year-btn active" data-year="2026" onclick="loadGitHubData(2026)">2026</button>
+                <button class="gh-year-btn" data-year="2025" onclick="loadGitHubData(2025)">2025</button>
+                <button class="gh-year-btn" data-year="2024" onclick="loadGitHubData(2024)">2024</button>
+            </div>
+        </div>
+
+        <div class="glass-panel gh-graph-container" id="gh-target">
+            <p style="padding-top: 50px; color: #64748b;" data-i18n="loading_git">Подключение к GitHub API...</p>
+        </div>
+
+        <div class="glass-panel streak-container">
+            <img src="https://github-readme-streak-stats.herokuapp.com/?user=Johan0565&theme=transparent&hide_border=true&ring=f97316&fire=f97316&currStreakLabel=f97316&sideNums=1e293b&currStreakNum=1e293b&sideLabels=1e293b&dates=64748b" alt="GitHub Streaks">
+        </div>
+
+        <h2 style="margin: 40px 0 20px; color: var(--text-dark);" data-i18n="certificates">Сертификаты</h2>
+        <div class="certificates-grid">
+            <a href="https://stepik.org/cert/2820543?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);" data-i18n="cert_stepik">Курс по mySQL</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;" data-i18n="cert_stepik_desc">Посмотреть на Stepik</p>
+            </a>
+        </div>
     </section>
 
     <section id="portfolio" class="section">
         <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="portfolio_title">Мои проекты</h2>
         <div class="portfolio-grid">
-            
             <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
                 <h3><i class="fas fa-city" style="color: var(--accent-orange);"></i> <span data-i18n="proj1_title">Street Retail Aggregator</span></h3>
                 <div class="project-details">
@@ -197,22 +231,21 @@
                     <a href="https://github.com/Johan0565?tab=repositories" target="_blank" class="gh-link"><i class="fab fa-github"></i> Все репозитории</a>
                 </div>
             </div>
-
         </div>
     </section>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    // Инициализация частиц - СДЕЛАЛ ИХ ШИРЕ И ЗАМЕТНЕЕ
+    // Инициализация частиц
     particlesJS("particles-js", {
         "particles": {
             "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
             "color": { "value": "#f97316" }, 
             "shape": { "type": "circle" },
             "opacity": { "value": 0.6, "random": true },
-            "size": { "value": 5, "random": true }, // Увеличил размер частиц (было 3)
-            "line_linked": { "enable": true, "distance": 160, "color": "#f97316", "opacity": 0.3, "width": 2 }, // Увеличил ширину линий (было 1)
+            "size": { "value": 5, "random": true }, 
+            "line_linked": { "enable": true, "distance": 160, "color": "#f97316", "opacity": 0.3, "width": 2 }, 
             "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
         },
         "interactivity": {
@@ -222,6 +255,69 @@
         },
         "retina_detect": true
     });
+
+    // --- Кастомный парсер сырого HTML GitHub ---
+    async function loadGitHubData(year) {
+        const container = document.getElementById('gh-target');
+        const langWait = currentLang === 'ru' ? 'Синхронизация с серверами GitHub...' : 'Syncing with GitHub servers...';
+        container.innerHTML = `<p style="padding-top: 50px; color: #64748b;">${langWait}</p>`;
+
+        // Обновляем активную кнопку
+        document.querySelectorAll('.gh-year-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.gh-year-btn[data-year="${year}"]`).classList.add('active');
+
+        // URL профиля с фильтрацией по нужному году
+        const url = `https://github.com/users/Johan0565/contributions?from=${year}-01-01&to=${year}-12-31`;
+        
+        // Два разных прокси-сервера для надежности
+        const proxy1 = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
+        const proxy2 = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+
+        // Функция для попытки парсинга
+        async function fetchGraph(proxyUrl) {
+            const response = await fetch(proxyUrl);
+            if (!response.ok) throw new Error('Proxy HTTP status error');
+            const html = await response.text(); // Забираем сырой HTML напрямую
+            
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const calendarGraph = doc.querySelector('.js-calendar-graph');
+            
+            if (!calendarGraph) throw new Error('Graph element not found');
+            return calendarGraph;
+        }
+
+        try {
+            let calendarGraph;
+            try {
+                // Пробуем первый прокси
+                calendarGraph = await fetchGraph(proxy1);
+            } catch (e) {
+                console.log("Первый прокси недоступен, пробуем резервный...");
+                // Если ошибка, пробуем второй прокси
+                calendarGraph = await fetchGraph(proxy2);
+            }
+
+            // Успешно скачали — встраиваем в сайт
+            container.innerHTML = '';
+            container.appendChild(calendarGraph);
+            
+            // Достаем текст для всплывающих подсказок (tooltips)
+            container.querySelectorAll('.ContributionCalendar-day').forEach(day => {
+                const hiddenText = day.querySelector('.sr-only');
+                if (hiddenText) {
+                    day.setAttribute('title', hiddenText.innerText);
+                }
+            });
+        } catch (error) {
+            console.error("Ошибка парсинга GitHub: ", error);
+            container.innerHTML = '<p style="padding-top: 50px; color: #ef4444;">Не удалось загрузить график. Прокси-серверы временно недоступны (возможно ограничение сети). Попробуйте обновить страницу.</p>';
+        }
+    }
+
+    // Запускаем загрузку 2026 года при старте страницы
+    window.onload = () => loadGitHubData(2026);
+
 
     // Переключение вкладок
     function switchTab(tabId, btnEl) {
@@ -252,7 +348,12 @@
             'proj2_desc': 'Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.',
             'proj2_license': '🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.',
             'proj3_title': '📂 Учебные CRM и Pet-проекты',
-            'proj3_desc': 'Коллекция учебных проектов, включая разработку CRM-систем (EsoftCrm), реализацию паттернов проектирования на Java, верстку маркетплейса и настройку сетей в Cisco Packet Tracer.'
+            'proj3_desc': 'Коллекция учебных проектов, включая разработку CRM-систем (EsoftCrm), реализацию паттернов проектирования на Java, верстку маркетплейса и настройку сетей в Cisco Packet Tracer.',
+            'github_activity': 'Активность GitHub',
+            'loading_git': 'Подключение к GitHub API...',
+            'certificates': 'Сертификаты',
+            'cert_stepik': 'Подробный курс по mySQL',
+            'cert_stepik_desc': 'Посмотреть на Stepik'
         },
         'en': {
             'nav_about': 'About Me', 'nav_portfolio': 'Portfolio',
@@ -272,7 +373,12 @@
             'proj2_desc': 'Cross-platform construction control ecosystem. Allows placing defect markers on 2D blueprints, attaching photos, and generating GOST-compliant PDF reports. Works offline with smart synchronization.',
             'proj2_license': '🚫 Proprietary License (Closed Source). The exclusive intellectual property of the author.',
             'proj3_title': '📂 Educational CRMs & Pet Projects',
-            'proj3_desc': 'A collection of educational projects including CRM system development (EsoftCrm), Java design patterns implementation, marketplace frontend, and Cisco Packet Tracer networking.'
+            'proj3_desc': 'A collection of educational projects including CRM system development (EsoftCrm), Java design patterns implementation, marketplace frontend, and Cisco Packet Tracer networking.',
+            'github_activity': 'GitHub Contributions',
+            'loading_git': 'Syncing with GitHub servers...',
+            'certificates': 'Certificates',
+            'cert_stepik': 'MySQL Course',
+            'cert_stepik_desc': 'View on Stepik'
         }
     };
 
@@ -284,6 +390,9 @@
                 el.textContent = translations[currentLang][key];
             }
         });
+        // Переводим текст загрузки, если график еще грузится
+        const loadingText = document.querySelector('#gh-target p');
+        if (loadingText) loadingText.textContent = translations[currentLang]['loading_git'];
     }
 </script>
 </body>
