@@ -38,99 +38,213 @@
     }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Базовые настройки и цвета */
+        /* CSS Custom Properties для анимированных углов */
+        @property --angle-1 {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: -75deg;
+        }
+        @property --angle-2 {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: -45deg;
+        }
+        /* Базовые настройки и цвета — Liquid Glass */
         :root {
             --text-dark: #1e293b;
-            --accent-orange: #f97316; 
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.7);
+            --accent-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.18);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --glass-highlight: rgba(255, 255, 255, 0.6);
             --white: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        
-        body { background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); color: var(--text-dark); overflow-x: hidden; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'SF Pro Display', 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            background-color: #f0f0f0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E");
+            color: var(--text-dark); overflow-x: hidden; min-height: 100vh;
+        }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* НАСТОЯЩИЙ ЭФФЕКТ СТЕКЛА */
+        /* LIQUID GLASS — стиль как у кнопки */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 32px rgba(30, 41, 59, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-            border-radius: 16px; transform: translateZ(0); -webkit-transform: translateZ(0); will-change: transform, backdrop-filter;
-            position: relative; z-index: 10;
+            --border-width: 1px;
+            position: relative;
+            background: linear-gradient(
+                -75deg,
+                rgba(255,255,255,0.05),
+                rgba(255,255,255,0.35),
+                rgba(255,255,255,0.05)
+            );
+            backdrop-filter: blur(clamp(4px, 0.5vw, 12px)) saturate(1.5);
+            -webkit-backdrop-filter: blur(clamp(4px, 0.5vw, 12px)) saturate(1.5);
+            border-radius: 20px;
+            box-shadow:
+                inset 0 2px 4px rgba(0,0,0,0.04),
+                inset 0 -2px 4px rgba(255,255,255,0.6),
+                0 8px 24px rgba(0,0,0,0.08),
+                0 2px 4px rgba(0,0,0,0.04),
+                inset 0 0 0 1px rgba(255,255,255,0.3);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            overflow: hidden;
+            z-index: 10;
         }
+        /* Specular highlight streak */
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(
+                var(--angle-2),
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.5) 40% 50%,
+                rgba(255,255,255,0) 55%
+            );
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 1;
+            background-size: 200% 200%;
+            background-position: 0% 50%;
+            transition: background-position 0.4s ease, --angle-2 0.4s ease;
+        }
+        /* Conic-gradient border */
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            inset: calc(-1 * var(--border-width));
+            border-radius: 21px;
+            padding: var(--border-width);
+            box-sizing: border-box;
+            background: conic-gradient(
+                from var(--angle-1) at 50% 50%,
+                rgba(0,0,0,0.3),
+                rgba(0,0,0,0) 5% 40%,
+                rgba(0,0,0,0.3) 50%,
+                rgba(0,0,0,0) 60% 95%,
+                rgba(0,0,0,0.3)
+            ),
+            linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+            pointer-events: none;
+            z-index: 2;
+            transition: --angle-1 0.5s ease;
+        }
+        .glass-panel:hover::before { background-position: 25% 50%; }
+        .glass-panel:hover::after { --angle-1: -125deg; }
 
         /* Шапка с кнопками */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid rgba(30, 41, 59, 0.2); margin-bottom: 30px; }
-        .logo-text { font-size: 1.2rem; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 2px solid rgba(30,41,59,0.15); margin-bottom: 30px; }
+        .logo-text { font-size: 1.2rem; color: var(--text-dark); }
         .nav-btns button {
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5); color: var(--text-dark);
-            padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05); transform: translateZ(0); -webkit-transform: translateZ(0);
+            background: linear-gradient(-75deg, rgba(255,255,255,0.05), rgba(255,255,255,0.3), rgba(255,255,255,0.05));
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.5); color: var(--text-dark);
+            padding: 8px 16px; margin-left: 10px; cursor: pointer; border-radius: 999px; font-weight: 600; transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), inset 0 -1px 3px rgba(255,255,255,0.6), 0 4px 12px rgba(0,0,0,0.08); transform: translateZ(0);
         }
-        .nav-btns button:hover, .nav-btns button.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
+        .nav-btns button:hover, .nav-btns button.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); box-shadow: 0 4px 12px rgba(249,115,22,0.3); }
 
         /* --- НОВЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ --- */
         .lang-switch {
             display: inline-flex;
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05);
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+            background: linear-gradient(-75deg, rgba(255,255,255,0.05), rgba(255,255,255,0.3), rgba(255,255,255,0.05));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 20px; padding: 4px; cursor: pointer; margin-left: 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), inset 0 -1px 3px rgba(255,255,255,0.6), 0 4px 12px rgba(0,0,0,0.06);
         }
         .lang-opt {
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--text-dark);
-            transition: all 0.3s ease;
+            padding: 6px 14px; border-radius: 16px; font-size: 13px; font-weight: bold;
+            color: var(--text-dark); transition: all 0.3s ease;
         }
         .lang-opt.active {
-            background: #f97316; 
-            color: #1e293b; 
-            box-shadow: 0 0 12px rgba(255, 163, 34, 0.8); 
+            background: #f97316; color: #fff;
+            box-shadow: 0 0 12px rgba(255,163,34,0.6);
         }
 
         /* Карточка профиля */
         .profile-card { padding: 30px; margin-bottom: 30px; display: flex; gap: 25px; align-items: center; }
-        .profile-logo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--accent-orange); padding: 5px; background: rgba(255, 255, 255, 0.8); }
+        .profile-logo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.7); padding: 5px; background: rgba(255,255,255,0.4); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
         .profile-info h1 { margin-bottom: 5px; color: var(--text-dark); font-size: 1.8rem; }
         .profile-info h3 { color: var(--accent-orange); margin-bottom: 15px; font-weight: 500; }
         .bio-text p { margin-bottom: 8px; font-size: 15px; color: #334155; }
         .social-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .social-links a { color: var(--white); background: var(--text-dark); padding: 10px 18px; border-radius: 8px; text-decoration: none; transition: 0.3s; font-size: 14px; font-weight: 500; }
-        .social-links a:hover { background: var(--accent-orange); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3); }
+        .social-links a, .social-links button {
+            color: var(--white); background: var(--text-dark); padding: 10px 18px; border-radius: 999px;
+            text-decoration: none; transition: all 0.3s cubic-bezier(.4,0,.2,1); font-size: 14px; font-weight: 500;
+            cursor: pointer; border: none; font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), inset 0 -1px 3px rgba(255,255,255,0.1), 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .social-links a:hover, .social-links button:hover { background: var(--accent-orange); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
 
         /* Секции */
         .section { display: none; animation: fadeIn 0.5s; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Графики навыков */
-        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
-        .skill-box { padding: 25px; }
-        .skill-item { margin-bottom: 18px; }
-        .skill-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: var(--text-dark); }
-        .progress-bar { width: 100%; background: rgba(255, 255, 255, 0.5); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
-        .progress { height: 100%; background: var(--accent-orange); width: 0; transition: width 1.5s ease-in-out; border-radius: 10px; }
-        .extra-skills { margin-top: 20px; font-size: 14px; color: #475569; padding-top: 15px; border-top: 1px solid rgba(30, 41, 59, 0.1); }
+        /* Плитки технического стека */
+        .tech-stack-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px;
+        }
+        .tech-tile {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;
+            padding: 20px 12px; text-decoration: none; color: var(--text-dark);
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+            cursor: pointer; position: relative; min-height: 100px;
+        }
+        .tech-tile:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 16px 40px rgba(30,41,59,0.14), 0 2px 8px rgba(249,115,22,0.15);
+            background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.2) 100%);
+        }
+        .tech-tile i {
+            font-size: 28px; margin-bottom: 10px; color: var(--accent-orange);
+            transition: transform 0.3s ease;
+        }
+        .tech-tile:hover i { transform: scale(1.2); }
+        .tech-tile span {
+            font-size: 13px; font-weight: 600; text-align: center; line-height: 1.3; color: var(--text-dark);
+        }
+        .tech-tile .tile-hint {
+            font-size: 10px; color: #94a3b8; margin-top: 4px; font-weight: 400;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .tech-tile:hover .tile-hint { opacity: 1; }
+        .extra-skills { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.7); padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.15); }
+
+        /* Toast-уведомление */
+        .toast-notification {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+            background: linear-gradient(135deg, rgba(30,41,59,0.92) 0%, rgba(30,41,59,0.85) 100%);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            color: #fff; padding: 14px 28px; border-radius: 16px;
+            font-size: 14px; font-weight: 500; z-index: 9999;
+            opacity: 0; transition: all 0.5s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .toast-notification.show {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
 
         /* Портфолио */
         .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .project-card { padding: 25px; border-left: 5px solid var(--accent-orange); cursor: pointer; transition: 0.3s; }
-        .project-card:hover { transform: scale(1.01) translateY(-2px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
+        .project-card { padding: 25px; border-left: 5px solid var(--accent-orange); cursor: pointer; transition: all 0.35s cubic-bezier(.4,0,.2,1); }
+        .project-card:hover { transform: scale(1.01) translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); background: rgba(255,255,255,0.5); }
         .project-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text-dark); }
         .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #334155; font-size: 14px; }
         .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
@@ -141,7 +255,7 @@
         .gh-header-row { display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px; flex-wrap: wrap; gap: 10px; }
         .gh-header-row h2 { margin: 0; color: var(--text-dark); }
         .gh-years { display: flex; gap: 8px; }
-        .gh-year-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--text-dark); font-weight: bold; transition: 0.3s; font-size: 13px; }
+        .gh-year-btn { background: linear-gradient(-75deg, rgba(255,255,255,0.05), rgba(255,255,255,0.3), rgba(255,255,255,0.05)); border: 1px solid rgba(255,255,255,0.5); padding: 5px 12px; border-radius: 8px; cursor: pointer; color: var(--text-dark); font-weight: bold; transition: 0.3s; font-size: 13px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), 0 2px 6px rgba(0,0,0,0.06); }
         .gh-year-btn:hover, .gh-year-btn.active { background: var(--accent-orange); color: var(--white); border-color: var(--accent-orange); }
         
         .gh-graph-container { padding: 25px; margin-bottom: 20px; overflow-x: auto; text-align: center; min-height: 180px; }
@@ -149,9 +263,9 @@
         .js-calendar-graph { min-width: 700px; }
         .ContributionCalendar-grid { border-collapse: separate; border-spacing: 3px; margin: 0 auto; }
         .ContributionCalendar-day { width: 11px; height: 11px; border-radius: 2px; outline: 1px solid rgba(27,31,35,0.06); outline-offset: -1px; cursor: pointer; }
-        .ContributionCalendar-label { font-size: 10px; fill: var(--text-dark); color: #475569; }
+        .ContributionCalendar-label { font-size: 10px; fill: #475569; color: #475569; }
         
-        .ContributionCalendar-day[data-level="0"] { background-color: rgba(255, 255, 255, 0.4); }
+        .ContributionCalendar-day[data-level="0"] { background-color: rgba(0,0,0,0.05); }
         .ContributionCalendar-day[data-level="1"] { background-color: rgba(249, 115, 22, 0.3); }
         .ContributionCalendar-day[data-level="2"] { background-color: rgba(249, 115, 22, 0.6); }
         .ContributionCalendar-day[data-level="3"] { background-color: rgba(249, 115, 22, 0.85); }
@@ -168,8 +282,8 @@
         .streak-container img { max-width: 100%; height: auto; border-radius: 8px; filter: drop-shadow(0 4px 10px rgba(30,41,59,0.05)); }
 
         .certificates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .cert-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-decoration: none; transition: 0.3s; text-align: center; }
-        .cert-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(30, 41, 59, 0.15); background: rgba(255, 255, 255, 0.45); }
+        .cert-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-decoration: none; transition: all 0.35s cubic-bezier(.4,0,.2,1); text-align: center; }
+        .cert-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(30, 41, 59, 0.14); background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.18) 100%); }
         .cert-icon { font-size: 40px; color: var(--accent-orange); margin-bottom: 15px; }
 
         @media (max-width: 768px) {
@@ -184,7 +298,10 @@
             
             .social-links { justify-content: center; }
 
-            .skill-box, .project-card, .cert-card { padding: 15px; }
+            .project-card, .cert-card { padding: 15px; }
+            .tech-stack-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+            .tech-tile { padding: 14px 8px; min-height: 80px; }
+            .tech-tile i { font-size: 22px; }
             
             .gh-header-row { justify-content: center; text-align: center; flex-direction: column; }
             .gh-years { justify-content: center; width: 100%; }
@@ -215,7 +332,7 @@
     </header>
 
     <section id="about" class="section active">
-        <div class="profile-card glass-panel">
+        <div class="gh-year-btn">
             <img src="Logo.jpg" alt="Logo" class="profile-logo">
             <div class="profile-info">
                 <h1 data-i18n="name">Магомедов Магомед Расулович</h1>
@@ -228,31 +345,50 @@
                 </div>
                 <div class="social-links">
                     <a href="https://t.me/Magomedov2026" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
-                    <a href="mailto:magomedxaxa_000@mail.ru"><i class="fas fa-envelope"></i> Email</a>
+                    <button onclick="copyEmail()"><i class="fas fa-envelope"></i> Email</button>
                     <a href="https://github.com/Johan0565" target="_blank"><i class="fab fa-github"></i> GitHub</a>
                 </div>
             </div>
         </div>
 
         <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="skills_title">Технический стек</h2>
-        <div class="skills-grid">
-            <div class="skill-box glass-panel">
-                <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_1">Databases & Backend</h3>
-                <div class="skill-item"><div class="skill-header"><span>SQL / PostgreSQL</span><span>90%</span></div><div class="progress-bar"><div class="progress" style="width: 90%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>Spring Boot</span><span>75%</span></div><div class="progress-bar"><div class="progress" style="width: 75%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>Java</span><span>70%</span></div><div class="progress-bar"><div class="progress" style="width: 70%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>1C:Предприятие</span><span>50%</span></div><div class="progress-bar"><div class="progress" style="width: 50%;"></div></div></div>
-            </div>
-
-            <div class="skill-box glass-panel">
-                <h3 style="margin-bottom: 20px; color: var(--accent-orange);" data-i18n="skill_group_2">Tools & Frontend</h3>
-                <div class="skill-item"><div class="skill-header"><span>Dart</span><span>70%</span></div><div class="progress-bar"><div class="progress" style="width: 70%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>Git</span><span>65%</span></div><div class="progress-bar"><div class="progress" style="width: 65%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>HTML / CSS</span><span>40%</span></div><div class="progress-bar"><div class="progress" style="width: 40%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>JavaScript</span><span>20%</span></div><div class="progress-bar"><div class="progress" style="width: 20%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><span>Flutter</span><span>10%</span></div><div class="progress-bar"><div class="progress" style="width: 10%;"></div></div></div>
-                <div class="extra-skills" data-i18n="extra_skills">Также есть опыт работы с: Python, PHP, C#</div>
-            </div>
+        <div class="tech-stack-grid">
+            <a href="https://www.java.com" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-java"></i><span>Java</span><span class="tile-hint">java.com →</span>
+            </a>
+            <a href="https://spring.io/projects/spring-boot" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-leaf"></i><span>Spring Boot</span><span class="tile-hint">spring.io →</span>
+            </a>
+            <a href="https://www.postgresql.org" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-database"></i><span>PostgreSQL</span><span class="tile-hint">postgresql.org →</span>
+            </a>
+            <a href="https://dart.dev" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-bullseye"></i><span>Dart</span><span class="tile-hint">dart.dev →</span>
+            </a>
+            <a href="https://flutter.dev" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-mobile-alt"></i><span>Flutter</span><span class="tile-hint">flutter.dev →</span>
+            </a>
+            <a href="https://git-scm.com" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-git-alt"></i><span>Git</span><span class="tile-hint">git-scm.com →</span>
+            </a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-html5"></i><span>HTML / CSS</span><span class="tile-hint">MDN →</span>
+            </a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-js-square"></i><span>JavaScript</span><span class="tile-hint">MDN →</span>
+            </a>
+            <a href="https://v8.1c.ru" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-cogs"></i><span>1C</span><span class="tile-hint">1c.ru →</span>
+            </a>
+            <a href="https://www.python.org" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-python"></i><span>Python</span><span class="tile-hint">python.org →</span>
+            </a>
+            <a href="https://www.php.net" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-php"></i><span>PHP</span><span class="tile-hint">php.net →</span>
+            </a>
+            <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-microsoft"></i><span>C#</span><span class="tile-hint">microsoft.com →</span>
+            </a>
         </div>
 
         <div class="gh-header-row">
@@ -299,7 +435,7 @@
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Dart, Flutter (Cross-platform), Offline-first, PDF Generation</p>
                     <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj2_desc">Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.</p>
-                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: rgba(254, 242, 242, 0.7); border-radius: 0 4px 4px 0;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
+                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: rgba(254,242,242,0.8); border-radius: 0 4px 4px 0;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
                     <a href="https://github.com/Johan0565/AetasApp" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
                 </div>
             </div>
@@ -316,16 +452,22 @@
     </section>
 </div>
 
+<!-- Toast-уведомление -->
+<div class="toast-notification" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-text">Email скопирован!</span>
+</div>
+
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
     particlesJS("particles-js", {
         "particles": {
             "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#f97316" }, 
+            "color": { "value": "#f97316" },
             "shape": { "type": "circle" },
             "opacity": { "value": 0.6, "random": true },
-            "size": { "value": 5, "random": true }, 
-            "line_linked": { "enable": true, "distance": 160, "color": "#f97316", "opacity": 0.3, "width": 2 }, 
+            "size": { "value": 5, "random": true },
+            "line_linked": { "enable": true, "distance": 160, "color": "#f97316", "opacity": 0.3, "width": 2 },
             "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
         },
         "interactivity": {
@@ -382,7 +524,7 @@
             });
         } catch (error) {
             console.error("Ошибка парсинга GitHub: ", error);
-            container.innerHTML = '<p style="padding-top: 50px; color: #ef4444;">Не удалось загрузить график. Прокси-серверы временно недоступны (возможно ограничение сети). Попробуйте обновить страницу.</p>';
+            container.innerHTML = '<p style="padding-top: 50px; color: #ef4444;">Не удалось загрузить график. Прокси-серверы временно недоступны (возможно ограничение сети). Попробуйте обновить страницу.</p>';;
         }
     }
 
@@ -395,6 +537,27 @@
         btnEl.classList.add('active');
     }
 
+    function copyEmail() {
+        const email = 'magomed@magomedov.online';
+        navigator.clipboard.writeText(email).then(() => {
+            showToast(currentLang === 'ru' ? '✉️ Email скопирован: ' + email : '✉️ Email copied: ' + email);
+        }).catch(() => {
+            /* Fallback for older browsers */
+            const ta = document.createElement('textarea');
+            ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast(currentLang === 'ru' ? '✉️ Email скопирован: ' + email : '✉️ Email copied: ' + email);
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
     let currentLang = 'ru';
     const translations = {
         'ru': {
@@ -405,8 +568,6 @@
             'bio_spec': 'Профиль: Прикладная информатика (Разработка и интеграция бизнес-приложений)',
             'bio_focus': 'Стек и фокус: Java, Spring Boot, разработка систем-агрегаторов, интеграция КИС',
             'skills_title': 'Технический стек',
-            'skill_group_1': 'Databases & Backend', 'skill_group_2': 'Tools & Frontend',
-            'extra_skills': 'Также есть опыт работы с: Python, PHP, C#',
             'portfolio_title': 'Мои проекты',
             'stack': 'Стек:',
             'proj1_title': '🏙️ Street Retail Aggregator',
@@ -430,8 +591,6 @@
             'bio_spec': 'Profile: Applied Informatics (Business App Development & Integration)',
             'bio_focus': 'Stack & Focus: Java, Spring Boot, aggregator systems development, CIS integration',
             'skills_title': 'Tech Stack',
-            'skill_group_1': 'Databases & Backend', 'skill_group_2': 'Tools & Frontend',
-            'extra_skills': 'Also experienced with: Python, PHP, C#',
             'portfolio_title': 'My Projects',
             'stack': 'Stack:',
             'proj1_title': '🏙️ Street Retail Aggregator',
