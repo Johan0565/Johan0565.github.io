@@ -246,10 +246,119 @@
         .project-card { padding: 25px; border-left: 5px solid var(--accent-orange); cursor: pointer; transition: all 0.35s cubic-bezier(.4,0,.2,1); }
         .project-card:hover { transform: scale(1.01) translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); background: rgba(255,255,255,0.5); }
         .project-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text-dark); }
-        .project-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-top: 0; color: #334155; font-size: 14px; }
-        .project-card.expanded .project-details { max-height: 500px; margin-top: 15px; }
+        .project-details { max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out; margin-top: 0; color: #334155; font-size: 14px; }
+        .project-card.expanded .project-details { max-height: 2000px; margin-top: 15px; }
         .gh-link { display: inline-block; margin-top: 15px; color: var(--accent-orange); text-decoration: none; font-weight: bold; font-size: 14px; }
         .gh-link:hover { text-decoration: underline; }
+
+        /* --- Coverflow Carousel --- */
+        .demo-carousel {
+            position: relative; margin: 20px 0 16px;
+            padding: 20px 0;
+            overflow: hidden;
+        }
+        .demo-carousel-viewport {
+            display: flex; align-items: center; justify-content: center;
+            position: relative; height: 600px;
+            perspective: 1200px;
+        }
+        .demo-carousel-slide {
+            position: absolute;
+            width: 55%; max-width: 480px;
+            max-height: 90%;
+            transition: all 0.6s cubic-bezier(.4,0,.2,1);
+            border-radius: 16px; overflow: hidden;
+            box-shadow: none;
+            cursor: pointer;
+            opacity: 0; pointer-events: none;
+            transform: scale(0.6) translateX(0);
+        }
+        .demo-carousel-slide img {
+            width: 100%; height: auto; max-height: 560px; display: block;
+            object-fit: contain;
+        }
+        /* Active center slide */
+        .demo-carousel-slide.active {
+            z-index: 4; opacity: 1; pointer-events: auto;
+            transform: scale(1) translateX(0) rotateY(0);
+            border: 2.5px solid rgba(249,115,22,0.5);
+            box-shadow: 0 12px 40px rgba(249,115,22,0.2), 0 8px 24px rgba(0,0,0,0.1);
+        }
+        /* Left neighbor */
+        .demo-carousel-slide.pos-left {
+            z-index: 3; opacity: 0.75; pointer-events: auto;
+            transform: scale(0.75) translateX(-82%) rotateY(8deg);
+            border: none;
+        }
+        /* Right neighbor */
+        .demo-carousel-slide.pos-right {
+            z-index: 3; opacity: 0.75; pointer-events: auto;
+            transform: scale(0.75) translateX(82%) rotateY(-8deg);
+            border: none;
+        }
+        /* Far left */
+        .demo-carousel-slide.pos-far-left {
+            z-index: 2; opacity: 0.4; pointer-events: auto;
+            transform: scale(0.55) translateX(-155%) rotateY(14deg);
+            border: none;
+        }
+        /* Far right */
+        .demo-carousel-slide.pos-far-right {
+            z-index: 2; opacity: 0.4; pointer-events: auto;
+            transform: scale(0.55) translateX(155%) rotateY(-14deg);
+            border: none;
+        }
+        .demo-carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+            width: 42px; height: 42px; border-radius: 50%; border: none;
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+            color: var(--text-dark); font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: all 0.25s ease; opacity: 0.65;
+        }
+        .demo-carousel:hover .demo-carousel-btn { opacity: 1; }
+        .demo-carousel-btn:hover {
+            background: var(--accent-orange); color: #fff;
+            box-shadow: 0 4px 20px rgba(249,115,22,0.4); transform: translateY(-50%) scale(1.12);
+        }
+        .demo-carousel-btn.prev { left: 4px; }
+        .demo-carousel-btn.next { right: 4px; }
+        .demo-carousel-dots {
+            display: flex; justify-content: center; gap: 6px;
+            margin-top: 14px;
+        }
+        .demo-carousel-dots span {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(30,41,59,0.15);
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .demo-carousel-dots span.active {
+            background: var(--accent-orange); transform: scale(1.35);
+            box-shadow: 0 0 8px rgba(249,115,22,0.5);
+        }
+        .demo-carousel-counter {
+            text-align: center; margin-top: 6px;
+            color: #64748b; font-size: 12px; font-weight: 600;
+        }
+
+        /* --- PPTX Embed --- */
+        .pptx-embed-wrapper {
+            margin-top: 18px; border-radius: 14px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+            background: #f8fafc;
+        }
+        .pptx-embed-header {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(255,255,255,0.3));
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+        }
+        .pptx-embed-header i { color: var(--accent-orange); font-size: 18px; }
+        .pptx-embed-header span { font-weight: 600; font-size: 13px; color: var(--text-dark); }
+        .pptx-embed-wrapper iframe {
+            width: 100%; height: 430px; border: none; display: block;
+        }
 
         /* --- КАСТОМНЫЙ GITHUB ГРАФИК --- */
         .gh-header-row { display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px; flex-wrap: wrap; gap: 10px; }
@@ -421,6 +530,14 @@
             .pdf-modal { width: 95%; padding: 24px 18px 20px; max-height: 85vh; }
             .pdf-item { padding: 12px 14px; }
             .pdf-item-icon { width: 38px; height: 38px; }
+
+            .demo-carousel-viewport { height: 240px; }
+            .demo-carousel-slide { width: 65%; }
+            .demo-carousel-slide.pos-far-left,
+            .demo-carousel-slide.pos-far-right { display: none; }
+            .demo-carousel-btn { width: 34px; height: 34px; font-size: 13px; }
+            .demo-carousel-dots span { width: 6px; height: 6px; }
+            .pptx-embed-wrapper iframe { height: 300px; }
         }
     </style>
 </head>
@@ -539,16 +656,35 @@
     <section id="portfolio" class="section">
         <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="portfolio_title">Мои проекты</h2>
         <div class="portfolio-grid">
-            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
                 <h3><i class="fas fa-city" style="color: var(--accent-orange);"></i> <span data-i18n="proj1_title">Street Retail Aggregator</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Java, Spring Boot, Spring Security (JWT), PostgreSQL, Yandex MapKit</p>
                     <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj1_desc">КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.</p>
-                    <a href="https://github.com/Johan0565/SpringBootProject" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
+
+                    <!-- Demo Coverflow Carousel -->
+                    <div class="demo-carousel" id="demoCarousel" onclick="event.stopPropagation()">
+                        <button class="demo-carousel-btn prev" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="demo-carousel-btn next" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+                        <div class="demo-carousel-viewport" id="carouselViewport"></div>
+                        <div class="demo-carousel-dots" id="carouselDots"></div>
+                        <div class="demo-carousel-counter"><span id="carouselCurrent">1</span> / 14</div>
+                    </div>
+
+                    <!-- PPTX Presentation -->
+                    <div class="pptx-embed-wrapper" onclick="event.stopPropagation()">
+                        <div class="pptx-embed-header">
+                            <i class="fas fa-file-powerpoint"></i>
+                            <span data-i18n="pptx_label">Презентация проекта</span>
+                        </div>
+                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fmagomedov.online%2Fstreet-retail-aggregator.pptx" allowfullscreen></iframe>
+                    </div>
+
+                    <a href="https://github.com/Johan0565/SpringBootProject" target="_blank" class="gh-link" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub</a>
                 </div>
             </div>
 
-            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
                 <h3><i class="fas fa-hard-hat" style="color: var(--accent-orange);"></i> <span data-i18n="proj2_title">Aetas: Construction control system</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Dart, Flutter (Cross-platform), Offline-first, PDF Generation</p>
@@ -558,7 +694,7 @@
                 </div>
             </div>
 
-            <div class="project-card glass-panel" onclick="this.classList.toggle('expanded')">
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
                 <h3><i class="fas fa-code-branch" style="color: var(--accent-orange);"></i> <span data-i18n="proj3_title">Учебные CRM и Pet-проекты</span></h3>
                 <div class="project-details">
                     <p><strong data-i18n="stack">Стек:</strong> Java, C#, HTML/CSS/JS, Cisco</p>
@@ -734,7 +870,8 @@
             'cert_other_desc': 'Дополнительные документы',
             'modal_title': 'Прочие документы',
             'modal_subtitle': 'Нажмите, чтобы открыть документ',
-            'pdf_document': 'PDF документ'
+            'pdf_document': 'PDF документ',
+            'pptx_label': 'Презентация проекта'
         },
         'en': {
             'nav_about': 'About Me', 'nav_portfolio': 'Portfolio',
@@ -762,7 +899,8 @@
             'cert_other_desc': 'Additional documents',
             'modal_title': 'Other Documents',
             'modal_subtitle': 'Click to open a document',
-            'pdf_document': 'PDF document'
+            'pdf_document': 'PDF document',
+            'pptx_label': 'Project Presentation'
         }
     };
 
@@ -830,6 +968,115 @@
             closePdfModal(null, true);
         }
     });
+
+    /* === Project Card Toggle (prevents carousel/iframe clicks from collapsing) === */
+    function toggleProject(card, e) {
+        // Don't toggle if clicking inside carousel or iframe wrapper
+        if (e.target.closest('.demo-carousel') || e.target.closest('.pptx-embed-wrapper') || e.target.closest('.gh-link')) return;
+        card.classList.toggle('expanded');
+    }
+
+    /* === Demo Coverflow Carousel Logic === */
+    const slideImages = [];
+    for (let i = 0; i <= 13; i++) slideImages.push(`demo/${i}.png`);
+    const totalSlides = slideImages.length;
+    let carouselIndex = 0;
+
+    // Build slides
+    (function initCoverflow() {
+        const viewport = document.getElementById('carouselViewport');
+        const dotsContainer = document.getElementById('carouselDots');
+        if (!viewport || !dotsContainer) return;
+
+        slideImages.forEach((src, i) => {
+            const slide = document.createElement('div');
+            slide.className = 'demo-carousel-slide';
+            slide.dataset.index = i;
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Demo ${i + 1}`;
+            img.loading = 'lazy';
+            slide.appendChild(img);
+            slide.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (i !== carouselIndex) goToSlide(i);
+            });
+            viewport.appendChild(slide);
+
+            const dot = document.createElement('span');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(i); });
+            dotsContainer.appendChild(dot);
+        });
+
+        updateCoverflow();
+    })();
+
+    function updateCoverflow() {
+        const slides = document.querySelectorAll('.demo-carousel-slide');
+        slides.forEach((slide, i) => {
+            slide.className = 'demo-carousel-slide';
+            const diff = i - carouselIndex;
+            if (diff === 0) slide.classList.add('active');
+            else if (diff === -1 || (carouselIndex === 0 && i === totalSlides - 1)) slide.classList.add(diff === -1 ? 'pos-left' : 'pos-left');
+            else if (diff === 1 || (carouselIndex === totalSlides - 1 && i === 0)) slide.classList.add(diff === 1 ? 'pos-right' : 'pos-right');
+            else if (diff === -2 || (carouselIndex <= 1 && i === totalSlides - 2 + carouselIndex)) slide.classList.add('pos-far-left');
+            else if (diff === 2 || (carouselIndex >= totalSlides - 2 && i === carouselIndex - totalSlides + 2)) slide.classList.add('pos-far-right');
+        });
+
+        // Simple position assignment without cyclic wrapping edge cases
+        slides.forEach((slide) => {
+            const i = parseInt(slide.dataset.index);
+            const diff = i - carouselIndex;
+            slide.className = 'demo-carousel-slide';
+            if (diff === 0) slide.classList.add('active');
+            else if (diff === -1) slide.classList.add('pos-left');
+            else if (diff === 1) slide.classList.add('pos-right');
+            else if (diff === -2) slide.classList.add('pos-far-left');
+            else if (diff === 2) slide.classList.add('pos-far-right');
+            // else: remains hidden (opacity 0, pointer-events none)
+        });
+
+        document.getElementById('carouselCurrent').textContent = carouselIndex + 1;
+        document.querySelectorAll('#carouselDots span').forEach((dot, i) => {
+            dot.classList.toggle('active', i === carouselIndex);
+        });
+    }
+
+    function goToSlide(index) {
+        carouselIndex = Math.max(0, Math.min(totalSlides - 1, index));
+        updateCoverflow();
+    }
+
+    function moveCarousel(dir) {
+        let next = carouselIndex + dir;
+        if (next < 0) next = totalSlides - 1;
+        if (next >= totalSlides) next = 0;
+        goToSlide(next);
+    }
+
+    // Keyboard navigation when carousel is visible
+    document.addEventListener('keydown', (e) => {
+        const carousel = document.getElementById('demoCarousel');
+        if (!carousel || !carousel.closest('.expanded')) return;
+        if (e.key === 'ArrowLeft') { moveCarousel(-1); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { moveCarousel(1); e.preventDefault(); }
+    });
+
+    // Touch/swipe support
+    (function initSwipe() {
+        const carousel = document.getElementById('demoCarousel');
+        if (!carousel) return;
+        let startX = 0, diffX = 0;
+        carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchmove', (e) => { diffX = e.touches[0].clientX - startX; }, { passive: true });
+        carousel.addEventListener('touchend', () => {
+            if (Math.abs(diffX) > 50) {
+                moveCarousel(diffX > 0 ? -1 : 1);
+            }
+            diffX = 0;
+        });
+    })();
 </script>
 </body>
 </html>
