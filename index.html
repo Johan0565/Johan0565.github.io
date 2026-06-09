@@ -618,30 +618,45 @@
 
         const url = `https://github.com/users/Johan0565/contributions?from=${year}-01-01&to=${year}-12-31`;
         
-        const proxy1 = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
-        const proxy2 = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+        const proxies = [
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+            `https://corsproxy.io/?${encodeURIComponent(url)}`,
+            `https://corsproxy.org/?url=${encodeURIComponent(url)}`
+        ];
 
         async function fetchGraph(proxyUrl) {
-            const response = await fetch(proxyUrl);
-            if (!response.ok) throw new Error('Proxy HTTP status error');
-            const html = await response.text(); 
-            
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const calendarGraph = doc.querySelector('.js-calendar-graph');
-            
-            if (!calendarGraph) throw new Error('Graph element not found');
-            return calendarGraph;
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 6000);
+            try {
+                const response = await fetch(proxyUrl, { signal: controller.signal });
+                clearTimeout(timeout);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const html = await response.text(); 
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const calendarGraph = doc.querySelector('.js-calendar-graph');
+                
+                if (!calendarGraph) throw new Error('Graph element not found');
+                return calendarGraph;
+            } catch (e) {
+                clearTimeout(timeout);
+                throw e;
+            }
         }
 
         try {
-            let calendarGraph;
-            try {
-                calendarGraph = await fetchGraph(proxy1);
-            } catch (e) {
-                console.log("Первый прокси недоступен, пробуем резервный...");
-                calendarGraph = await fetchGraph(proxy2);
+            let calendarGraph = null;
+            for (let i = 0; i < proxies.length; i++) {
+                try {
+                    calendarGraph = await fetchGraph(proxies[i]);
+                    break;
+                } catch (e) {
+                    console.log(`Прокси ${i + 1} недоступен: ${e.message}, пробуем следующий...`);
+                }
             }
+            if (!calendarGraph) throw new Error('All proxies failed');
 
             container.innerHTML = '';
             container.appendChild(calendarGraph);
@@ -654,7 +669,10 @@
             });
         } catch (error) {
             console.error("Ошибка парсинга GitHub: ", error);
-            container.innerHTML = '<p style="padding-top: 50px; color: #ef4444;">Не удалось загрузить график. Прокси-серверы временно недоступны (возможно ограничение сети). Попробуйте обновить страницу.</p>';;
+            const errMsg = currentLang === 'ru'
+                ? 'Не удалось загрузить график. Прокси-серверы временно недоступны. <br><a href="https://github.com/Johan0565" target="_blank" style="color: var(--accent-orange); font-weight: 600;">Открыть профиль GitHub →</a>'
+                : 'Could not load the graph. Proxy servers are temporarily unavailable. <br><a href="https://github.com/Johan0565" target="_blank" style="color: var(--accent-orange); font-weight: 600;">Open GitHub profile →</a>';
+            container.innerHTML = `<p style="padding-top: 50px; color: #ef4444;">${errMsg}</p>`;
         }
     }
 
