@@ -409,19 +409,22 @@
             opacity: 1; pointer-events: auto;
         }
         .pdf-modal {
-            width: 90%; max-width: 720px; max-height: 80vh;
-            padding: 36px 32px 28px;
-            border-radius: 24px;
-            overflow-y: auto;
+            width: 90%; max-width: 720px;
+            padding: 30px;
             transform: translateY(30px) scale(0.96);
             transition: transform 0.4s cubic-bezier(.4,0,.2,1);
             position: relative;
+        }
+        .pdf-modal-content {
+            max-height: 70vh;
+            overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(249,115,22,0.35) transparent;
+            padding-right: 10px;
         }
-        .pdf-modal::-webkit-scrollbar { width: 6px; }
-        .pdf-modal::-webkit-scrollbar-track { background: transparent; }
-        .pdf-modal::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.35); border-radius: 3px; }
+        .pdf-modal-content::-webkit-scrollbar { width: 6px; }
+        .pdf-modal-content::-webkit-scrollbar-track { background: transparent; }
+        .pdf-modal-content::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.35); border-radius: 3px; }
         .pdf-modal-overlay.open .pdf-modal {
             transform: translateY(0) scale(1);
         }
@@ -527,7 +530,8 @@
             
             .certificates-grid { grid-template-columns: 1fr; }
 
-            .pdf-modal { width: 95%; padding: 24px 18px 20px; max-height: 85vh; }
+            .pdf-modal { width: 95%; padding: 20px; }
+            .pdf-modal-content { max-height: 75vh; }
             .pdf-item { padding: 12px 14px; }
             .pdf-item-icon { width: 38px; height: 38px; }
 
@@ -591,15 +595,7 @@
             <a href="https://www.postgresql.org" target="_blank" class="tech-tile glass-panel">
                 <i class="fas fa-database"></i><span>PostgreSQL</span><span class="tile-hint">postgresql.org →</span>
             </a>
-            <a href="https://dart.dev" target="_blank" class="tech-tile glass-panel">
-                <i class="fas fa-bullseye"></i><span>Dart</span><span class="tile-hint">dart.dev →</span>
-            </a>
-            <a href="https://flutter.dev" target="_blank" class="tech-tile glass-panel">
-                <i class="fas fa-mobile-alt"></i><span>Flutter</span><span class="tile-hint">flutter.dev →</span>
-            </a>
-            <a href="https://git-scm.com" target="_blank" class="tech-tile glass-panel">
-                <i class="fab fa-git-alt"></i><span>Git</span><span class="tile-hint">git-scm.com →</span>
-            </a>
+
             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="tech-tile glass-panel">
                 <i class="fab fa-html5"></i><span>HTML / CSS</span><span class="tile-hint">MDN →</span>
             </a>
@@ -612,12 +608,7 @@
             <a href="https://www.python.org" target="_blank" class="tech-tile glass-panel">
                 <i class="fab fa-python"></i><span>Python</span><span class="tile-hint">python.org →</span>
             </a>
-            <a href="https://www.php.net" target="_blank" class="tech-tile glass-panel">
-                <i class="fab fa-php"></i><span>PHP</span><span class="tile-hint">php.net →</span>
-            </a>
-            <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" class="tech-tile glass-panel">
-                <i class="fab fa-microsoft"></i><span>C#</span><span class="tile-hint">microsoft.com →</span>
-            </a>
+
         </div>
 
         <div class="gh-header-row">
@@ -643,6 +634,16 @@
                 <i class="fas fa-award cert-icon"></i>
                 <h4 style="color: var(--text-dark);" data-i18n="cert_stepik">Курс по mySQL</h4>
                 <p style="font-size: 13px; color: #475569; margin-top: 8px;" data-i18n="cert_stepik_desc">Посмотреть на Stepik</p>
+            </a>
+            <a href="https://stepik.org/cert/3293749?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);">Jira: управление потоком задач</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;">Посмотреть на Stepik</p>
+            </a>
+            <a href="https://stepik.org/cert/3291171?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);">Управление проектами. От теории к практике</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;">Посмотреть на Stepik</p>
             </a>
             <div class="glass-panel cert-card cert-card-other" onclick="openPdfModal()">
                 <i class="fas fa-folder-open cert-icon"></i>
@@ -671,14 +672,7 @@
                         <div class="demo-carousel-counter"><span id="carouselCurrent">1</span> / 14</div>
                     </div>
 
-                    <!-- PPTX Presentation -->
-                    <div class="pptx-embed-wrapper" onclick="event.stopPropagation()">
-                        <div class="pptx-embed-header">
-                            <i class="fas fa-file-powerpoint"></i>
-                            <span data-i18n="pptx_label">Презентация проекта</span>
-                        </div>
-                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fmagomedov.online%2Fstreet-retail-aggregator.pptx" allowfullscreen></iframe>
-                    </div>
+
 
                     <a href="https://github.com/Johan0565/SpringBootProject" target="_blank" class="gh-link" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub</a>
                 </div>
@@ -712,9 +706,11 @@
         <button class="pdf-modal-close" onclick="closePdfModal(event, true)" aria-label="Close">
             <i class="fas fa-times"></i>
         </button>
-        <h3><i class="fas fa-folder-open"></i> <span data-i18n="modal_title">Прочие документы</span></h3>
-        <p class="pdf-modal-subtitle" data-i18n="modal_subtitle">Нажмите, чтобы открыть документ</p>
-        <div class="pdf-list" id="pdfList"></div>
+        <div class="pdf-modal-content">
+            <h3><i class="fas fa-folder-open"></i> <span data-i18n="modal_title">Прочие документы</span></h3>
+            <p class="pdf-modal-subtitle" data-i18n="modal_subtitle">Нажмите, чтобы открыть документ</p>
+            <div class="pdf-list" id="pdfList"></div>
+        </div>
     </div>
 </div>
 
@@ -925,9 +921,8 @@
     }
     /* === PDF Modal Logic === */
     const allPDFs = [
-        { file: 'https___study-techtraining.mipt.ru_api_v1_files_8v5e6gWHZ5bHF7YpE.pdf', nameRu: 'Сертификат МФТИ — Tech Training', nameEn: 'MIPT Tech Training Certificate' }
-        // Добавляйте новые PDF сюда:
-        // { file: 'filename.pdf', nameRu: 'Название RU', nameEn: 'Name EN' }
+        { file: 'https___study-techtraining.mipt.ru_api_v1_files_8v5e6gWHZ5bHF7YpE.pdf', nameRu: 'Сертификат МФТИ — Tech Training', nameEn: 'MIPT Tech Training Certificate' },
+        { file: '1_nominatsiya_2_mesto_2_komanda.pdf', nameRu: '1 номинация 2 место 2 команда', nameEn: '1st nomination 2nd place 2nd team' }
     ];
 
     function renderPdfList() {
