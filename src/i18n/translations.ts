@@ -69,8 +69,16 @@ export const translations = {
       certOther: 'Прочее',
       certOtherDesc: 'Дополнительные документы',
       certOtherModalTitle: 'Дополнительные документы',
-      certOtherDiplom: 'ДИПЛОМ ЗА 2 МЕСТО В МЕЖДУНАРОДНОМ КЕЙС-ЧЕМПИОНАТЕ «БЕЗОПАСНОСТЬ В ЦИФРОВОМ МИРЕ»',
-      certOtherCertificate: 'СЕРТИФИКАТ программы «Тренинги предпринимательских компетенций»'
+      certOtherCertificate: 'СЕРТИФИКАТ программы «Тренинги предпринимательских компетенций»',
+      stepikStatsTitle: 'STEPIK СТАТИСТИКА',
+      stepikGraphTitle: 'Stepik Activity',
+      stepikGraphDesc: 'График моей активности на платформе Stepik за последнее время.',
+      stepikProfileStatsTitle: 'Stepik Профиль',
+      stepikProfileStatsDesc: 'Мои общие знания и репутация на платформе.',
+      stepikKnowledge: 'Знания',
+      stepikReputation: 'Репутация',
+      loadingStepik: 'Загрузка данных Stepik...',
+      stepikError: 'Не удалось загрузить данные Stepik.'
     },
     uses: {
       title: 'Инструменты',
@@ -185,8 +193,16 @@ export const translations = {
       certOther: 'Other',
       certOtherDesc: 'Additional documents',
       certOtherModalTitle: 'Additional Documents',
-      certOtherDiplom: 'DIPLOMA FOR 2ND PLACE IN THE INTERNATIONAL CASE CHAMPIONSHIP "SECURITY IN THE DIGITAL WORLD"',
-      certOtherCertificate: 'CERTIFICATE of the program "Entrepreneurial Competence Trainings"'
+      certOtherCertificate: 'CERTIFICATE of the program "Entrepreneurial Competence Trainings"',
+      stepikStatsTitle: 'STEPIK STATS',
+      stepikGraphTitle: 'Stepik Activity',
+      stepikGraphDesc: 'My activity graph (solved steps) on Stepik over the last year.',
+      stepikProfileStatsTitle: 'Stepik Profile',
+      stepikProfileStatsDesc: 'My total knowledge and reputation on the platform.',
+      stepikKnowledge: 'Knowledge',
+      stepikReputation: 'Reputation',
+      loadingStepik: 'Loading Stepik data...',
+      stepikError: 'Failed to load Stepik data.'
     },
     uses: {
       title: 'Uses',

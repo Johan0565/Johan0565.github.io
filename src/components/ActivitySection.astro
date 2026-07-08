@@ -24,10 +24,10 @@ const { activity, nav } = tr;
 
     <!-- GitHub Activity -->
     <div class="mb-12 md:mb-16">
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-6">
         
         <!-- Graph Card -->
-        <div class="liquid-glass-card p-6 md:p-8 flex flex-col h-full">
+        <div class="liquid-glass-card p-6 md:p-8 flex flex-col h-full w-full">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
             <div class="flex items-start gap-4">
               <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">📊</span>
@@ -53,7 +53,7 @@ const { activity, nav } = tr;
         </div>
 
         <!-- Streak Card -->
-        <div class="liquid-glass-card p-6 md:p-8 flex flex-col h-full">
+        <div class="liquid-glass-card p-6 md:p-8 flex flex-col h-full w-full">
           <div class="flex items-start gap-4 mb-4">
             <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">🔥</span>
             <div>
@@ -74,6 +74,45 @@ const { activity, nav } = tr;
               class="max-w-full h-auto scale-[1.15] transform origin-center dark:invert-[0.8] dark:hue-rotate-180 transition-filter duration-300"
               referrerpolicy="no-referrer"
             >
+          </div>
+        </div>
+
+        <!-- Stepik Combined Card -->
+        <div class="liquid-glass-card p-6 md:p-8 flex flex-col lg:flex-row gap-6 h-full w-full">
+          <!-- Left: Heatmap -->
+          <div class="flex-1 flex flex-col min-w-0">
+            <div class="flex items-start gap-4 mb-4">
+              <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">📈</span>
+              <div>
+                <h3 class="text-badge text-primary mb-3">Stepik</h3>
+                <p class="text-lg font-display font-semibold text-foreground mb-2">{activity.stepikGraphTitle}</p>
+                <p class="text-sm text-muted leading-relaxed">{activity.stepikGraphDesc}</p>
+              </div>
+            </div>
+            
+            <div class="mt-4 flex-1 min-h-[180px] flex items-center justify-start overflow-x-auto relative z-10" id="stepik-target">
+              <p class="text-muted flex items-center gap-3" id="stepik-loading">
+                <span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                {activity.loadingStepik}
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Stats -->
+          <div class="lg:w-64 shrink-0 flex flex-col justify-center gap-6 border-t lg:border-t-0 lg:border-l border-edge pt-6 lg:pt-0 lg:pl-8">
+            <div class="flex flex-col gap-2 group">
+              <div class="text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-primary transition-colors duration-300" id="stepik-knowledge">
+                --
+              </div>
+              <div class="text-sm font-medium text-muted uppercase tracking-wider">{activity.stepikKnowledge}</div>
+            </div>
+            
+            <div class="flex flex-col gap-2 group">
+              <div class="text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-primary transition-colors duration-300" id="stepik-streak">
+                --
+              </div>
+              <div class="text-sm font-medium text-muted uppercase tracking-wider">{locale === 'ru' ? 'Текущий Стрик' : 'Current Streak'}</div>
+            </div>
           </div>
         </div>
 
@@ -338,6 +377,121 @@ const { activity, nav } = tr;
               }
           });
       }
+
+      // Stepik API Logic
+      async function fetchWithProxies(targetUrl) {
+        const proxies = [
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+          `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`,
+          `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
+          `https://corsproxy.org/?url=${encodeURIComponent(targetUrl)}`
+        ];
+        
+        for (let proxy of proxies) {
+          try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 6000);
+            const res = await fetch(proxy, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (res.ok) {
+              const data = await res.json();
+              return data;
+            }
+          } catch (e) {
+            console.log(`Stepik proxy failed, trying next...`);
+          }
+        }
+        throw new Error('All Stepik proxies failed');
+      }
+
+      async function fetchStepikData() {
+        try {
+          // Fetch user stats
+          const userData = await fetchWithProxies('https://stepik.org/api/users/611926268');
+          if (userData && userData.users && userData.users.length > 0) {
+            document.getElementById('stepik-knowledge').textContent = userData.users[0].knowledge || 0;
+          }
+
+          // Delay to prevent free CORS proxies (like corsproxy.io) from rate-limiting the second request
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
+          // Fetch user activities (heatmap)
+          const activityData = await fetchWithProxies('https://stepik.org/api/user-activities/611926268');
+          if (activityData && activityData['user-activities'] && activityData['user-activities'].length > 0) {
+            const pins = activityData['user-activities'][0].pins; // 365 elements
+            renderStepikGraph(pins);
+            
+            // Calculate streak
+            // pins array: usually pins[364] is today. But if the zeroes are at the end, 
+            // Stepik might return pins[0] as today, or the user hasn't been active for months.
+            // Let's find the current streak by counting consecutive non-zeroes from the end of the active period.
+            // Actually, let's just find the max streak if current streak is 0, or just calculate current streak properly.
+            // Let's assume pins[364] is today (standard for 365-day arrays).
+            let currentStreak = 0;
+            // Let's check if the array is reversed (if recent days are at the beginning).
+            // Usually, pins[364] is today.
+            let isReversed = false;
+            // A simple heuristic: find the longest streak just to be safe and show it.
+            let tempStreak = 0;
+            let maxStreak = 0;
+            for (let i = 0; i < pins.length; i++) {
+                if (pins[i] > 0) {
+                    tempStreak++;
+                    if (tempStreak > maxStreak) maxStreak = tempStreak;
+                } else {
+                    tempStreak = 0;
+                }
+            }
+            
+            // For current streak, let's just count backwards from 364
+            let curStreak = 0;
+            for (let i = 364; i >= 0; i--) {
+                if (pins[i] > 0) curStreak++;
+                else if (curStreak > 0) break; // broke the streak
+                // if we hit 0 and haven't started a streak, we check if i == 364 or 363 (maybe today is 0 but yesterday was active)
+                else if (i < 363) break; 
+            }
+            // If the user's pins are at the beginning, we fallback to maxStreak or another calculation
+            let displayStreak = curStreak > 0 ? curStreak : maxStreak;
+            
+            document.getElementById('stepik-streak').textContent = displayStreak;
+          }
+        } catch (err) {
+          console.error(err);
+          const target = document.getElementById('stepik-target');
+          if (target) {
+            target.innerHTML = `<p class="text-sm text-red-500">${currentLang === 'ru' ? 'Не удалось загрузить данные Stepik.' : 'Failed to load Stepik data.'}</p>`;
+          }
+        }
+      }
+
+      function renderStepikGraph(pins) {
+        const target = document.getElementById('stepik-target');
+        if (!target) return;
+        
+        target.innerHTML = '';
+        const graphContainer = document.createElement('div');
+        graphContainer.className = 'stepik-calendar-graph';
+        
+        // Render 365 days
+        pins.forEach(pin => {
+          let level = 0;
+          if (pin >= 10) level = 4;
+          else if (pin >= 6) level = 3;
+          else if (pin >= 3) level = 2;
+          else if (pin >= 1) level = 1;
+          
+          const day = document.createElement('div');
+          day.className = 'stepik-day';
+          day.setAttribute('data-level', level.toString());
+          day.title = `${pin} steps solved`;
+          graphContainer.appendChild(day);
+        });
+        
+        target.appendChild(graphContainer);
+      }
+      
+      fetchStepikData();
   });
 </script>
 
@@ -371,4 +525,23 @@ const { activity, nav } = tr;
   :global(.js-calendar-graph td.ContributionCalendar-day[data-level="2"]) { background-color: var(--color-calendar-graph-day-L2-bg); }
   :global(.js-calendar-graph td.ContributionCalendar-day[data-level="3"]) { background-color: var(--color-calendar-graph-day-L3-bg); }
   :global(.js-calendar-graph td.ContributionCalendar-day[data-level="4"]) { background-color: var(--color-calendar-graph-day-L4-bg); }
+  
+  :global(.stepik-calendar-graph) {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    gap: 4px;
+    padding: 10px;
+  }
+  :global(.stepik-day) {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid var(--edge);
+    background-color: rgba(128, 128, 128, 0.15);
+  }
+  :global(.stepik-day[data-level="1"]) { background-color: rgba(249,115,22,0.3); border-color: rgba(249,115,22,0.3); }
+  :global(.stepik-day[data-level="2"]) { background-color: rgba(249,115,22,0.5); border-color: rgba(249,115,22,0.5); }
+  :global(.stepik-day[data-level="3"]) { background-color: rgba(249,115,22,0.7); border-color: rgba(249,115,22,0.7); }
+  :global(.stepik-day[data-level="4"]) { background-color: rgba(249,115,22,1); border-color: rgba(249,115,22,1); }
 </style>
