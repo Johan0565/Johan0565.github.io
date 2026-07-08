@@ -1,0 +1,100 @@
+---
+import type { Locale } from '../i18n/translations';
+import { t, getAlternateUrl } from '../i18n/utils';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Toast from '../components/Toast.astro';
+import ParticlesBackground from '../components/ParticlesBackground.astro';
+
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+const htmlLang = locale === 'ru' ? 'ru' : 'en';
+const alternateLang = locale === 'ru' ? 'en' : 'ru';
+const alternateUrl = getAlternateUrl(Astro.url.pathname, locale);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const alternateFullUrl = new URL(alternateUrl, Astro.site);
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Theme detection: runs before first paint to prevent FOUC -->
+    <script is:inline>
+      (function() {
+        var d = document.documentElement;
+        d.classList.add('no-transition');
+        var stored = localStorage.getItem('theme');
+        var theme = stored || 'light';
+        d.setAttribute('data-theme', theme);
+        d.style.colorScheme = theme;
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            d.classList.remove('no-transition');
+          });
+        });
+      })();
+    </script>
+
+    <!-- SEO -->
+    <title>{tr.meta.title}</title>
+    <meta name="description" content={tr.meta.description} />
+    <link rel="canonical" href={canonicalUrl.href} />
+
+    <!-- i18n alternates -->
+    <link rel="alternate" hreflang={htmlLang} href={canonicalUrl.href} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateFullUrl.href} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={tr.meta.title} />
+    <meta property="og:description" content={tr.meta.description} />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta property="og:locale" content={locale === 'ru' ? 'ru_RU' : 'en_US'} />
+    <meta property="og:site_name" content="Magomedov" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={tr.meta.title} />
+    <meta name="twitter:description" content={tr.meta.description} />
+    <meta name="twitter:site" content="@MMagomedovR" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Fonts: Google Fonts (Golos Text + Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+  </head>
+  <body class="relative">
+    <ParticlesBackground />
+    <Header locale={locale} />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+    <Toast />
+  </body>
+</html>

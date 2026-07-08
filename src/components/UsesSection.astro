@@ -1,0 +1,86 @@
+---
+import type { Locale } from '../i18n/translations';
+import { t } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+const { management, software, hardware } = tr.uses;
+
+/* Category icons as SVG strings for consistent rendering */
+const categoryIcons = {
+  management: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  software: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  hardware: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+};
+---
+
+<section class="relative py-10 md:py-16" id="uses">
+  <!-- Section divider -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-24 rounded-full bg-gradient-to-r from-primary/0 via-primary to-primary/0"></div>
+
+  <div class="section-container">
+    <!-- Section heading -->
+    <h2 class="text-h2 text-foreground mb-12 md:mb-16 flex flex-col items-start gap-3">
+      <span class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
+        {tr.uses.title}
+      </span>
+      <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
+    </h2>
+
+    <!-- 3-column grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Management -->
+      <div class="liquid-glass-card p-6 md:p-8 flex flex-col">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary" set:html={categoryIcons.management}></div>
+          <h3 class="text-h3 text-foreground text-lg">{management.label}</h3>
+        </div>
+        <ul class="space-y-4 flex-1">
+          {management.items.map((item) => (
+            <li class="flex flex-col">
+              <span class="text-sm font-semibold text-foreground">{item.name}</span>
+              <span class="text-xs text-muted mt-0.5">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Software -->
+      <div class="liquid-glass-card p-6 md:p-8 flex flex-col">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary" set:html={categoryIcons.software}></div>
+          <h3 class="text-h3 text-foreground text-lg">{software.label}</h3>
+        </div>
+        <ul class="space-y-4 flex-1">
+          {software.items.map((item) => (
+            <li class="flex flex-col">
+              <span class="text-sm font-semibold text-foreground">{item.name}</span>
+              <span class="text-xs text-muted mt-0.5">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Hardware -->
+      <div class="liquid-glass-card p-6 md:p-8 flex flex-col">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary" set:html={categoryIcons.hardware}></div>
+          <h3 class="text-h3 text-foreground text-lg">{hardware.label}</h3>
+        </div>
+        <ul class="space-y-4 flex-1">
+          {hardware.items.map((item) => (
+            <li class="flex flex-col">
+              <span class="text-sm font-semibold text-foreground">{item.name}</span>
+              <span class="text-xs text-muted mt-0.5">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

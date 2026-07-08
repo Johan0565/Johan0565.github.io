@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Магомедов Магомед Расулович — Официальный сайт и портфолио</title>
+    <link rel="icon" type="image/png" href="../public/images/favicon.png">
+    <meta name="description" content="Официальный сайт и портфолио разработчика Магомедова Магомеда Расуловича (Johan0565). Java, Spring Boot, Dart, SQL. Проекты, навыки и профессиональный опыт.">
+    <meta name="keywords" content="Магомедов Магомед Расулович, Java разработчик, портфолио, программист, Spring Boot, Johan0565, Москва">
+    <meta name="author" content="Магомедов Магомед Расулович">
+
+    <meta property="og:title" content="Магомедов Магомед Расулович — Портфолио">
+    <meta property="og:description" content="Официальный сайт Java Backend разработчика. Проекты, навыки и контакты.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://magomedov.online/">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Магомедов Магомед Расулович",
+      "alternateName": ["Magomedov Magomed Rasulovich", "Johan0565"],
+      "url": "https://magomedov.online",
+      "jobTitle": "Java Backend Developer",
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Москва"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Московский Политехнический Университет"
+      },
+      "sameAs": [
+        "https://github.com/Johan0565",
+        "https://t.me/Magomedov2026"
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container">
+    <header>
+        <div class="logo-text"><strong>Johan0565</strong></div>
+        <div>
+            <span class="nav-btns">
+                <a href="index.html" class="nav-btn" data-i18n="nav_about">Обо мне</a>
+                <a href="portfolio.html" class="nav-btn active" data-i18n="nav_portfolio">Портфолио</a>
+            </span>
+            <div class="lang-switch" onclick="toggleLang()">
+                <span class="lang-opt active" id="lang-ru">RU</span>
+                <span class="lang-opt" id="lang-en">EN</span>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <section id="portfolio" class="section active">
+        <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="portfolio_title">Мои проекты</h2>
+        <div class="portfolio-grid">
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
+                <h3><i class="fas fa-city" style="color: var(--accent-orange);"></i> <span data-i18n="proj1_title">Street Retail Aggregator</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Java, Spring Boot, Spring Security (JWT), PostgreSQL, Yandex MapKit</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj1_desc">КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.</p>
+
+                    
+                    <div class="demo-carousel" id="demoCarousel" onclick="event.stopPropagation()">
+                        <button class="demo-carousel-btn prev" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="demo-carousel-btn next" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+                        <div class="demo-carousel-viewport" id="carouselViewport"></div>
+                        <div class="demo-carousel-dots" id="carouselDots"></div>
+                        <div class="demo-carousel-counter"><span id="carouselCurrent">1</span> / 14</div>
+                    </div>
+
+
+
+                    <a href="https://github.com/Johan0565/SpringBootProject" target="_blank" class="gh-link" onclick="event.stopPropagation()"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
+                <h3><i class="fas fa-hard-hat" style="color: var(--accent-orange);"></i> <span data-i18n="proj2_title">Aetas: Construction control system</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Dart, Flutter (Cross-platform), Offline-first, PDF Generation</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj2_desc">Кроссплатформенная экосистема стройконтроля. Позволяет ставить метки дефектов на 2D-чертежах, прикреплять фото и генерировать PDF-предписания по ГОСТ. Работает оффлайн с последующей умной синхронизацией.</p>
+                    <p style="margin-top: 12px; font-size: 12px; color: #ef4444; border-left: 2px solid #ef4444; padding-left: 10px; background: rgba(254,242,242,0.8); border-radius: 0 4px 4px 0;" data-i18n="proj2_license">🚫 Проприетарная лицензия (Закрытый исходный код). Исключительная интеллектуальная собственность автора.</p>
+                    <a href="https://github.com/Johan0565/AetasApp" target="_blank" class="gh-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card glass-panel" onclick="toggleProject(this, event)">
+                <h3><i class="fas fa-code-branch" style="color: var(--accent-orange);"></i> <span data-i18n="proj3_title">Учебные CRM и Pet-проекты</span></h3>
+                <div class="project-details">
+                    <p><strong data-i18n="stack">Стек:</strong> Java, C#, HTML/CSS/JS, Cisco</p>
+                    <p style="margin-top: 10px; line-height: 1.6;" data-i18n="proj3_desc">Коллекция учебных проектов, включая разработку CRM-систем (EsoftCrm), реализацию паттернов проектирования на Java, верстку маркетплейса и настройку сетей в Cisco Packet Tracer.</p>
+                    <a href="https://github.com/Johan0565?tab=repositories" target="_blank" class="gh-link"><i class="fab fa-github"></i> Все репозитории</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="pdf-modal-overlay" id="pdfModalOverlay" onclick="closePdfModal(event)">
+    <div class="pdf-modal glass-panel" onclick="event.stopPropagation()">
+        <button class="pdf-modal-close" onclick="closePdfModal(event, true)" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="pdf-modal-content">
+            <h3><i class="fas fa-folder-open"></i> <span data-i18n="modal_title">Прочие документы</span></h3>
+            <p class="pdf-modal-subtitle" data-i18n="modal_subtitle">Нажмите, чтобы открыть документ</p>
+            <div class="pdf-list" id="pdfList"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="toast-notification" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-text">Email скопирован!</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

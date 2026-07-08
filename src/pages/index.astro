@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import UsesSection from '../components/UsesSection.astro';
+
+const locale = 'ru' as const;
+---
+
+<BaseLayout locale={locale}>
+  <HeroSection locale={locale} />
+  <AboutSection locale={locale} />
+  <UsesSection locale={locale} />
+</BaseLayout>

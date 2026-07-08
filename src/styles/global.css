@@ -1,0 +1,361 @@
+@import "tailwindcss";
+
+/* ============================================
+   THEME VARIABLES
+   ============================================ */
+:root {
+  /* Background */
+  --theme-bg: #000000;
+  --theme-bg-subtle: #0a0a0a;
+
+  /* Text */
+  --theme-text: #ffffff;
+  --theme-text-muted: #94a3b8;
+  --theme-text-subtle: rgba(255, 255, 255, 0.6);
+  --theme-text-dim: rgba(255, 255, 255, 0.3);
+
+  /* Surfaces / Overlays */
+  --theme-overlay: rgba(255, 255, 255, 0.04);
+  --theme-overlay-hover: rgba(255, 255, 255, 0.08);
+  --theme-overlay-active: rgba(255, 255, 255, 0.1);
+
+  /* Borders */
+  --theme-border: rgba(255, 255, 255, 0.1);
+  --theme-border-dim: rgba(255, 255, 255, 0.08);
+  --theme-separator: rgba(255, 255, 255, 0.15);
+
+  /* Glass */
+  --glass-fill: rgba(255, 255, 255, 0.03);
+  --glass-fill-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.2);
+  --glass-highlight: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  --glass-inset-top: rgba(255, 255, 255, 0.25);
+  --glass-inset-bottom: rgba(255, 255, 255, 0.05);
+  --glass-inset-top-hover: rgba(255, 255, 255, 0.4);
+
+  /* Shadows */
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 20px 50px rgba(0, 0, 0, 0.7);
+  --shadow-neumorphic: 0 0 8px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.08), inset 3px 3px 0.5px -3.5px rgba(255,255,255,0.09), inset -3px -3px 0.5px -3.5px rgba(255,255,255,0.85), inset 1px 1px 1px -0.5px rgba(255,255,255,0.6), inset -1px -1px 1px -0.5px rgba(255,255,255,0.6), inset 0 0 6px 6px rgba(255,255,255,0.12), inset 0 0 2px 2px rgba(255,255,255,0.06), 0 0 12px rgba(0,0,0,0.15);
+
+  /* Orange glow (constant) */
+  --orange-glow: rgba(249, 115, 22, 0.3);
+
+  /* Vignette */
+  --vignette-center: #0a0a0a;
+  --vignette-edge: #000000;
+}
+
+[data-theme="light"] {
+  --theme-bg: #ffffff;
+  --theme-bg-subtle: #f8f9fa;
+
+  --theme-text: #0f172a;
+  --theme-text-muted: #64748b;
+  --theme-text-subtle: rgba(0, 0, 0, 0.5);
+  --theme-text-dim: rgba(0, 0, 0, 0.2);
+
+  --theme-overlay: rgba(0, 0, 0, 0.03);
+  --theme-overlay-hover: rgba(0, 0, 0, 0.05);
+  --theme-overlay-active: rgba(0, 0, 0, 0.07);
+
+  --theme-border: rgba(0, 0, 0, 0.08);
+  --theme-border-dim: rgba(0, 0, 0, 0.05);
+  --theme-separator: rgba(0, 0, 0, 0.1);
+
+  --glass-fill: rgba(255, 255, 255, 0.15);
+  --glass-fill-hover: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-border-hover: rgba(255, 255, 255, 0.8);
+  --glass-highlight: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  --glass-inset-bottom: rgba(0, 0, 0, 0.02);
+  --glass-inset-top-hover: rgba(255, 255, 255, 1);
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 36px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-neumorphic: 0 0 6px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.08), inset 3px 3px 0.5px -3px rgba(0,0,0,0.9), inset -3px -3px 0.5px -3px rgba(0,0,0,0.85), inset 1px 1px 1px -0.5px rgba(0,0,0,0.6), inset -1px -1px 1px -0.5px rgba(0,0,0,0.6), inset 0 0 6px 6px rgba(0,0,0,0.12), inset 0 0 2px 2px rgba(0,0,0,0.06), 0 0 12px rgba(255,255,255,0.15);
+
+  --vignette-center: #ffffff;
+  --vignette-edge: #ffffff;
+}
+
+/* Prevent flash of wrong theme on load */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* ============================================
+   DESIGN SYSTEM TOKENS (Tailwind v4 @theme)
+   ============================================ */
+@theme {
+  /* Typography */
+  --font-display: "Golos Text", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Theme-aware text */
+  --color-foreground: var(--theme-text);
+  --color-muted: var(--theme-text-muted);
+  --color-subtle: var(--theme-text-subtle);
+  --color-dim: var(--theme-text-dim);
+
+  /* Theme-aware surfaces */
+  --color-surface: var(--theme-bg);
+  --color-surface-alt: var(--theme-bg-subtle);
+  --color-overlay: var(--theme-overlay);
+  --color-overlay-hover: var(--theme-overlay-hover);
+  --color-overlay-active: var(--theme-overlay-active);
+
+  /* Theme-aware borders */
+  --color-edge: var(--theme-border);
+  --color-edge-dim: var(--theme-border-dim);
+  --color-sep: var(--theme-separator);
+
+  /* Static accent colors */
+  --color-primary: #f97316;
+  --color-primary-hover: #ff822e;
+}
+
+/* ============================================
+   BASE LAYER
+   ============================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--theme-bg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E");
+    color: var(--theme-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(249, 115, 22, 0.3);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--theme-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--theme-border);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(249, 115, 22, 0.5);
+  }
+
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ============================================
+   COMPONENT LAYER
+   ============================================ */
+@layer components {
+  /* Liquid Glass Card */
+  .liquid-glass-card {
+    background: var(--glass-fill);
+    background-image: var(--glass-highlight);
+    backdrop-filter: blur(1px) saturate(200%);
+    -webkit-backdrop-filter:  blur(1px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      var(--shadow-neumorphic),
+      var(--shadow-card);
+    border-radius: 24px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .liquid-glass-card:hover {
+    background: var(--glass-fill-hover);
+    background-image: var(--glass-highlight);
+    border-color: var(--glass-border-hover);
+    box-shadow:
+      var(--shadow-neumorphic),
+      var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  /* Primary CTA Button */
+  .btn-primary-orange {
+    background: #f97316;
+    color: #000000;
+    font-family: var(--font-display);
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 25px var(--orange-glow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary-orange:hover,
+  .btn-primary-orange:active {
+    background: #ff822e;
+    box-shadow: 0 0 40px rgba(249, 115, 22, 0.7), 0 0 15px #ffffff;
+    transform: scale(1.03);
+  }
+
+  /* Section Container */
+  .section-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* Social Button */
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-overlay);
+    box-shadow: var(--shadow-neumorphic);
+    color: var(--theme-text-muted);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .social-btn:hover {
+    color: var(--color-primary);
+    border-color: rgba(249, 115, 22, 0.4);
+    background: rgba(249, 115, 22, 0.08);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .social-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  /* Badge / Chip */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-overlay);
+    box-shadow: var(--shadow-neumorphic);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: var(--theme-text-muted);
+    white-space: nowrap;
+  }
+
+  .badge-orange {
+    border-color: rgba(249, 115, 22, 0.3);
+    background: rgba(249, 115, 22, 0.08);
+    color: var(--color-primary);
+  }
+
+  /* Theme toggle icon visibility */
+  .theme-icon--moon {
+    display: none;
+  }
+
+  [data-theme="light"] .theme-icon--sun {
+    display: none;
+  }
+
+  [data-theme="light"] .theme-icon--moon {
+    display: block;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITIES
+   ============================================ */
+@layer utilities {
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.75rem, 6vw + 1rem, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .text-h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 4vw + 1rem, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .text-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 3.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .text-h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2vw + 0.5rem, 2rem);
+    line-height: 1.25;
+    letter-spacing: 0em;
+  }
+
+  .text-body-lg {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(1.0625rem, 0.5vw + 0.9rem, 1.25rem);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .text-badge {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}

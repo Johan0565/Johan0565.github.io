@@ -1,0 +1,42 @@
+---
+import type { Locale } from '../i18n/translations';
+import { getAlternateUrl } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const isRu = locale === 'ru';
+const alternateUrl = getAlternateUrl(Astro.url.pathname, locale);
+---
+
+<nav class="flex items-center gap-1" aria-label="Language switcher">
+  <a
+    href={isRu ? '#' : alternateUrl}
+    class:list={[
+      'px-2 py-1 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200',
+      isRu
+        ? 'text-foreground bg-overlay-active shadow-[var(--shadow-neumorphic)]'
+        : 'text-muted hover:text-primary',
+    ]}
+    aria-current={isRu ? 'page' : undefined}
+    aria-label="Русский"
+  >
+    RU
+  </a>
+  <span class="text-dim text-xs select-none">/</span>
+  <a
+    href={isRu ? alternateUrl : '#'}
+    class:list={[
+      'px-2 py-1 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200',
+      !isRu
+        ? 'text-foreground bg-overlay-active shadow-[var(--shadow-neumorphic)]'
+        : 'text-muted hover:text-primary',
+    ]}
+    aria-current={!isRu ? 'page' : undefined}
+    aria-label="English"
+  >
+    EN
+  </a>
+</nav>

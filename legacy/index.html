@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Магомедов Магомед Расулович — Официальный сайт и портфолио</title>
+    <link rel="icon" type="image/png" href="../public/images/favicon.png">
+    <meta name="description" content="Официальный сайт и портфолио разработчика Магомедова Магомеда Расуловича (Johan0565). Java, Spring Boot, Dart, SQL. Проекты, навыки и профессиональный опыт.">
+    <meta name="keywords" content="Магомедов Магомед Расулович, Java разработчик, портфолио, программист, Spring Boot, Johan0565, Москва">
+    <meta name="author" content="Магомедов Магомед Расулович">
+
+    <meta property="og:title" content="Магомедов Магомед Расулович — Портфолио">
+    <meta property="og:description" content="Официальный сайт Java Backend разработчика. Проекты, навыки и контакты.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://magomedov.online/">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Магомедов Магомед Расулович",
+      "alternateName": ["Magomedov Magomed Rasulovich", "Johan0565"],
+      "url": "https://magomedov.online",
+      "jobTitle": "Java Backend Developer",
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Москва"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Московский Политехнический Университет"
+      },
+      "sameAs": [
+        "https://github.com/Johan0565",
+        "https://t.me/Magomedov2026"
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container">
+    <header>
+        <div class="logo-text"><strong>Johan0565</strong></div>
+        <div>
+            <span class="nav-btns">
+                <a href="index.html" class="nav-btn active" data-i18n="nav_about">Обо мне</a>
+                <a href="portfolio.html" class="nav-btn" data-i18n="nav_portfolio">Портфолио</a>
+            </span>
+            <div class="lang-switch" onclick="toggleLang()">
+                <span class="lang-opt active" id="lang-ru">RU</span>
+                <span class="lang-opt" id="lang-en">EN</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section active">
+        <div class="profile-card glass-panel">
+            <img src="../public/images/Logo.jpg" alt="Logo" class="profile-logo">
+            <div class="profile-info">
+                <h1 data-i18n="name">Магомедов Магомед Расулович</h1>
+                <h3>@Johan0565</h3>
+                <div class="bio-text">
+                    <p>💻 <span data-i18n="bio_role">Java Backend Developer | Москва, 18 лет</span></p>
+                    <p>🎓 <span data-i18n="bio_uni">ВУЗ: Московский Политехнический Университет</span></p>
+                    <p>📚 <span data-i18n="bio_spec">Профиль: Прикладная информатика (Разработка и интеграция бизнес-приложений)</span></p>
+                    <p>⚙️ <span data-i18n="bio_focus">Стек и фокус: Java, Spring Boot, разработка систем-агрегаторов, интеграция КИС</span></p>
+                </div>
+                <div class="social-links">
+                    <a href="https://t.me/Magomedov2026" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                    <button onclick="copyEmail()"><i class="fas fa-envelope"></i> Email</button>
+                    <a href="https://github.com/Johan0565" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 20px; color: var(--text-dark);" data-i18n="skills_title">Технический стек</h2>
+        <div class="tech-stack-grid">
+            <a href="https://www.java.com" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-java"></i><span>Java</span><span class="tile-hint">java.com →</span>
+            </a>
+            <a href="https://spring.io/projects/spring-boot" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-leaf"></i><span>Spring Boot</span><span class="tile-hint">spring.io →</span>
+            </a>
+            <a href="https://www.postgresql.org" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-database"></i><span>PostgreSQL</span><span class="tile-hint">postgresql.org →</span>
+            </a>
+
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-html5"></i><span>HTML / CSS</span><span class="tile-hint">MDN →</span>
+            </a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-js-square"></i><span>JavaScript</span><span class="tile-hint">MDN →</span>
+            </a>
+            <a href="https://v8.1c.ru" target="_blank" class="tech-tile glass-panel">
+                <i class="fas fa-cogs"></i><span>1C</span><span class="tile-hint">1c.ru →</span>
+            </a>
+            <a href="https://www.python.org" target="_blank" class="tech-tile glass-panel">
+                <i class="fab fa-python"></i><span>Python</span><span class="tile-hint">python.org →</span>
+            </a>
+
+        </div>
+
+        <div class="gh-header-row">
+            <h2 data-i18n="github_activity">Активность GitHub</h2>
+            <div class="gh-years">
+                <button class="gh-year-btn active" data-year="2026" onclick="loadGitHubData(2026)">2026</button>
+                <button class="gh-year-btn" data-year="2025" onclick="loadGitHubData(2025)">2025</button>
+                <button class="gh-year-btn" data-year="2024" onclick="loadGitHubData(2024)">2024</button>
+            </div>
+        </div>
+
+        <div class="glass-panel gh-graph-container" id="gh-target">
+            <p style="padding-top: 50px; color: #64748b;" data-i18n="loading_git">Подключение к GitHub API...</p>
+        </div>
+
+        <div class="glass-panel streak-container">
+            <img src="https://github-readme-streak-stats.herokuapp.com/?user=Johan0565&theme=transparent&hide_border=true&ring=f97316&fire=f97316&currStreakLabel=f97316&sideNums=1e293b&currStreakNum=1e293b&sideLabels=1e293b&dates=64748b" alt="GitHub Streaks">
+        </div>
+
+        <h2 style="margin: 40px 0 20px; color: var(--text-dark);" data-i18n="certificates">Сертификаты</h2>
+        <div class="certificates-grid">
+            <a href="https://stepik.org/cert/2820543?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);" data-i18n="cert_stepik">Курс по mySQL</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;" data-i18n="cert_stepik_desc">Посмотреть на Stepik</p>
+            </a>
+            <a href="https://stepik.org/cert/3293749?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);">Jira: управление потоком задач</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;">Посмотреть на Stepik</p>
+            </a>
+            <a href="https://stepik.org/cert/3291171?lang=en" target="_blank" class="glass-panel cert-card">
+                <i class="fas fa-award cert-icon"></i>
+                <h4 style="color: var(--text-dark);">Управление проектами. От теории к практике</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;">Посмотреть на Stepik</p>
+            </a>
+            <div class="glass-panel cert-card cert-card-other" onclick="openPdfModal()">
+                <i class="fas fa-folder-open cert-icon"></i>
+                <h4 style="color: var(--text-dark);" data-i18n="cert_other">Прочее</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 8px;" data-i18n="cert_other_desc">Дополнительные документы</p>
+                <div class="dots"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </section>
+
+    
+</div>
+
+
+<div class="pdf-modal-overlay" id="pdfModalOverlay" onclick="closePdfModal(event)">
+    <div class="pdf-modal glass-panel" onclick="event.stopPropagation()">
+        <button class="pdf-modal-close" onclick="closePdfModal(event, true)" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="pdf-modal-content">
+            <h3><i class="fas fa-folder-open"></i> <span data-i18n="modal_title">Прочие документы</span></h3>
+            <p class="pdf-modal-subtitle" data-i18n="modal_subtitle">Нажмите, чтобы открыть документ</p>
+            <div class="pdf-list" id="pdfList"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="toast-notification" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-text">Email скопирован!</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+---
+/**
+ * Toast notification component.
+ * Listens for 'show-toast' CustomEvent and displays a brief notification.
+ * Usage: dispatch `new CustomEvent('show-toast', { detail: { message: '...' } })`
+ */
+---
+
+<div
+  id="toast-notification"
+  class="fixed top-6 md:top-auto md:bottom-8 left-1/2 z-50 pointer-events-none"
+  style="transform: translateX(-50%) translateY(-16px); opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;"
+  role="status"
+  aria-live="polite"
+>
+  <div class="flex items-center gap-3 px-5 py-3 rounded-2xl border border-primary/40 bg-[rgba(249,115,22,0.08)] backdrop-blur-xl shadow-[var(--shadow-neumorphic)]" style="-webkit-backdrop-filter: blur(24px);">
+    <svg class="w-5 h-5 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-message" class="text-sm font-medium text-foreground whitespace-nowrap"></span>
+  </div>
+</div>
+
+<script>
+  const toast = document.getElementById('toast-notification') as HTMLElement | null;
+  const toastMessage = document.getElementById('toast-message') as HTMLElement | null;
+  let hideTimeout: ReturnType<typeof setTimeout>;
+
+  function isMobile() {
+    return window.innerWidth < 768;
+  }
+
+  function getHiddenTransform() {
+    return isMobile()
+      ? 'translateX(-50%) translateY(-16px)'
+      : 'translateX(-50%) translateY(16px)';
+  }
+
+  document.addEventListener('show-toast', ((e: CustomEvent) => {
+    if (!toast || !toastMessage) return;
+
+    toastMessage.textContent = e.detail.message;
+
+    // Show
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+
+    // Auto-hide after 2.5s
+    clearTimeout(hideTimeout);
+    hideTimeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = getHiddenTransform();
+    }, 2500);
+  }) as EventListener);
+</script>
+

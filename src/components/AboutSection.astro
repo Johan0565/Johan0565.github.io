@@ -1,0 +1,94 @@
+---
+import type { Locale } from '../i18n/translations';
+import { t } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+const { education, currentActivity, competencies } = tr.about;
+---
+
+<section class="relative py-10 md:py-16" id="about">
+  <!-- Section divider -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-24 rounded-full bg-gradient-to-r from-primary/0 via-primary to-primary/0"></div>
+
+  <div class="section-container">
+    <!-- Section heading -->
+    <h2 class="text-h2 text-foreground mb-12 md:mb-16 flex flex-col items-start gap-3">
+      <span class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
+        {tr.about.title}
+      </span>
+      <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
+    </h2>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Education Card -->
+      <div class="liquid-glass-card p-6 md:p-8">
+        <div class="flex items-start gap-4">
+          <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">{education.icon}</span>
+          <div>
+            <h3 class="text-badge text-primary mb-3">{education.label}</h3>
+            <p class="text-lg font-display font-semibold text-foreground mb-2">{education.university}</p>
+            <p class="text-sm text-muted leading-relaxed">{education.program}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Activity Card -->
+      <div class="liquid-glass-card p-6 md:p-8">
+        <div class="flex items-start gap-4">
+          <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">{currentActivity.icon}</span>
+          <div>
+            <h3 class="text-badge text-primary mb-3">{currentActivity.label}</h3>
+            <p class="text-base text-subtle leading-relaxed">{currentActivity.description}</p>
+            <div class="mt-4 flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              <span class="text-xs text-green-400/80 font-medium">
+                {locale === 'ru' ? 'В процессе' : 'In progress'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Management Card -->
+      <div class="liquid-glass-card p-6 md:p-8">
+        <div class="flex items-start gap-4">
+          <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">{competencies.management.icon}</span>
+          <div>
+            <h3 class="text-badge text-primary mb-3">{competencies.management.label}</h3>
+            <p class="text-sm text-muted leading-relaxed">{competencies.management.description}</p>
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mt-4">
+              {['PMBOK 7', 'Agile', 'Scrum', 'Facilitation'].map((tag) => (
+                <span class="px-2.5 py-1 rounded-lg bg-primary/10 border border-primary/20 text-xs text-foreground/70 font-medium">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Background Card -->
+      <div class="liquid-glass-card p-6 md:p-8">
+        <div class="flex items-start gap-4">
+          <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">{competencies.technical.icon}</span>
+          <div>
+            <h3 class="text-badge text-primary mb-3">{competencies.technical.label}</h3>
+            <p class="text-sm text-muted leading-relaxed">{competencies.technical.description}</p>
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mt-4">
+              {['Java', 'Spring Boot', 'REST API', 'SQL'].map((tag) => (
+                <span class="px-2.5 py-1 rounded-lg bg-primary/10 border border-primary/20 text-xs text-foreground/70 font-medium">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
