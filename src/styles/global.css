@@ -313,7 +313,7 @@
   .text-display {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(2.75rem, 6vw + 1rem, 6.5rem);
+    font-size: clamp(2rem, 6vw + 1rem, 6.5rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
   }
@@ -321,7 +321,7 @@
   .text-h1 {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2.25rem, 4vw + 1rem, 4.5rem);
+    font-size: clamp(1.75rem, 4vw + 1rem, 4.5rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
@@ -329,7 +329,7 @@
   .text-h2 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.75rem, 3vw + 0.5rem, 3.25rem);
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 3.25rem);
     line-height: 1.15;
     letter-spacing: -0.01em;
   }
