@@ -86,6 +86,21 @@
   transition: none !important;
 }
 
+/* GitHub Streak Image Swapping */
+.gh-streak-light {
+  display: none !important;
+}
+.gh-streak-dark {
+  display: block !important;
+}
+
+[data-theme="light"] .gh-streak-light {
+  display: block !important;
+}
+[data-theme="light"] .gh-streak-dark {
+  display: none !important;
+}
+
 /* ============================================
    DESIGN SYSTEM TOKENS (Tailwind v4 @theme)
    ============================================ */
