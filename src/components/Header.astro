@@ -15,15 +15,6 @@ const homeUrl = locale === 'ru' ? '/' : '/en/';
 
 <header class="fixed z-40 left-1/2 w-auto max-w-[calc(100vw-32px)] header-position" id="site-header">
   <nav class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-2.5 rounded-2xl border border-edge bg-overlay backdrop-blur-2xl shadow-[var(--shadow-neumorphic)]" style="-webkit-backdrop-filter: blur(40px) saturate(180%);">
-    <!-- Logo / Monogram -->
-    <a
-      href={homeUrl}
-      class="flex items-center justify-center w-8 h-8 rounded-xl bg-primary text-black font-display font-bold text-sm mr-1 sm:mr-3 shrink-0 hover:scale-105 transition-transform"
-      aria-label="Home"
-    >
-      MM
-    </a>
-
     <!-- Nav links -->
     <div class="flex items-center gap-0.5 sm:gap-1">
       <a
@@ -32,6 +23,15 @@ const homeUrl = locale === 'ru' ? '/' : '/en/';
         aria-current="page"
       >
         {tr.nav.about}
+      </a>
+      <a
+        href="#"
+        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-dim cursor-default transition-all duration-200"
+        aria-disabled="true"
+        tabindex="-1"
+        title={locale === 'ru' ? 'Скоро' : 'Coming soon'}
+      >
+        {tr.nav.activity}
       </a>
       <a
         href="#"

@@ -7,6 +7,7 @@ export const translations = {
     },
     nav: {
       about: 'Обо мне',
+      activity: 'Активность',
       projects: 'Проекты',
     },
     hero: {
@@ -100,6 +101,7 @@ export const translations = {
     },
     nav: {
       about: 'About',
+      activity: 'Activity',
       projects: 'Projects',
     },
     hero: {
