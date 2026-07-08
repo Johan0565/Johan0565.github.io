@@ -181,6 +181,29 @@ const { activity, nav } = tr;
         </div>
       </div>
     </div>
+
+    <!-- Other Section -->
+    <div class="mb-8">
+      <h2 class="text-h2 text-foreground mb-6 md:mb-8 flex flex-col items-start gap-3">
+        <span class="flex items-center gap-3">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
+          {activity.otherSectionTitle}
+        </span>
+        <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <!-- Resume Button -->
+        <a href="/resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10 h-full">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+          </div>
+          <div class="flex flex-col flex-1 w-full">
+            <h4 class="text-foreground font-semibold mb-2 group-hover:text-primary transition-colors">{activity.resumeBtn}</h4>
+            <p class="text-sm text-muted mt-auto">{activity.resumeDesc}</p>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- PDF Modal -->
