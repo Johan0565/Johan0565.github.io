@@ -1,0 +1,242 @@
+---
+import type { Locale } from '../i18n/translations';
+import { t } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+const { activity } = tr;
+---
+
+<section class="relative pb-10 md:pb-16 pt-24 md:pt-32" id="activity">
+  <div class="section-container">
+    <!-- GitHub Activity -->
+    <div class="mb-12 md:mb-16">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 md:mb-8">
+        <h2 class="text-h2 text-foreground flex items-center gap-3">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
+          {activity.github}
+        </h2>
+        <div class="flex gap-2 gh-years">
+          <button class="gh-year-btn px-4 py-2 rounded-xl text-sm font-medium bg-primary text-white transition-colors shadow-[0_0_15px_rgba(249,115,22,0.3)]" data-year="2026">2026</button>
+          <button class="gh-year-btn px-4 py-2 rounded-xl text-sm font-medium bg-overlay text-foreground border border-edge hover:border-primary/50 transition-colors" data-year="2025">2025</button>
+          <button class="gh-year-btn px-4 py-2 rounded-xl text-sm font-medium bg-overlay text-foreground border border-edge hover:border-primary/50 transition-colors" data-year="2024">2024</button>
+        </div>
+      </div>
+
+      <div class="liquid-glass-card p-6 md:p-8 mb-6 min-h-[200px] flex items-center justify-center overflow-x-auto relative z-10" id="gh-target">
+        <p class="text-muted flex items-center gap-3">
+          <span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+          {activity.loadingGit}
+        </p>
+      </div>
+
+      <div class="liquid-glass-card p-6 md:p-8 flex justify-center overflow-x-auto overflow-y-hidden relative z-10">
+        <img 
+          src="https://github-readme-streak-stats.herokuapp.com/?user=Johan0565&theme=transparent&hide_border=true&ring=f97316&fire=f97316&currStreakLabel=f97316&sideNums=e2e8f0&currStreakNum=e2e8f0&sideLabels=94a3b8&dates=64748b" 
+          alt="GitHub Streaks" 
+          class="max-w-full h-auto dark:invert-[0.8] dark:hue-rotate-180 transition-filter duration-300"
+          loading="lazy"
+        >
+      </div>
+    </div>
+
+    <!-- Certificates -->
+    <div class="mb-8">
+      <h2 class="text-h2 text-foreground mb-6 md:mb-8 flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
+        {activity.certificates}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <!-- Stepik MySQL -->
+        <a href="https://stepik.org/cert/2820543?lang=en" target="_blank" rel="noopener noreferrer" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h4 class="text-foreground font-semibold mb-1 group-hover:text-primary transition-colors">{activity.certStepik}</h4>
+            <p class="text-sm text-muted">{activity.certStepikDesc}</p>
+          </div>
+        </a>
+
+        <!-- Stepik Jira -->
+        <a href="https://stepik.org/cert/3293749?lang=en" target="_blank" rel="noopener noreferrer" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h4 class="text-foreground font-semibold mb-1 group-hover:text-primary transition-colors">{activity.certJira}</h4>
+            <p class="text-sm text-muted">{activity.certStepikDesc}</p>
+          </div>
+        </a>
+
+        <!-- Stepik PM -->
+        <a href="https://stepik.org/cert/3291171?lang=en" target="_blank" rel="noopener noreferrer" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h4 class="text-foreground font-semibold mb-1 group-hover:text-primary transition-colors">{activity.certPm}</h4>
+            <p class="text-sm text-muted">{activity.certStepikDesc}</p>
+          </div>
+        </a>
+
+        <!-- Other -->
+        <div class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10" id="open-other-pdf-modal">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div>
+            <h4 class="text-foreground font-semibold mb-1 group-hover:text-primary transition-colors">{activity.certOther}</h4>
+            <p class="text-sm text-muted flex items-center gap-2">
+              {activity.certOtherDesc}
+              <span class="flex gap-0.5">
+                <span class="w-1 h-1 rounded-full bg-muted/60"></span>
+                <span class="w-1 h-1 rounded-full bg-muted/60"></span>
+                <span class="w-1 h-1 rounded-full bg-muted/60"></span>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentLang = document.documentElement.lang || 'ru';
+  
+  async function loadGitHubData(year) {
+    const container = document.getElementById('gh-target');
+    if (!container) return;
+    
+    const langWait = currentLang === 'ru' ? 'Синхронизация с серверами GitHub...' : 'Syncing with GitHub servers...';
+    
+    container.innerHTML = \`<p class="text-muted flex items-center justify-center gap-3 w-full"><span class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span> \${langWait}</p>\`;
+    
+    document.querySelectorAll('.gh-year-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-white', 'shadow-[0_0_15px_rgba(249,115,22,0.3)]');
+      b.classList.add('bg-overlay', 'text-foreground');
+    });
+    
+    const activeBtn = document.querySelector(\`.gh-year-btn[data-year="\${year}"]\`);
+    if (activeBtn) {
+      activeBtn.classList.remove('bg-overlay', 'text-foreground');
+      activeBtn.classList.add('bg-primary', 'text-white', 'shadow-[0_0_15px_rgba(249,115,22,0.3)]');
+    }
+    
+    const url = \`https://github.com/users/Johan0565/contributions?from=\${year}-01-01&to=\${year}-12-31\`;
+    const proxies = [
+        \`https://api.allorigins.win/raw?url=\${encodeURIComponent(url)}\`,
+        \`https://api.codetabs.com/v1/proxy?quest=\${encodeURIComponent(url)}\`,
+        \`https://corsproxy.io/?\${encodeURIComponent(url)}\`,
+        \`https://corsproxy.org/?url=\${encodeURIComponent(url)}\`
+    ];
+    
+    async function fetchGraph(proxyUrl) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 6000);
+        try {
+            const response = await fetch(proxyUrl, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const html = await response.text(); 
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const calendarGraph = doc.querySelector('.js-calendar-graph');
+            if (!calendarGraph) throw new Error('Graph element not found');
+            return calendarGraph;
+        } catch (e) {
+            clearTimeout(timeout);
+            throw e;
+        }
+    }
+    
+    try {
+        let calendarGraph = null;
+        for (let i = 0; i < proxies.length; i++) {
+            try {
+                calendarGraph = await fetchGraph(proxies[i]);
+                break;
+            } catch (e) {
+                console.log(\`Proxy \${i + 1} failed: \${e.message}, trying next...\`);
+            }
+        }
+        if (!calendarGraph) throw new Error('All proxies failed');
+        container.innerHTML = '';
+        container.appendChild(calendarGraph);
+        
+        container.querySelectorAll('.ContributionCalendar-day').forEach(day => {
+            const hiddenText = day.querySelector('.sr-only');
+            if (hiddenText) {
+                day.setAttribute('title', hiddenText.innerText);
+            }
+        });
+        
+        const svg = container.querySelector('svg');
+        if (svg) {
+            svg.style.width = '100%';
+            svg.style.height = 'auto';
+            svg.style.minWidth = '750px'; 
+            
+            // Apply theme colors to github graph variables
+            container.style.setProperty('--color-calendar-graph-day-bg', 'var(--overlay)');
+            container.style.setProperty('--color-calendar-graph-day-border', 'var(--edge)');
+            container.style.setProperty('--color-calendar-graph-day-L1-bg', 'rgba(249,115,22,0.3)');
+            container.style.setProperty('--color-calendar-graph-day-L2-bg', 'rgba(249,115,22,0.5)');
+            container.style.setProperty('--color-calendar-graph-day-L3-bg', 'rgba(249,115,22,0.7)');
+            container.style.setProperty('--color-calendar-graph-day-L4-bg', 'rgba(249,115,22,1)');
+        }
+    } catch (error) {
+        console.error("GitHub parsing error: ", error);
+        const errMsg = currentLang === 'ru'
+            ? 'Не удалось загрузить график. Прокси-серверы временно недоступны. <br><a href="https://github.com/Johan0565" target="_blank" class="text-primary hover:underline font-semibold mt-2 inline-block">Открыть профиль GitHub →</a>'
+            : 'Could not load the graph. Proxy servers are temporarily unavailable. <br><a href="https://github.com/Johan0565" target="_blank" class="text-primary hover:underline font-semibold mt-2 inline-block">Open GitHub profile →</a>';
+        container.innerHTML = \`<p class="text-red-400/90 text-sm text-center">\${errMsg}</p>\`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.gh-year-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+              const year = (e.currentTarget as HTMLElement).dataset.year;
+              if (year) loadGitHubData(year);
+          });
+      });
+      
+      // Initial load
+      setTimeout(() => {
+          loadGitHubData('2026');
+      }, 500);
+
+      // Other PDF Modal Placeholder
+      const otherBtn = document.getElementById('open-other-pdf-modal');
+      if (otherBtn) {
+          otherBtn.addEventListener('click', () => {
+              // TODO: Implement PDF modal as per previous agent's plans if needed
+              alert(currentLang === 'ru' ? 'Открытие дополнительных документов (модальное окно)' : 'Opening additional documents (modal)');
+          });
+      }
+  });
+</script>
+
+<style>
+  /* Github Graph Styles Override */
+  :global(.js-calendar-graph) {
+    width: 100%;
+    overflow-x: auto;
+  }
+  :global(.js-calendar-graph text.ContributionCalendar-label) {
+    fill: var(--text-muted);
+    font-size: 10px;
+  }
+  :global(.js-calendar-graph .ContributionCalendar-day) {
+    shape-rendering: geometricPrecision;
+    outline: 1px solid var(--edge);
+    outline-offset: -1px;
+    border-radius: 2px;
+  }
+</style>

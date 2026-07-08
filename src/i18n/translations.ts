@@ -50,6 +50,20 @@ export const translations = {
         },
       },
     },
+    activity: {
+      github: 'Активность GitHub',
+      loadingGit: 'Подключение к GitHub API...',
+      syncingGit: 'Синхронизация с серверами GitHub...',
+      gitError: 'Не удалось загрузить график. Прокси-серверы временно недоступны.',
+      openProfile: 'Открыть профиль GitHub →',
+      certificates: 'Сертификаты',
+      certStepik: 'Курс по mySQL',
+      certStepikDesc: 'Посмотреть на Stepik',
+      certJira: 'Jira: управление потоком задач',
+      certPm: 'Управление проектами. От теории к практике',
+      certOther: 'Прочее',
+      certOtherDesc: 'Дополнительные документы'
+    },
     uses: {
       title: 'Инструменты',
       management: {
@@ -143,6 +157,20 @@ export const translations = {
             'Understanding of architecture, Java, Spring Boot, aggregation systems, CIS integration — I speak the same language as developers and can adequately evaluate estimates',
         },
       },
+    },
+    activity: {
+      github: 'GitHub Contributions',
+      loadingGit: 'Connecting to GitHub API...',
+      syncingGit: 'Syncing with GitHub servers...',
+      gitError: 'Could not load the graph. Proxy servers are temporarily unavailable.',
+      openProfile: 'Open GitHub profile →',
+      certificates: 'Certificates',
+      certStepik: 'Comprehensive mySQL Course',
+      certStepikDesc: 'View on Stepik',
+      certJira: 'Jira: task flow management',
+      certPm: 'Project Management. From theory to practice',
+      certOther: 'Other',
+      certOtherDesc: 'Additional documents'
     },
     uses: {
       title: 'Uses',

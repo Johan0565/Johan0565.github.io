@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ActivitySection from '../components/ActivitySection.astro';
+
+const locale = 'ru' as const;
+---
+
+<BaseLayout locale={locale}>
+  <ActivitySection locale={locale} />
+</BaseLayout>

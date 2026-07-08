@@ -25,11 +25,8 @@ const homeUrl = locale === 'ru' ? '/' : '/en/';
         {tr.nav.about}
       </a>
       <a
-        href="#"
-        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-dim cursor-default transition-all duration-200"
-        aria-disabled="true"
-        tabindex="-1"
-        title={locale === 'ru' ? 'Скоро' : 'Coming soon'}
+        href={locale === 'ru' ? '/activity' : '/en/activity'}
+        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground hover:bg-overlay-hover transition-all duration-200"
       >
         {tr.nav.activity}
       </a>
