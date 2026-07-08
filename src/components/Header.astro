@@ -11,6 +11,12 @@ interface Props {
 const { locale } = Astro.props;
 const tr = t(locale);
 const homeUrl = locale === 'ru' ? '/' : '/en/';
+const activityUrl = locale === 'ru' ? '/activity' : '/en/activity';
+
+const currentPath = Astro.url.pathname;
+// Using a simple check: if it contains 'activity', it's the activity page
+const isActivity = currentPath.includes('/activity');
+const isHome = !isActivity;
 ---
 
 <header class="fixed z-40 left-1/2 w-auto max-w-[calc(100vw-32px)] header-position" id="site-header">
@@ -19,14 +25,15 @@ const homeUrl = locale === 'ru' ? '/' : '/en/';
     <div class="flex items-center gap-0.5 sm:gap-1">
       <a
         href={homeUrl}
-        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground bg-overlay-hover transition-all duration-200"
-        aria-current="page"
+        class={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground transition-all duration-200 ${isHome ? 'bg-overlay-hover' : 'hover:bg-overlay-hover'}`}
+        aria-current={isHome ? "page" : undefined}
       >
         {tr.nav.about}
       </a>
       <a
-        href={locale === 'ru' ? '/activity' : '/en/activity'}
-        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground hover:bg-overlay-hover transition-all duration-200"
+        href={activityUrl}
+        class={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground transition-all duration-200 ${isActivity ? 'bg-overlay-hover' : 'hover:bg-overlay-hover'}`}
+        aria-current={isActivity ? "page" : undefined}
       >
         {tr.nav.activity}
       </a>
