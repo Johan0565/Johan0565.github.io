@@ -65,9 +65,12 @@ export const translations = {
       certStepik: 'Курс по mySQL',
       certStepikDesc: 'Посмотреть на Stepik',
       certJira: 'Jira: управление потоком задач',
-      certPm: 'Управление проектами. От теории к практике',
+      certPm: 'PM. От теории к практике',
       certOther: 'Прочее',
-      certOtherDesc: 'Дополнительные документы'
+      certOtherDesc: 'Дополнительные документы',
+      certOtherModalTitle: 'Дополнительные документы',
+      certOtherDiplom: 'ДИПЛОМ ЗА 2 МЕСТО В МЕЖДУНАРОДНОМ КЕЙС-ЧЕМПИОНАТЕ «БЕЗОПАСНОСТЬ В ЦИФРОВОМ МИРЕ»',
+      certOtherCertificate: 'СЕРТИФИКАТ программы «Тренинги предпринимательских компетенций»'
     },
     uses: {
       title: 'Инструменты',
@@ -178,9 +181,12 @@ export const translations = {
       certStepik: 'Comprehensive mySQL Course',
       certStepikDesc: 'View on Stepik',
       certJira: 'Jira: task flow management',
-      certPm: 'Project Management. From theory to practice',
+      certPm: 'PM. From theory to practice',
       certOther: 'Other',
-      certOtherDesc: 'Additional documents'
+      certOtherDesc: 'Additional documents',
+      certOtherModalTitle: 'Additional Documents',
+      certOtherDiplom: 'DIPLOMA FOR 2ND PLACE IN THE INTERNATIONAL CASE CHAMPIONSHIP "SECURITY IN THE DIGITAL WORLD"',
+      certOtherCertificate: 'CERTIFICATE of the program "Entrepreneurial Competence Trainings"'
     },
     uses: {
       title: 'Uses',

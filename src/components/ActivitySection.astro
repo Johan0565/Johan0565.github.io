@@ -143,6 +143,44 @@ const { activity, nav } = tr;
       </div>
     </div>
   </div>
+
+  <!-- PDF Modal -->
+  <div id="pdf-modal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-background/80 backdrop-blur-sm" id="pdf-modal-backdrop"></div>
+    <div class="liquid-glass-card relative w-[90%] max-w-lg p-6 md:p-8 flex flex-col gap-6 transform scale-95 transition-transform duration-300" id="pdf-modal-content">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-display font-semibold text-foreground">{activity.certOtherModalTitle}</h3>
+        <button id="close-pdf-modal" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-muted hover:text-foreground transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <!-- Item 1 -->
+        <a href="/allPDFs/1_nominatsiya_2_mesto_2_komanda.pdf" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 p-4 rounded-xl border border-edge bg-overlay hover:border-primary/50 hover:bg-overlay-hover transition-all group">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-medium mb-1 text-foreground group-hover:text-primary transition-colors">{activity.certOtherDiplom}</h4>
+            <span class="text-xs text-muted uppercase tracking-wider font-semibold">PDF</span>
+          </div>
+        </a>
+        
+        <!-- Item 2 -->
+        <a href="/allPDFs/https___study-techtraining.mipt.ru_api_v1_files_8v5e6gWHZ5bHF7YpE.pdf" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 p-4 rounded-xl border border-edge bg-overlay hover:border-primary/50 hover:bg-overlay-hover transition-all group">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-medium mb-1 text-foreground group-hover:text-primary transition-colors">{activity.certOtherCertificate}</h4>
+            <span class="text-xs text-muted uppercase tracking-wider font-semibold">PDF</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <script>
@@ -266,12 +304,38 @@ const { activity, nav } = tr;
           loadGitHubData('2026');
       }, 500);
 
-      // Other PDF Modal Placeholder
+      // Other PDF Modal Logic
       const otherBtn = document.getElementById('open-other-pdf-modal');
-      if (otherBtn) {
-          otherBtn.addEventListener('click', () => {
-              // TODO: Implement PDF modal as per previous agent's plans if needed
-              alert(currentLang === 'ru' ? 'Открытие дополнительных документов (модальное окно)' : 'Opening additional documents (modal)');
+      const modal = document.getElementById('pdf-modal');
+      const modalContent = document.getElementById('pdf-modal-content');
+      const backdrop = document.getElementById('pdf-modal-backdrop');
+      const closeBtn = document.getElementById('close-pdf-modal');
+
+      function openModal() {
+          if (!modal) return;
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modalContent.classList.remove('scale-95');
+          modalContent.classList.add('scale-100');
+          document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+          if (!modal) return;
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          modalContent.classList.remove('scale-100');
+          modalContent.classList.add('scale-95');
+          document.body.style.overflow = '';
+      }
+
+      if (otherBtn && modal) {
+          otherBtn.addEventListener('click', openModal);
+          closeBtn.addEventListener('click', closeModal);
+          backdrop.addEventListener('click', closeModal);
+          
+          document.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+                  closeModal();
+              }
           });
       }
   });
