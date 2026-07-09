@@ -133,6 +133,7 @@ export const translations = {
     footer: {
       copyright: `© ${new Date().getFullYear()} Магомедов Магомед Расулович`,
       builtWith: 'Сделано с помощью',
+      hostedBy: 'Отдельная благодарность за хостинг сайту ',
     },
   },
 
@@ -273,6 +274,7 @@ export const translations = {
     footer: {
       copyright: `© ${new Date().getFullYear()} Magomed Rasulovich Magomedov`,
       builtWith: 'Built with',
+      hostedBy: 'Special thanks for hosting to ',
     },
   },
 } as const;
