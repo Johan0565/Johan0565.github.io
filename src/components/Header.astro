@@ -16,7 +16,8 @@ const activityUrl = locale === 'ru' ? '/activity' : '/en/activity';
 const currentPath = Astro.url.pathname;
 // Using a simple check: if it contains 'activity', it's the activity page
 const isActivity = currentPath.includes('/activity');
-const isHome = !isActivity;
+const isProjects = currentPath.includes('/projects');
+const isHome = !isActivity && !isProjects;
 ---
 
 <header class="fixed z-40 left-1/2 w-auto max-w-[calc(100vw-32px)] header-position" id="site-header">
@@ -38,11 +39,9 @@ const isHome = !isActivity;
         {tr.nav.activity}
       </a>
       <a
-        href="#"
-        class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-dim cursor-default transition-all duration-200"
-        aria-disabled="true"
-        tabindex="-1"
-        title={locale === 'ru' ? 'Скоро' : 'Coming soon'}
+        href={locale === 'ru' ? '/projects' : '/en/projects'}
+        class={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground transition-all duration-200 ${isProjects ? 'bg-overlay-hover' : 'hover:bg-overlay-hover'}`}
+        aria-current={isProjects ? "page" : undefined}
       >
         {tr.nav.projects}
       </a>

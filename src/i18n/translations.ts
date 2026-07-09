@@ -117,6 +117,16 @@ export const translations = {
         ],
       },
     },
+    projects: {
+      title: 'Проекты',
+      mobileAlert: 'Мне было лень адаптировать демо-фото для телефона, поэтому лучше на пк или планшете сайт смотреть, так презентабельнее.',
+      proj1: {
+        title: 'Street Retail Aggregator',
+        stack: ['Java', 'Spring Boot', 'Spring Security (JWT)', 'PostgreSQL', 'Yandex MapKit', 'OpenStreetMap'],
+        desc: 'КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.',
+        comment: 'Мой комментарий: целью было сделать проект в кратчайшие сроки (1.5 мес), поэтому некоторые адреса захардкожены в код, не соблюдена чистая архитектура, но в целом проект за такие сроки получился оптимизированным и отказоустойчивым.',
+      }
+    },
     toast: {
       emailCopied: 'Email скопирован в буфер обмена!',
     },
@@ -246,6 +256,16 @@ export const translations = {
           { name: 'Samsung Buds 4 Pro', detail: 'Headphones' },
         ],
       },
+    },
+    projects: {
+      title: 'Projects',
+      mobileAlert: "I was too lazy to adapt the demo photos for mobile, so it's better to view the site on a PC or tablet, it looks much more presentable.",
+      proj1: {
+        title: 'Street Retail Aggregator',
+        stack: ['Java', 'Spring Boot', 'Spring Security (JWT)', 'PostgreSQL', 'Yandex MapKit', 'OpenStreetMap'],
+        desc: 'CIS for searching and renting commercial real estate in the "street retail" format. Includes a smart recommendation algorithm based on spatial analysis (Yandex MapKit), which evaluates infrastructure and lowers the ranking of premises with direct competitors nearby.',
+        comment: 'My comment: the goal was to make the project in the shortest possible time (1.5 months), so some addresses are hardcoded, clean architecture is not fully respected, but overall the project turned out to be optimized and fault-tolerant for such a timeframe.',
+      }
     },
     toast: {
       emailCopied: 'Email copied to clipboard!',

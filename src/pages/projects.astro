@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+
+const locale = 'ru' as const;
+---
+
+<BaseLayout locale={locale}>
+  <ProjectsSection locale={locale} />
+</BaseLayout>
