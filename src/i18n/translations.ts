@@ -82,7 +82,12 @@ export const translations = {
       stepikKnowledge: 'Знания',
       stepikReputation: 'Репутация',
       loadingStepik: 'Загрузка данных Stepik...',
-      stepikError: 'Не удалось загрузить данные Stepik.'
+      stepikError: 'Не удалось загрузить данные Stepik.',
+      lastUpdated: 'Обновлено',
+      radarTitle: 'Активность по дням недели',
+      radarDesc: 'Распределение коммитов за последний месяц по дням недели.',
+      radarDays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+      commits: 'коммитов',
     },
     uses: {
       title: 'Инструменты',
@@ -221,7 +226,12 @@ export const translations = {
       stepikKnowledge: 'Knowledge',
       stepikReputation: 'Reputation',
       loadingStepik: 'Loading Stepik data...',
-      stepikError: 'Failed to load Stepik data.'
+      stepikError: 'Failed to load Stepik data.',
+      lastUpdated: 'Updated',
+      radarTitle: 'Activity by day of week',
+      radarDesc: 'Commit distribution over the last month by day of week.',
+      radarDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      commits: 'commits',
     },
     uses: {
       title: 'Uses',
