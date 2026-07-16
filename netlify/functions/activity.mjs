@@ -1,12 +1,15 @@
 // Netlify Function: fetches GitHub contributions + Stepik data and caches them on Netlify CDN.
 // Endpoint: /.netlify/functions/activity?year=2026
-// Cached for 24 hours on Netlify's edge (durable cache).
+// Successful responses are cached on Netlify's edge (durable cache).
+
+const ACTIVITY_SCHEMA_VERSION = 'duolingo-v1';
 
 export default async (request) => {
   const url = new URL(request.url);
   const year = url.searchParams.get('year') || new Date().getFullYear().toString();
 
   const results = {
+    schemaVersion: ACTIVITY_SCHEMA_VERSION,
     timestamp: new Date().toISOString(),
     year,
     github: null,
@@ -86,15 +89,22 @@ export default async (request) => {
     console.error('Duolingo profile fetch failed:', err.message);
   }
 
+  const hasDuolingoData = Boolean(results.duolingo?.users?.[0]);
+
   return new Response(JSON.stringify(results), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      // Cache for 24 hours on Netlify CDN (durable = survives deploys)
-      'Netlify-CDN-Cache-Control': 'public, max-age=86400, stale-while-revalidate=3600, durable',
-      // Browser cache: 1 hour, then revalidate
-      'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+      // The version parameter creates a new cache key when the response schema changes.
+      'Netlify-Vary': 'query=year|v',
+      // Never keep an upstream failure for a full day.
+      'Netlify-CDN-Cache-Control': hasDuolingoData
+        ? 'public, max-age=86400, stale-while-revalidate=3600, durable'
+        : 'public, max-age=120, stale-while-revalidate=60',
+      'Cache-Control': hasDuolingoData
+        ? 'public, max-age=3600, stale-while-revalidate=86400'
+        : 'no-cache, max-age=0, must-revalidate',
     },
   });
 };
