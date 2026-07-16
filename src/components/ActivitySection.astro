@@ -242,6 +242,17 @@ const { activity, nav } = tr;
             <p class="text-sm text-muted mt-auto">{activity.resumeDesc}</p>
           </div>
         </a>
+
+        <!-- Quote Video Button -->
+        <button type="button" id="open-quote-video-modal" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10 h-full text-left" aria-haspopup="dialog" aria-controls="quote-video-modal">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5v14l11-7L8 5z"></path></svg>
+          </div>
+          <div class="flex flex-col flex-1 w-full">
+            <h4 class="text-foreground font-semibold mb-2 group-hover:text-primary transition-colors">{activity.quoteBtn}</h4>
+            <p class="text-sm text-muted mt-auto">{activity.quoteDesc}</p>
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -279,6 +290,26 @@ const { activity, nav } = tr;
             <span class="text-xs text-muted uppercase tracking-wider font-semibold">PDF</span>
           </div>
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote Video Modal -->
+  <div id="quote-video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="quote-video-title" aria-hidden="true">
+    <div class="absolute inset-0 bg-background/85 backdrop-blur-md" id="quote-video-backdrop"></div>
+    <div id="quote-video-content" class="quote-video-frame relative w-full max-w-3xl transform scale-95 transition-transform duration-300">
+      <div class="flex items-center justify-between gap-4 px-5 py-4 md:px-6">
+        <h3 id="quote-video-title" class="text-xl font-display font-semibold text-foreground">{activity.quoteModalTitle}</h3>
+        <button type="button" id="close-quote-video-modal" class="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-overlay hover:bg-primary/15 text-muted hover:text-primary transition-colors" aria-label={locale === 'ru' ? 'Закрыть видео' : 'Close video'}>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="px-3 pb-3 md:px-5 md:pb-5">
+        <div class="overflow-hidden rounded-2xl border border-primary/25 bg-black shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
+          <video id="quote-video" class="block w-full max-h-[72vh] bg-black object-contain" src="/video.mp4" controls playsinline preload="metadata">
+            {locale === 'ru' ? 'Ваш браузер не поддерживает видео.' : 'Your browser does not support video.'}
+          </video>
+        </div>
       </div>
     </div>
   </div>
@@ -758,6 +789,42 @@ const { activity, nav } = tr;
       });
     }
 
+    // Quote Video Modal Logic
+    const quoteBtn = document.getElementById('open-quote-video-modal');
+    const quoteModal = document.getElementById('quote-video-modal');
+    const quoteContent = document.getElementById('quote-video-content');
+    const quoteBackdrop = document.getElementById('quote-video-backdrop');
+    const quoteCloseBtn = document.getElementById('close-quote-video-modal');
+    const quoteVideo = document.getElementById('quote-video') as HTMLVideoElement | null;
+
+    function openQuoteModal() {
+      if (!quoteModal) return;
+      quoteModal.classList.remove('opacity-0', 'pointer-events-none');
+      quoteModal.setAttribute('aria-hidden', 'false');
+      quoteContent?.classList.replace('scale-95', 'scale-100');
+      document.body.style.overflow = 'hidden';
+      quoteCloseBtn?.focus();
+    }
+
+    function closeQuoteModal() {
+      if (!quoteModal) return;
+      quoteVideo?.pause();
+      quoteModal.classList.add('opacity-0', 'pointer-events-none');
+      quoteModal.setAttribute('aria-hidden', 'true');
+      quoteContent?.classList.replace('scale-100', 'scale-95');
+      document.body.style.overflow = '';
+      quoteBtn?.focus();
+    }
+
+    quoteBtn?.addEventListener('click', openQuoteModal);
+    quoteCloseBtn?.addEventListener('click', closeQuoteModal);
+    quoteBackdrop?.addEventListener('click', closeQuoteModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && quoteModal && !quoteModal.classList.contains('opacity-0')) {
+        closeQuoteModal();
+      }
+    });
+
     // Re-render radar on theme change
     const observer = new MutationObserver(() => {
       const cachedData = dataCache[`activity_${new Date().getFullYear()}`];
@@ -826,5 +893,13 @@ const { activity, nav } = tr;
     width: 100%;
     height: auto;
     aspect-ratio: 1;
+  }
+
+  .quote-video-frame {
+    border: 1px solid color-mix(in srgb, var(--color-primary, #f97316) 35%, transparent);
+    border-radius: 1.5rem;
+    background: color-mix(in srgb, var(--color-background, #0f172a) 88%, transparent);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 24px 80px rgba(0,0,0,0.38), 0 0 45px rgba(249,115,22,0.12);
+    backdrop-filter: blur(24px);
   }
 </style>
