@@ -170,15 +170,24 @@ const { activity, nav } = tr;
               <div class="pt-6 flex flex-col gap-5 max-w-sm relative z-10">
                 <p class="hidden text-sm text-red-400/90" id="duolingo-status"></p>
                 <div class="flex flex-col gap-1.5 group">
-                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-level">--</div>
+                  <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
+                    <span class="text-[0.75em] leading-none" aria-hidden="true">🇺🇸</span>
+                    <span id="duolingo-level">--</span>
+                  </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoXpLevel}</div>
                 </div>
                 <div class="flex flex-col gap-1.5 group">
-                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-xp">--</div>
+                  <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
+                    <span class="text-[0.75em] leading-none" aria-hidden="true">⚡</span>
+                    <span id="duolingo-xp">--</span>
+                  </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoCourseXp}</div>
                 </div>
                 <div class="flex flex-col gap-1.5 group">
-                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-streak">--</div>
+                  <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
+                    <span class="text-[0.75em] leading-none" aria-hidden="true">🔥</span>
+                    <span id="duolingo-streak">--</span>
+                  </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoStreak}</div>
                 </div>
                 <a href="https://www.duolingo.com/profile/Muhammad73304" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#58cc02] hover:underline relative z-10">@Muhammad73304 →</a>
@@ -822,8 +831,17 @@ const { activity, nav } = tr;
       trigger.addEventListener('click', () => {
         const card = trigger.closest('.expandable-activity-card');
         if (!card) return;
-        const expanded = card.classList.toggle('is-expanded');
+        const expanded = !card.classList.contains('is-expanded');
+        card.classList.toggle('is-expanded', expanded);
+        card.classList.toggle('is-collapsed', !expanded);
         trigger.setAttribute('aria-expanded', String(expanded));
+      });
+
+      trigger.closest('.expandable-activity-card')?.addEventListener('mouseleave', (event) => {
+        const card = event.currentTarget as HTMLElement;
+        if (!card.classList.contains('is-expanded')) {
+          card.classList.remove('is-collapsed');
+        }
       });
     });
 
@@ -1032,6 +1050,16 @@ const { activity, nav } = tr;
       transform: rotate(180deg);
       color: var(--color-primary, #f97316);
     }
+  }
+
+  .expandable-activity-card.is-collapsed .expandable-activity-panel {
+    grid-template-rows: 0fr !important;
+    opacity: 0 !important;
+  }
+
+  .expandable-activity-card.is-collapsed .expandable-activity-chevron {
+    transform: rotate(0deg) !important;
+    color: var(--color-muted) !important;
   }
 
   .duolingo-mark {
