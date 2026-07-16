@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
 import ParticlesBackground from '../components/ParticlesBackground.astro';
 import MicrosoftClarity from '../components/MicrosoftClarity.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 import '../styles/global.css';
 
@@ -29,7 +30,8 @@ const alternateFullUrl = new URL(alternateUrl, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Behavioral analytics (production only) -->
+    <!-- Analytics (production only) -->
+    <GoogleAnalytics />
     <MicrosoftClarity />
 
     <!-- Theme detection: runs before first paint to prevent FOUC -->
