@@ -387,18 +387,23 @@ const { activity, nav } = tr;
 
   // ───────── Data cache (per session) ─────────
   const dataCache: Record<string, any> = {};
+  const activitySchemaVersion = 'duolingo-v1';
 
   // ───────── Fetch from our own API (Netlify Function) with fallback ─────────
   async function fetchActivityData(year: string) {
-    const cacheKey = `activity_${year}`;
+    const cacheKey = `activity_${activitySchemaVersion}_${year}`;
     if (dataCache[cacheKey]) return dataCache[cacheKey];
 
     try {
-      const res = await fetch(`/api/activity?year=${year}`, { signal: AbortSignal.timeout(12000) });
+      const params = new URLSearchParams({ year, v: activitySchemaVersion });
+      const res = await fetch(`/api/activity?${params}`, { signal: AbortSignal.timeout(12000) });
       if (res.ok) {
         const data = await res.json();
-        dataCache[cacheKey] = data;
-        return data;
+        if (data?.schemaVersion === activitySchemaVersion) {
+          dataCache[cacheKey] = data;
+          return data;
+        }
+        console.warn('Ignoring an outdated activity API response.');
       }
     } catch (e) {
       console.warn('Netlify function failed, falling back to direct proxies...', e);
@@ -446,13 +451,14 @@ const { activity, nav } = tr;
     stepikActivity = await fetchStepikProxy('https://stepik.org/api/user-activities/611926268');
 
     const result = {
+      schemaVersion: activitySchemaVersion,
       timestamp: new Date().toISOString(),
       year,
       github: githubHtml,
       stepikUser,
       stepikActivity,
     };
-    dataCache[`activity_${year}`] = result;
+    dataCache[`activity_${activitySchemaVersion}_${year}`] = result;
     return result;
   }
 
@@ -942,7 +948,7 @@ const { activity, nav } = tr;
 
     // Re-render radar on theme change
     const observer = new MutationObserver(() => {
-      const cachedData = dataCache[`activity_${new Date().getFullYear()}`];
+      const cachedData = dataCache[`activity_${activitySchemaVersion}_${new Date().getFullYear()}`];
       if (cachedData?.github) {
         const dayData = extractDayData(cachedData.github);
         renderRadarChart(dayData);
