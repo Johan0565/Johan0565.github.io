@@ -53,18 +53,23 @@ const { activity, nav } = tr;
             </p>
           </div>
         </div>
-        <div class="liquid-glass-card p-6 md:p-8 flex flex-col lg:flex-row gap-6 h-full w-full">
-          <div class="flex-1 flex flex-col min-w-0">
-            <div class="flex items-start gap-4 mb-4">
+        <div class="liquid-glass-card p-6 md:p-8 h-full w-full expandable-activity-card" id="github-radar-card">
+          <button type="button" class="expandable-activity-trigger w-full flex items-start justify-between gap-4 text-left relative z-10" aria-expanded="false" aria-controls="github-radar-panel">
+            <span class="flex items-start gap-4">
               <span class="text-2xl shrink-0 mt-0.5" aria-hidden="true">🕸️</span>
-              <div>
-                <h3 class="text-badge text-primary mb-3">{activity.githubStats}</h3>
-                <p class="text-lg font-display font-semibold text-foreground mb-2">{activity.radarTitle}</p>
-                <p class="text-sm text-muted leading-relaxed">{activity.radarDesc}</p>
+              <span>
+                <span class="text-badge text-primary mb-3 block">{activity.githubStats}</span>
+                <span class="text-lg font-display font-semibold text-foreground mb-2 block">{activity.radarTitle}</span>
+                <span class="text-sm text-muted leading-relaxed block">{activity.radarDesc}</span>
+              </span>
+            </span>
+            <svg class="expandable-activity-chevron w-5 h-5 shrink-0 mt-1 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="expandable-activity-panel" id="github-radar-panel">
+            <div class="expandable-activity-panel-inner">
+              <div class="mt-6 min-h-[280px] flex items-center justify-center relative z-10" id="radar-target">
+                <canvas id="radar-canvas" width="400" height="400" class="max-w-full h-auto"></canvas>
               </div>
-            </div>
-            <div class="mt-4 flex-1 min-h-[280px] flex items-center justify-center relative z-10" id="radar-target">
-              <canvas id="radar-canvas" width="400" height="400" class="max-w-full h-auto"></canvas>
             </div>
           </div>
         </div>
@@ -146,40 +151,39 @@ const { activity, nav } = tr;
         </div>
 
         <!-- Duolingo Activity Card -->
-        <div class="liquid-glass-card p-6 md:p-8 flex flex-col lg:flex-row gap-6 h-full w-full relative">
+        <div class="liquid-glass-card p-6 md:p-8 h-full w-full relative expandable-activity-card" id="duolingo-activity-card">
           <span class="absolute top-3 right-4 text-[11px] text-muted/40 font-mono select-none" id="duolingo-last-updated"></span>
-          <div class="flex-1 flex flex-col min-w-0">
-            <div class="flex items-start gap-4 mb-6">
+          <button type="button" class="expandable-activity-trigger w-full flex items-start justify-between gap-4 text-left pr-2 relative z-10" aria-expanded="false" aria-controls="duolingo-activity-panel">
+            <span class="flex items-start gap-4">
               <img src="/images/duolingoIcon.png" alt="" class="duolingo-mark shrink-0 mt-0.5" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
-              <div>
-                <h3 class="text-badge text-primary mb-3">Duolingo</h3>
-                <p class="text-lg font-display font-semibold text-foreground mb-2">{activity.duolingoTitle}</p>
-                <p class="text-sm text-muted leading-relaxed">{activity.duolingoDesc}</p>
+              <span>
+                <span class="text-badge text-primary mb-3 block">Duolingo</span>
+                <span class="text-lg font-display font-semibold text-foreground mb-2 block">{activity.duolingoTitle}</span>
+                <span class="text-sm text-muted leading-relaxed block">{activity.duolingoDesc}</span>
+              </span>
+            </span>
+            <svg class="expandable-activity-chevron w-5 h-5 shrink-0 mt-1 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+
+          <div class="expandable-activity-panel" id="duolingo-activity-panel">
+            <div class="expandable-activity-panel-inner">
+              <div class="pt-6 flex flex-col gap-5 max-w-sm relative z-10">
+                <p class="hidden text-sm text-red-400/90" id="duolingo-status"></p>
+                <div class="flex flex-col gap-1.5 group">
+                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-level">--</div>
+                  <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoXpLevel}</div>
+                </div>
+                <div class="flex flex-col gap-1.5 group">
+                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-xp">--</div>
+                  <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoCourseXp}</div>
+                </div>
+                <div class="flex flex-col gap-1.5 group">
+                  <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-streak">--</div>
+                  <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoStreak}</div>
+                </div>
+                <a href="https://www.duolingo.com/profile/Muhammad73304" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#58cc02] hover:underline relative z-10">@Muhammad73304 →</a>
               </div>
             </div>
-
-            <div class="relative z-10 flex-1" id="duolingo-target">
-              <p class="text-muted flex items-center gap-3">
-                <span class="w-5 h-5 border-2 border-[#58cc02] border-t-transparent rounded-full animate-spin"></span>
-                {activity.duolingoLoading}
-              </p>
-            </div>
-          </div>
-
-          <div class="lg:w-72 shrink-0 grid grid-cols-2 lg:grid-cols-1 gap-5 border-t lg:border-t-0 lg:border-l border-edge pt-6 lg:pt-0 lg:pl-8">
-            <div class="flex flex-col gap-1.5 group">
-              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-level">--</div>
-              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoXpLevel}</div>
-            </div>
-            <div class="flex flex-col gap-1.5 group">
-              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-xp">--</div>
-              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoCourseXp}</div>
-            </div>
-            <div class="flex flex-col gap-1.5 group col-span-2 lg:col-span-1">
-              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-streak">--</div>
-              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoStreak}</div>
-            </div>
-            <a href="https://www.duolingo.com/profile/Muhammad73304" target="_blank" rel="noopener noreferrer" class="col-span-2 lg:col-span-1 text-sm font-semibold text-[#58cc02] hover:underline relative z-10">@Muhammad73304 →</a>
           </div>
         </div>
 
@@ -733,23 +737,21 @@ const { activity, nav } = tr;
 
   // ───────── Render Duolingo ─────────
   function renderDuolingoData(data: any) {
-    const target = document.getElementById('duolingo-target');
     const user = data?.duolingo?.users?.[0];
-    if (!target) return;
+    const status = document.getElementById('duolingo-status');
 
     if (!user) {
-      target.innerHTML = `<p class="text-sm text-red-400/90">${currentLang === 'ru' ? 'Не удалось загрузить данные Duolingo.' : 'Failed to load Duolingo data.'}</p>`;
+      if (status) {
+        status.textContent = currentLang === 'ru' ? 'Не удалось загрузить данные Duolingo.' : 'Failed to load Duolingo data.';
+        status.classList.remove('hidden');
+      }
       return;
     }
 
-    const courses = Array.isArray(user.courses)
-      ? [...user.courses].sort((a: any, b: any) => {
-          if (a.id === 'DUOLINGO_EN_RU') return -1;
-          if (b.id === 'DUOLINGO_EN_RU') return 1;
-          return Number(b.xp || 0) - Number(a.xp || 0);
-        })
-      : [];
-    const englishCourse = courses.find((course: any) => course.id === 'DUOLINGO_EN_RU');
+    status?.classList.add('hidden');
+    const englishCourse = Array.isArray(user.courses)
+      ? user.courses.find((course: any) => course.id === 'DUOLINGO_EN_RU')
+      : null;
     const englishXp = Number(englishCourse?.xp || 0);
     const formatter = new Intl.NumberFormat(currentLang === 'ru' ? 'ru-RU' : 'en-US');
 
@@ -760,47 +762,6 @@ const { activity, nav } = tr;
     if (levelEl) levelEl.textContent = '34';
     if (xpEl) xpEl.textContent = formatter.format(englishXp);
     if (streakEl) streakEl.textContent = formatter.format(Number(user.streak || 0));
-
-    target.innerHTML = '';
-    const title = document.createElement('p');
-    title.className = 'text-sm font-semibold text-foreground mb-5';
-    title.textContent = currentLang === 'ru' ? 'Опыт по курсам' : 'XP by course';
-    target.appendChild(title);
-
-    const chart = document.createElement('div');
-    chart.className = 'flex flex-col gap-4';
-    const maxXp = Math.max(...courses.map((course: any) => Number(course.xp || 0)), 1);
-    const languageNames: Record<string, string> = currentLang === 'ru'
-      ? { en: 'Английский', de: 'Немецкий', ru: 'Русский', ar: 'Арабский' }
-      : { en: 'English', de: 'German', ru: 'Russian', ar: 'Arabic' };
-
-    courses.forEach((course: any) => {
-      const xp = Number(course.xp || 0);
-      const isCurrent = course.id === 'DUOLINGO_EN_RU';
-      const row = document.createElement('div');
-      row.className = 'duolingo-course-row';
-
-      const labels = document.createElement('div');
-      labels.className = 'flex items-center justify-between gap-3 mb-1.5 text-xs';
-      const name = document.createElement('span');
-      name.className = isCurrent ? 'font-semibold text-foreground' : 'font-medium text-muted';
-      name.textContent = languageNames[course.learningLanguage] || course.title || course.learningLanguage;
-      const value = document.createElement('span');
-      value.className = 'font-mono tabular-nums text-muted';
-      value.textContent = `${formatter.format(xp)} XP`;
-      labels.append(name, value);
-
-      const track = document.createElement('div');
-      track.className = 'duolingo-xp-track';
-      const bar = document.createElement('div');
-      bar.className = `duolingo-xp-bar${isCurrent ? ' is-current' : ''}`;
-      bar.style.width = `${Math.max((xp / maxXp) * 100, xp > 0 ? 1.5 : 0)}%`;
-      track.appendChild(bar);
-      row.append(labels, track);
-      chart.appendChild(row);
-    });
-
-    target.appendChild(chart);
   }
 
   // ───────── Main: load and render everything ─────────
@@ -856,6 +817,16 @@ const { activity, nav } = tr;
 
   // ───────── Init ─────────
   document.addEventListener('DOMContentLoaded', () => {
+    // Expandable activity cards: click/tap toggles, desktop hover is handled in CSS.
+    document.querySelectorAll('.expandable-activity-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const card = trigger.closest('.expandable-activity-card');
+        if (!card) return;
+        const expanded = card.classList.toggle('is-expanded');
+        trigger.setAttribute('aria-expanded', String(expanded));
+      });
+    });
+
     document.querySelectorAll('.gh-year-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const year = (e.currentTarget as HTMLElement).dataset.year;
@@ -1019,35 +990,58 @@ const { activity, nav } = tr;
     aspect-ratio: 1;
   }
 
+  .expandable-activity-card {
+    overflow: hidden;
+  }
+
+  .expandable-activity-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 420ms cubic-bezier(.22,1,.36,1), opacity 250ms ease;
+  }
+
+  .expandable-activity-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .expandable-activity-chevron {
+    transition: transform 300ms cubic-bezier(.22,1,.36,1), color 200ms ease;
+  }
+
+  .expandable-activity-card.is-expanded .expandable-activity-panel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .expandable-activity-card.is-expanded .expandable-activity-chevron {
+    transform: rotate(180deg);
+    color: var(--color-primary, #f97316);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .expandable-activity-card:hover .expandable-activity-panel,
+    .expandable-activity-card:focus-within .expandable-activity-panel {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .expandable-activity-card:hover .expandable-activity-chevron,
+    .expandable-activity-card:focus-within .expandable-activity-chevron {
+      transform: rotate(180deg);
+      color: var(--color-primary, #f97316);
+    }
+  }
+
   .duolingo-mark {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.8rem;
     object-fit: cover;
-    box-shadow: 0 5px 0 #46a302, 0 10px 24px rgba(88,204,2,0.2);
+    box-shadow: 0 8px 22px rgba(88,204,2,0.2);
   }
 
-  .duolingo-xp-track {
-    height: 0.65rem;
-    overflow: hidden;
-    border: 1px solid var(--theme-border);
-    border-radius: 999px;
-    background: var(--theme-overlay);
-  }
-
-  .duolingo-xp-bar {
-    height: 100%;
-    border-radius: inherit;
-    background: color-mix(in srgb, var(--theme-text-muted) 50%, transparent);
-    transition: width 700ms cubic-bezier(.22,1,.36,1);
-  }
-
-  .duolingo-xp-bar.is-current {
-    background: linear-gradient(90deg, #58cc02, #89e219);
-    box-shadow: 0 0 14px rgba(88,204,2,0.35);
-  }
-
-  :global([data-theme="light"]) .duolingo-course-row a,
   :global([data-theme="light"]) a[href*="duolingo.com/profile/"] {
     color: #46a302;
   }
