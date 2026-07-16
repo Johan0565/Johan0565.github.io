@@ -12,6 +12,7 @@ export default async (request) => {
     github: null,
     stepikUser: null,
     stepikActivity: null,
+    duolingo: null,
   };
 
   // --- GitHub Contributions (scrape HTML) ---
@@ -64,6 +65,25 @@ export default async (request) => {
     }
   } catch (err) {
     console.error('Stepik activity fetch failed:', err.message);
+  }
+
+  // --- Duolingo Public Profile ---
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    const duoRes = await fetch('https://www.duolingo.com/2017-06-30/users?username=Muhammad73304', {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; NetlifyFunction/1.0)',
+        'Accept': 'application/json',
+      },
+    });
+    clearTimeout(timeout);
+    if (duoRes.ok) {
+      results.duolingo = await duoRes.json();
+    }
+  } catch (err) {
+    console.error('Duolingo profile fetch failed:', err.message);
   }
 
   return new Response(JSON.stringify(results), {

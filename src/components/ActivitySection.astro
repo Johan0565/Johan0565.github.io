@@ -145,6 +145,44 @@ const { activity, nav } = tr;
           </div>
         </div>
 
+        <!-- Duolingo Activity Card -->
+        <div class="liquid-glass-card p-6 md:p-8 flex flex-col lg:flex-row gap-6 h-full w-full relative">
+          <span class="absolute top-3 right-4 text-[11px] text-muted/40 font-mono select-none" id="duolingo-last-updated"></span>
+          <div class="flex-1 flex flex-col min-w-0">
+            <div class="flex items-start gap-4 mb-6">
+              <span class="duolingo-mark shrink-0 mt-0.5" aria-hidden="true">D</span>
+              <div>
+                <h3 class="text-badge text-primary mb-3">Duolingo</h3>
+                <p class="text-lg font-display font-semibold text-foreground mb-2">{activity.duolingoTitle}</p>
+                <p class="text-sm text-muted leading-relaxed">{activity.duolingoDesc}</p>
+              </div>
+            </div>
+
+            <div class="relative z-10 flex-1" id="duolingo-target">
+              <p class="text-muted flex items-center gap-3">
+                <span class="w-5 h-5 border-2 border-[#58cc02] border-t-transparent rounded-full animate-spin"></span>
+                {activity.duolingoLoading}
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:w-72 shrink-0 grid grid-cols-2 lg:grid-cols-1 gap-5 border-t lg:border-t-0 lg:border-l border-edge pt-6 lg:pt-0 lg:pl-8">
+            <div class="flex flex-col gap-1.5 group">
+              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-level">--</div>
+              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoXpLevel}</div>
+            </div>
+            <div class="flex flex-col gap-1.5 group">
+              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-xp">--</div>
+              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoCourseXp}</div>
+            </div>
+            <div class="flex flex-col gap-1.5 group col-span-2 lg:col-span-1">
+              <div class="text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300" id="duolingo-streak">--</div>
+              <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoStreak}</div>
+            </div>
+            <a href="https://www.duolingo.com/profile/Muhammad73304" target="_blank" rel="noopener noreferrer" class="col-span-2 lg:col-span-1 text-sm font-semibold text-[#58cc02] hover:underline relative z-10">@Muhammad73304 →</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -693,6 +731,87 @@ const { activity, nav } = tr;
     target.appendChild(graphContainer);
   }
 
+  // ───────── Render Duolingo ─────────
+  function getDuolingoXpLevel(xp: number) {
+    // Duolingo's classic XP levels (level 25 is the maximum XP level).
+    const thresholds = [0, 60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 17000, 19000, 22500, 26000, 30000];
+    let level = 1;
+    thresholds.forEach((threshold, index) => {
+      if (xp >= threshold) level = index + 1;
+    });
+    return Math.min(level, 25);
+  }
+
+  function renderDuolingoData(data: any) {
+    const target = document.getElementById('duolingo-target');
+    const user = data?.duolingo?.users?.[0];
+    if (!target) return;
+
+    if (!user) {
+      target.innerHTML = `<p class="text-sm text-red-400/90">${currentLang === 'ru' ? 'Не удалось загрузить данные Duolingo.' : 'Failed to load Duolingo data.'}</p>`;
+      return;
+    }
+
+    const courses = Array.isArray(user.courses)
+      ? [...user.courses].sort((a: any, b: any) => {
+          if (a.id === 'DUOLINGO_EN_RU') return -1;
+          if (b.id === 'DUOLINGO_EN_RU') return 1;
+          return Number(b.xp || 0) - Number(a.xp || 0);
+        })
+      : [];
+    const englishCourse = courses.find((course: any) => course.id === 'DUOLINGO_EN_RU');
+    const englishXp = Number(englishCourse?.xp || 0);
+    const formatter = new Intl.NumberFormat(currentLang === 'ru' ? 'ru-RU' : 'en-US');
+
+    const levelEl = document.getElementById('duolingo-level');
+    const xpEl = document.getElementById('duolingo-xp');
+    const streakEl = document.getElementById('duolingo-streak');
+    if (levelEl) levelEl.textContent = String(getDuolingoXpLevel(englishXp));
+    if (xpEl) xpEl.textContent = formatter.format(englishXp);
+    if (streakEl) streakEl.textContent = formatter.format(Number(user.streak || 0));
+
+    target.innerHTML = '';
+    const title = document.createElement('p');
+    title.className = 'text-sm font-semibold text-foreground mb-5';
+    title.textContent = currentLang === 'ru' ? 'Опыт по курсам' : 'XP by course';
+    target.appendChild(title);
+
+    const chart = document.createElement('div');
+    chart.className = 'flex flex-col gap-4';
+    const maxXp = Math.max(...courses.map((course: any) => Number(course.xp || 0)), 1);
+    const languageNames: Record<string, string> = currentLang === 'ru'
+      ? { en: 'Английский', de: 'Немецкий', ru: 'Русский', ar: 'Арабский' }
+      : { en: 'English', de: 'German', ru: 'Russian', ar: 'Arabic' };
+
+    courses.forEach((course: any) => {
+      const xp = Number(course.xp || 0);
+      const isCurrent = course.id === 'DUOLINGO_EN_RU';
+      const row = document.createElement('div');
+      row.className = 'duolingo-course-row';
+
+      const labels = document.createElement('div');
+      labels.className = 'flex items-center justify-between gap-3 mb-1.5 text-xs';
+      const name = document.createElement('span');
+      name.className = isCurrent ? 'font-semibold text-foreground' : 'font-medium text-muted';
+      name.textContent = languageNames[course.learningLanguage] || course.title || course.learningLanguage;
+      const value = document.createElement('span');
+      value.className = 'font-mono tabular-nums text-muted';
+      value.textContent = `${formatter.format(xp)} XP`;
+      labels.append(name, value);
+
+      const track = document.createElement('div');
+      track.className = 'duolingo-xp-track';
+      const bar = document.createElement('div');
+      bar.className = `duolingo-xp-bar${isCurrent ? ' is-current' : ''}`;
+      bar.style.width = `${Math.max((xp / maxXp) * 100, xp > 0 ? 1.5 : 0)}%`;
+      track.appendChild(bar);
+      row.append(labels, track);
+      chart.appendChild(row);
+    });
+
+    target.appendChild(chart);
+  }
+
   // ───────── Main: load and render everything ─────────
   async function loadGitHubData(year: string) {
     const container = document.getElementById('gh-target');
@@ -721,6 +840,9 @@ const { activity, nav } = tr;
 
         const stepikUpdated = document.getElementById('stepik-last-updated');
         if (stepikUpdated) stepikUpdated.textContent = formatTimestamp(data.timestamp);
+
+        const duolingoUpdated = document.getElementById('duolingo-last-updated');
+        if (duolingoUpdated) duolingoUpdated.textContent = formatTimestamp(data.timestamp);
       }
 
       // Render GitHub graph
@@ -733,6 +855,7 @@ const { activity, nav } = tr;
       const currentYear = new Date().getFullYear().toString();
       if (year === currentYear) {
         renderStepikData(data);
+        renderDuolingoData(data);
       }
     } catch (error) {
       console.error('Activity load error:', error);
@@ -903,6 +1026,45 @@ const { activity, nav } = tr;
     width: 100%;
     height: auto;
     aspect-ratio: 1;
+  }
+
+  .duolingo-mark {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.8rem;
+    background: linear-gradient(145deg, #89e219, #58cc02);
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 0 #46a302, 0 10px 24px rgba(88,204,2,0.2);
+  }
+
+  .duolingo-xp-track {
+    height: 0.65rem;
+    overflow: hidden;
+    border: 1px solid var(--theme-border);
+    border-radius: 999px;
+    background: var(--theme-overlay);
+  }
+
+  .duolingo-xp-bar {
+    height: 100%;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--theme-text-muted) 50%, transparent);
+    transition: width 700ms cubic-bezier(.22,1,.36,1);
+  }
+
+  .duolingo-xp-bar.is-current {
+    background: linear-gradient(90deg, #58cc02, #89e219);
+    box-shadow: 0 0 14px rgba(88,204,2,0.35);
+  }
+
+  :global([data-theme="light"]) .duolingo-course-row a,
+  :global([data-theme="light"]) a[href*="duolingo.com/profile/"] {
+    color: #46a302;
   }
 
   .quote-video-frame {
