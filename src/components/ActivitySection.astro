@@ -797,13 +797,23 @@ const { activity, nav } = tr;
     const quoteCloseBtn = document.getElementById('close-quote-video-modal');
     const quoteVideo = document.getElementById('quote-video') as HTMLVideoElement | null;
 
-    function openQuoteModal() {
+    async function openQuoteModal() {
       if (!quoteModal) return;
       quoteModal.classList.remove('opacity-0', 'pointer-events-none');
       quoteModal.setAttribute('aria-hidden', 'false');
       quoteContent?.classList.replace('scale-95', 'scale-100');
       document.body.style.overflow = 'hidden';
       quoteCloseBtn?.focus();
+
+      if (quoteVideo) {
+        try {
+          await quoteVideo.play();
+        } catch {
+          // Some browsers only allow automatic playback without sound.
+          quoteVideo.muted = true;
+          await quoteVideo.play().catch(() => undefined);
+        }
+      }
     }
 
     function closeQuoteModal() {
@@ -896,10 +906,26 @@ const { activity, nav } = tr;
   }
 
   .quote-video-frame {
-    border: 1px solid color-mix(in srgb, var(--color-primary, #f97316) 35%, transparent);
+    color-scheme: dark;
+    border: 1px solid color-mix(in srgb, var(--glass-border) 70%, #f97316 30%);
     border-radius: 1.5rem;
-    background: color-mix(in srgb, var(--color-background, #0f172a) 88%, transparent);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 24px 80px rgba(0,0,0,0.38), 0 0 45px rgba(249,115,22,0.12);
+    background:
+      var(--glass-highlight),
+      color-mix(in srgb, var(--theme-bg) 90%, transparent);
+    box-shadow:
+      var(--shadow-card),
+      inset 0 1px 0 var(--glass-inset-top),
+      0 0 45px rgba(249,115,22,0.12);
     backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  :global([data-theme="light"]) .quote-video-frame {
+    color-scheme: light;
+    border-color: color-mix(in srgb, var(--theme-border) 75%, #f97316 25%);
+    box-shadow:
+      var(--shadow-card),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 0 40px rgba(249,115,22,0.08);
   }
 </style>
