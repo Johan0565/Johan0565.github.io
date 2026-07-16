@@ -171,21 +171,23 @@ const { activity, nav } = tr;
                 <p class="hidden text-sm text-red-400/90" id="duolingo-status"></p>
                 <div class="flex flex-col gap-1.5 group">
                   <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
-                    <span class="text-[0.75em] leading-none" aria-hidden="true">🇺🇸</span>
+                    <span class="duolingo-stat-icon" aria-hidden="true">
+                      <img src="/images/usaIcon.png" alt="" class="duolingo-stat-icon-image" width="48" height="34" loading="lazy" decoding="async">
+                    </span>
                     <span id="duolingo-level">--</span>
                   </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoXpLevel}</div>
                 </div>
                 <div class="flex flex-col gap-1.5 group">
                   <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
-                    <span class="text-[0.75em] leading-none" aria-hidden="true">⚡</span>
+                    <span class="duolingo-stat-icon" aria-hidden="true">⚡</span>
                     <span id="duolingo-xp">--</span>
                   </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoCourseXp}</div>
                 </div>
                 <div class="flex flex-col gap-1.5 group">
                   <div class="flex items-center gap-3 text-3xl md:text-4xl font-display font-bold text-foreground tabular-nums tracking-tight group-hover:text-[#58cc02] transition-colors duration-300">
-                    <span class="text-[0.75em] leading-none" aria-hidden="true">🔥</span>
+                    <span class="duolingo-stat-icon" aria-hidden="true">🔥</span>
                     <span id="duolingo-streak">--</span>
                   </div>
                   <div class="text-xs sm:text-sm font-medium text-muted uppercase tracking-wider">{activity.duolingoStreak}</div>
@@ -1068,6 +1070,26 @@ const { activity, nav } = tr;
     border-radius: 0.8rem;
     object-fit: cover;
     box-shadow: 0 8px 22px rgba(88,204,2,0.2);
+  }
+
+  .duolingo-stat-icon {
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    flex: 0 0 1em;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    line-height: 1;
+  }
+
+  .duolingo-stat-icon-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 0.72em;
+    object-fit: contain;
+    border-radius: 0.14em;
   }
 
   :global([data-theme="light"]) a[href*="duolingo.com/profile/"] {
