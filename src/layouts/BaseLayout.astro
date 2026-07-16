@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
 import ParticlesBackground from '../components/ParticlesBackground.astro';
+import MicrosoftClarity from '../components/MicrosoftClarity.astro';
 
 import '../styles/global.css';
 
@@ -27,6 +28,9 @@ const alternateFullUrl = new URL(alternateUrl, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Behavioral analytics (production only) -->
+    <MicrosoftClarity />
 
     <!-- Theme detection: runs before first paint to prevent FOUC -->
     <script is:inline>
