@@ -478,19 +478,13 @@ const { activity, nav } = tr;
     const commitsByDay = [0, 0, 0, 0, 0, 0, 0];
 
     if (dayData && dayData.length > 0) {
-      const today = new Date();
-      const thirtyDaysAgo = new Date(today);
-      thirtyDaysAgo.setDate(today.getDate() - 30);
-
       dayData.forEach(d => {
         const dt = new Date(d.date + 'T00:00:00');
-        if (dt >= thirtyDaysAgo && dt <= today) {
-          // JS getDay(): 0=Sun, 1=Mon ...
-          let dow = dt.getDay(); // 0=Sun
-          // Convert to ISO: 0=Mon ... 6=Sun
-          dow = dow === 0 ? 6 : dow - 1;
-          commitsByDay[dow] += d.count;
-        }
+        // JS getDay(): 0=Sun, 1=Mon ...
+        let dow = dt.getDay(); // 0=Sun
+        // Convert to ISO: 0=Mon ... 6=Sun
+        dow = dow === 0 ? 6 : dow - 1;
+        commitsByDay[dow] += d.count;
       });
     }
 
@@ -701,13 +695,11 @@ const { activity, nav } = tr;
       // Render GitHub graph
       const dayData = renderGitHubGraph(data?.github, container);
 
-      // Render radar chart (only for the current year)
-      const currentYear = new Date().getFullYear().toString();
-      if (year === currentYear) {
-        renderRadarChart(dayData);
-      }
+      // Render radar chart for the selected year
+      renderRadarChart(dayData);
 
       // Render Stepik (only on initial load — year 2026)
+      const currentYear = new Date().getFullYear().toString();
       if (year === currentYear) {
         renderStepikData(data);
       }
