@@ -142,6 +142,19 @@ export const translations = {
         stack: ['Java', 'Spring Boot', 'Spring Security (JWT)', 'PostgreSQL', 'Yandex MapKit', 'OpenStreetMap'],
         desc: 'КИС для поиска и аренды коммерческой недвижимости формата «стрит-ритейл». Включает умный алгоритм рекомендаций на основе пространственного анализа (Yandex MapKit), который оценивает инфраструктуру и снижает в выдаче помещения с прямыми конкурентами поблизости.',
         comment: 'Мой комментарий: целью было сделать проект в кратчайшие сроки (1.5 мес), поэтому некоторые адреса захардкожены в код, не соблюдена чистая архитектура, но в целом проект за такие сроки получился оптимизированным и отказоустойчивым.',
+      },
+      proj2: {
+        title: 'Coursera Subtitles Extension',
+        stack: ['JavaScript', 'Chrome Extension (MV3)', 'Google Translate API', 'CSS3'],
+        desc: 'Браузерное расширение для платформы Coursera, которое переводит видеосубтитры в реальном времени на 31 язык. Инструмент снимает языковые ограничения для студентов со всего мира, предлагая гибкие настройки отображения и режим двуязычного чтения.',
+        comment: 'Мой комментарий: расширение было сделано из-за отсуствия нормальнных опенсурс бесплатных аналогов как в chrome web store, так и на git hub (был сырой репозиторий без нормальных рабочих субтитров, который меня вдохновил, но я его как автора идеи указал, думаю слишком много сделал для него...',
+        features: [
+          'Real-time перевод — автоматический перехват и перевод субтитров прямо во время воспроизведения видео на Coursera.',
+          'Билингвальный режим — синхронное отображение оригинального текста и его перевода (идеально для изучающих иностранные языки).',
+          'Умный поиск языков — встроенная фильтрация в выпадающем списке для быстрого выбора из 31 доступного языка.',
+          'Глубокая кастомизация UI — изменение порядка текста, выбор цветов через Color Picker, динамическое изменение ширины контейнера (от 40% до 100%).',
+          'Локальное сохранение — расширение запоминает все настройки пользователя и автоматически применяет их при следующем открытии.',
+        ],
       }
     },
     toast: {
@@ -300,6 +313,19 @@ export const translations = {
         stack: ['Java', 'Spring Boot', 'Spring Security (JWT)', 'PostgreSQL', 'Yandex MapKit', 'OpenStreetMap'],
         desc: 'CIS for searching and renting commercial real estate in the "street retail" format. Includes a smart recommendation algorithm based on spatial analysis (Yandex MapKit), which evaluates infrastructure and lowers the ranking of premises with direct competitors nearby.',
         comment: 'My comment: the goal was to make the project in the shortest possible time (1.5 months), so some addresses are hardcoded, clean architecture is not fully respected, but overall the project turned out to be optimized and fault-tolerant for such a timeframe.',
+      },
+      proj2: {
+        title: 'Coursera Subtitles Extension',
+        stack: ['JavaScript', 'Chrome Extension (MV3)', 'Google Translate API', 'CSS3'],
+        desc: 'A browser extension for the Coursera platform that translates video subtitles in real time into 31 languages. The tool removes language barriers for students worldwide, offering flexible display settings and a bilingual reading mode.',
+        comment: 'My comment: the extension was made due to the lack of normal open-source free analogs both in the Chrome Web Store and on GitHub (there was a raw repository without normally working subtitles that inspired me, but I credited him as the author of the idea, though I think I did too much for him...',
+        features: [
+          'Real-time translation — automatic interception and translation of subtitles during Coursera video playback.',
+          'Bilingual mode — synchronized display of original text and its translation (ideal for language learners).',
+          'Smart language search — built-in filtering in the dropdown for quick selection from 31 available languages.',
+          'Deep UI customization — text order switching, color selection via Color Picker, dynamic container width adjustment (40% to 100%).',
+          'Local storage — the extension remembers all user settings and automatically applies them on the next video session.',
+        ],
       }
     },
     toast: {
