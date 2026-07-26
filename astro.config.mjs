@@ -7,8 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://magomedov.online',
   i18n: {
-    defaultLocale: 'ru',
-    locales: ['ru', 'en'],
+    defaultLocale: 'en',
+    locales: ['en', 'ru'],
     routing: {
       prefixDefaultLocale: false,
     },

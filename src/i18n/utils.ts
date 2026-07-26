@@ -13,19 +13,19 @@ export function t(locale: Locale) {
  */
 export function getLocaleFromUrl(url: URL): Locale {
   const [, segment] = url.pathname.split('/');
-  if (segment === 'en') return 'en';
-  return 'ru';
+  if (segment === 'ru') return 'ru';
+  return 'en';
 }
 
 /**
  * Get the URL for the alternate language version of the current page.
  */
 export function getAlternateUrl(pathname: string, currentLocale: Locale): string {
-  if (currentLocale === 'ru') {
-    // Russian → English: prepend /en
-    return '/en' + (pathname === '/' ? '/' : pathname);
+  if (currentLocale === 'en') {
+    // English → Russian: prepend /ru
+    return '/ru' + (pathname === '/' ? '/' : pathname);
   }
-  // English → Russian: strip /en prefix
-  const stripped = pathname.replace(/^\/en\/?/, '/');
+  // Russian → English: strip /ru prefix
+  const stripped = pathname.replace(/^\/ru\/?/, '/');
   return stripped || '/';
 }

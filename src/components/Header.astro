@@ -10,8 +10,8 @@ interface Props {
 
 const { locale } = Astro.props;
 const tr = t(locale);
-const homeUrl = locale === 'ru' ? '/' : '/en/';
-const activityUrl = locale === 'ru' ? '/activity' : '/en/activity';
+const homeUrl = locale === 'ru' ? '/ru/' : '/';
+const activityUrl = locale === 'ru' ? '/ru/activity' : '/activity';
 
 const currentPath = Astro.url.pathname;
 // Using a simple check: if it contains 'activity', it's the activity page
@@ -39,7 +39,7 @@ const isHome = !isActivity && !isProjects;
         {tr.nav.activity}
       </a>
       <a
-        href={locale === 'ru' ? '/projects' : '/en/projects'}
+        href={locale === 'ru' ? '/ru/projects' : '/projects'}
         class={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-foreground transition-all duration-200 ${isProjects ? 'bg-overlay-hover' : 'hover:bg-overlay-hover'}`}
         aria-current={isProjects ? "page" : undefined}
       >
