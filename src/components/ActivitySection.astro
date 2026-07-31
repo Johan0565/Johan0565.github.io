@@ -219,14 +219,20 @@ const { activity, nav } = tr;
         <div class="coursera-tracker-inner">
           <!-- Left: Certificate Preview -->
           <div class="coursera-preview" id="coursera-preview">
-            <div class="coursera-preview-frame" id="coursera-preview-frame">
+            <div class="coursera-preview-frame group cursor-pointer" id="coursera-preview-frame" role="button" aria-label="Expand certificate">
               <iframe
                 id="coursera-pdf-viewer"
-                class="coursera-pdf-iframe"
-                src="/Coursera/Coursera QSYOSOTAYTLU.pdf"
+                class="coursera-pdf-iframe pointer-events-none"
+                src="/Coursera/Coursera QSYOSOTAYTLU.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
                 title="Certificate Preview"
+                tabindex="-1"
               ></iframe>
-              <div class="coursera-preview-placeholder" id="coursera-preview-placeholder">
+              <div class="absolute inset-0 z-10 flex items-center justify-center transition-colors group-hover:bg-primary/5 pointer-events-auto">
+                <div class="bg-background/80 backdrop-blur-sm p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100 text-primary shadow-lg border border-primary/20">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="coursera-preview-placeholder pointer-events-none" id="coursera-preview-placeholder">
                 <div class="coursera-preview-placeholder-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -438,6 +444,21 @@ const { activity, nav } = tr;
             <p class="text-sm text-muted mt-auto">{activity.quoteDesc}</p>
           </div>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coursera Fullscreen Certificate Modal -->
+  <div id="coursera-cert-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="absolute inset-0 bg-background/90 backdrop-blur-md" id="coursera-cert-modal-backdrop"></div>
+    <div id="coursera-cert-modal-content" class="relative w-full max-w-5xl h-[85vh] md:h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
+      <div class="flex justify-end mb-4">
+        <button type="button" id="close-coursera-cert-modal" class="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-overlay border border-edge hover:bg-primary/15 text-muted hover:text-primary transition-all shadow-lg" aria-label="Close certificate">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="flex-1 w-full bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_70px_rgba(249,115,22,0.15)] border border-primary/20">
+        <iframe id="coursera-cert-modal-iframe" class="w-full h-full border-none block" src="" title="Full Certificate"></iframe>
       </div>
     </div>
   </div>
@@ -1039,7 +1060,7 @@ const { activity, nav } = tr;
           setTimeout(() => {
             if (isCompleted && pdf) {
               if (iframe) {
-                iframe.src = pdf;
+                iframe.src = pdf + '#view=FitH&toolbar=0&navpanes=0&scrollbar=0';
                 iframe.style.display = 'block';
               }
               if (placeholder) placeholder.style.display = 'none';
@@ -1156,6 +1177,56 @@ const { activity, nav } = tr;
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && quoteModal && !quoteModal.classList.contains('opacity-0')) {
         closeQuoteModal();
+      }
+    });
+
+    // Coursera Fullscreen Modal Logic
+    const courseraPreviewFrame = document.getElementById('coursera-preview-frame');
+    const courseraCertModal = document.getElementById('coursera-cert-modal');
+    const courseraCertModalContent = document.getElementById('coursera-cert-modal-content');
+    const courseraCertModalBackdrop = document.getElementById('coursera-cert-modal-backdrop');
+    const closeCourseraCertBtn = document.getElementById('close-coursera-cert-modal');
+    const courseraCertIframe = document.getElementById('coursera-cert-modal-iframe') as HTMLIFrameElement | null;
+    let currentCourseraPdf = '/Coursera/Coursera QSYOSOTAYTLU.pdf';
+
+    // Update current pdf on step click
+    document.querySelectorAll('.coursera-step').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        if (el.classList.contains('is-completed') && el.dataset.pdf) {
+          currentCourseraPdf = el.dataset.pdf;
+        }
+      });
+    });
+
+    function openCourseraCertModal() {
+      if (!courseraCertModal || !document.querySelector('.coursera-step.is-active.is-completed')) return;
+      if (courseraCertIframe) {
+        courseraCertIframe.src = currentCourseraPdf + '#toolbar=0&navpanes=0&scrollbar=0&view=Fit';
+      }
+      courseraCertModal.classList.remove('opacity-0', 'pointer-events-none');
+      courseraCertModal.removeAttribute('aria-hidden');
+      courseraCertModalContent?.classList.replace('scale-95', 'scale-100');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCourseraCertModal() {
+      if (!courseraCertModal) return;
+      courseraCertModal.classList.add('opacity-0', 'pointer-events-none');
+      courseraCertModal.setAttribute('aria-hidden', 'true');
+      courseraCertModalContent?.classList.replace('scale-100', 'scale-95');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        if (courseraCertIframe) courseraCertIframe.src = '';
+      }, 300);
+    }
+
+    courseraPreviewFrame?.addEventListener('click', openCourseraCertModal);
+    closeCourseraCertBtn?.addEventListener('click', closeCourseraCertModal);
+    courseraCertModalBackdrop?.addEventListener('click', closeCourseraCertModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && courseraCertModal && !courseraCertModal.classList.contains('opacity-0')) {
+        closeCourseraCertModal();
       }
     });
 
@@ -1386,7 +1457,7 @@ const { activity, nav } = tr;
   .coursera-preview-frame {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 11 / 8.5;
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid var(--theme-border-dim);
@@ -1537,7 +1608,7 @@ const { activity, nav } = tr;
     position: absolute;
     left: 20px;
     right: 20px;
-    top: 50%;
+    top: 32px;
     height: 3px;
     background: var(--theme-overlay-active);
     border-radius: 9999px;
@@ -1748,6 +1819,10 @@ const { activity, nav } = tr;
       height: 34px;
     }
 
+    .coursera-timeline-track {
+      top: 29px;
+    }
+
     .coursera-step-check {
       width: 15px;
       height: 15px;
@@ -1773,6 +1848,10 @@ const { activity, nav } = tr;
     .coursera-step-dot {
       width: 28px;
       height: 28px;
+    }
+
+    .coursera-timeline-track {
+      top: 26px;
     }
 
     .coursera-step-dot::before {
