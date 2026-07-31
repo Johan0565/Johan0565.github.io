@@ -220,13 +220,12 @@ const { activity, nav } = tr;
           <!-- Left: Certificate Preview -->
           <div class="coursera-preview" id="coursera-preview">
             <div class="coursera-preview-frame group cursor-pointer" id="coursera-preview-frame" role="button" aria-label="Expand certificate">
-              <iframe
-                id="coursera-pdf-viewer"
-                class="coursera-pdf-iframe pointer-events-none"
-                src="/Coursera/Coursera QSYOSOTAYTLU.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
-                title="Certificate Preview"
-                tabindex="-1"
-              ></iframe>
+              <img
+                id="coursera-img-viewer"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                src="/Coursera/1.png"
+                alt="Certificate Preview"
+              />
               <div class="absolute inset-0 z-10 flex items-center justify-center transition-colors group-hover:bg-primary/5 pointer-events-auto">
                 <div class="bg-background/80 backdrop-blur-sm p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100 text-primary shadow-lg border border-primary/20">
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -289,49 +288,49 @@ const { activity, nav } = tr;
                 <div class="coursera-timeline-track-fill"></div>
               </div>
               
-              <button class="coursera-step is-completed is-active" data-step="1" data-pdf="/Coursera/Coursera QSYOSOTAYTLU.pdf" data-link="https://coursera.org/share/e8cde4d71770bfaa10331a1207dfaf72" aria-label={activity.courseraCourse1} type="button">
+              <button class="coursera-step is-completed is-active" data-step="1" data-img="/Coursera/1.png" data-link="https://coursera.org/share/e8cde4d71770bfaa10331a1207dfaf72" aria-label={activity.courseraCourse1} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 <span class="coursera-step-label">1</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="2" data-pdf="" data-link="" aria-label={activity.courseraCourse2} type="button">
+              <button class="coursera-step is-locked" data-step="2" data-img="" data-link="" aria-label={activity.courseraCourse2} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <span class="coursera-step-label">2</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="3" data-pdf="" data-link="" aria-label={activity.courseraCourse3} type="button">
+              <button class="coursera-step is-locked" data-step="3" data-img="" data-link="" aria-label={activity.courseraCourse3} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <span class="coursera-step-label">3</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="4" data-pdf="" data-link="" aria-label={activity.courseraCourse4} type="button">
+              <button class="coursera-step is-locked" data-step="4" data-img="" data-link="" aria-label={activity.courseraCourse4} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <span class="coursera-step-label">4</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="5" data-pdf="" data-link="" aria-label={activity.courseraCourse5} type="button">
+              <button class="coursera-step is-locked" data-step="5" data-img="" data-link="" aria-label={activity.courseraCourse5} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <span class="coursera-step-label">5</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="6" data-pdf="" data-link="" aria-label={activity.courseraCourse6} type="button">
+              <button class="coursera-step is-locked" data-step="6" data-img="" data-link="" aria-label={activity.courseraCourse6} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <span class="coursera-step-label">6</span>
               </button>
 
-              <button class="coursera-step is-locked" data-step="7" data-pdf="" data-link="" aria-label={activity.courseraCourse7} type="button">
+              <button class="coursera-step is-locked" data-step="7" data-img="" data-link="" aria-label={activity.courseraCourse7} type="button">
                 <span class="coursera-step-dot">
                   <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
@@ -449,16 +448,16 @@ const { activity, nav } = tr;
   </div>
 
   <!-- Coursera Fullscreen Certificate Modal -->
-  <div id="coursera-cert-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-hidden="true">
+  <div id="coursera-cert-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-opacity duration-500" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="absolute inset-0 bg-background/90 backdrop-blur-md" id="coursera-cert-modal-backdrop"></div>
-    <div id="coursera-cert-modal-content" class="relative w-full max-w-5xl h-[85vh] md:h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
-      <div class="flex justify-end mb-4">
+    <div id="coursera-cert-modal-content" class="relative w-full max-w-5xl h-[85vh] md:h-[90vh] flex flex-col items-center justify-center transform scale-[0.85] opacity-0 transition-all duration-500 ease-out">
+      <div class="flex justify-end w-full max-w-4xl mb-4">
         <button type="button" id="close-coursera-cert-modal" class="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-overlay border border-edge hover:bg-primary/15 text-muted hover:text-primary transition-all shadow-lg" aria-label="Close certificate">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
-      <div class="flex-1 w-full bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_70px_rgba(249,115,22,0.15)] border border-primary/20">
-        <iframe id="coursera-cert-modal-iframe" class="w-full h-full border-none block" src="" title="Full Certificate"></iframe>
+      <div class="w-full max-w-4xl flex items-center justify-center rounded-xl md:rounded-2xl overflow-hidden shadow-[0_20px_70px_rgba(249,115,22,0.2)] border border-primary/20 bg-black/5">
+        <img id="coursera-cert-modal-img" class="max-w-full max-h-[75vh] object-contain" src="" alt="Full Certificate" />
       </div>
     </div>
   </div>
@@ -1050,22 +1049,22 @@ const { activity, nav } = tr;
           }, 200);
         }
 
-        // Update PDF preview
-        const iframe = document.getElementById('coursera-pdf-viewer') as HTMLIFrameElement | null;
+        // Update Image preview
+        const img = document.getElementById('coursera-img-viewer') as HTMLImageElement | null;
         const placeholder = document.getElementById('coursera-preview-placeholder');
         const previewFrame = document.getElementById('coursera-preview-frame');
 
         if (previewFrame) {
           previewFrame.classList.add('coursera-preview-switching');
           setTimeout(() => {
-            if (isCompleted && pdf) {
-              if (iframe) {
-                iframe.src = pdf + '#view=FitH&toolbar=0&navpanes=0&scrollbar=0';
-                iframe.style.display = 'block';
+            if (isCompleted && el.dataset.img) {
+              if (img) {
+                img.src = el.dataset.img;
+                img.style.display = 'block';
               }
               if (placeholder) placeholder.style.display = 'none';
             } else {
-              if (iframe) iframe.style.display = 'none';
+              if (img) img.style.display = 'none';
               if (placeholder) placeholder.style.display = 'flex';
             }
             previewFrame.classList.remove('coursera-preview-switching');
@@ -1186,27 +1185,28 @@ const { activity, nav } = tr;
     const courseraCertModalContent = document.getElementById('coursera-cert-modal-content');
     const courseraCertModalBackdrop = document.getElementById('coursera-cert-modal-backdrop');
     const closeCourseraCertBtn = document.getElementById('close-coursera-cert-modal');
-    const courseraCertIframe = document.getElementById('coursera-cert-modal-iframe') as HTMLIFrameElement | null;
-    let currentCourseraPdf = '/Coursera/Coursera QSYOSOTAYTLU.pdf';
+    const courseraCertImg = document.getElementById('coursera-cert-modal-img') as HTMLImageElement | null;
+    let currentCourseraImg = '/Coursera/1.png';
 
-    // Update current pdf on step click
+    // Update current img on step click
     document.querySelectorAll('.coursera-step').forEach(btn => {
       btn.addEventListener('click', () => {
         const el = btn as HTMLElement;
-        if (el.classList.contains('is-completed') && el.dataset.pdf) {
-          currentCourseraPdf = el.dataset.pdf;
+        if (el.classList.contains('is-completed') && el.dataset.img) {
+          currentCourseraImg = el.dataset.img;
         }
       });
     });
 
     function openCourseraCertModal() {
       if (!courseraCertModal || !document.querySelector('.coursera-step.is-active.is-completed')) return;
-      if (courseraCertIframe) {
-        courseraCertIframe.src = currentCourseraPdf + '#toolbar=0&navpanes=0&scrollbar=0&view=Fit';
+      if (courseraCertImg) {
+        courseraCertImg.src = currentCourseraImg;
       }
       courseraCertModal.classList.remove('opacity-0', 'pointer-events-none');
       courseraCertModal.removeAttribute('aria-hidden');
-      courseraCertModalContent?.classList.replace('scale-95', 'scale-100');
+      courseraCertModalContent?.classList.replace('scale-[0.85]', 'scale-100');
+      courseraCertModalContent?.classList.remove('opacity-0');
       document.body.style.overflow = 'hidden';
     }
 
@@ -1214,11 +1214,12 @@ const { activity, nav } = tr;
       if (!courseraCertModal) return;
       courseraCertModal.classList.add('opacity-0', 'pointer-events-none');
       courseraCertModal.setAttribute('aria-hidden', 'true');
-      courseraCertModalContent?.classList.replace('scale-100', 'scale-95');
+      courseraCertModalContent?.classList.replace('scale-100', 'scale-[0.85]');
+      courseraCertModalContent?.classList.add('opacity-0');
       document.body.style.overflow = '';
       setTimeout(() => {
-        if (courseraCertIframe) courseraCertIframe.src = '';
-      }, 300);
+        if (courseraCertImg) courseraCertImg.src = '';
+      }, 500);
     }
 
     courseraPreviewFrame?.addEventListener('click', openCourseraCertModal);
