@@ -210,6 +210,138 @@ const { activity, nav } = tr;
         </span>
         <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
       </h2>
+
+      <!-- ═══════ Coursera Google PM Progress Tracker ═══════ -->
+      <div class="liquid-glass-card coursera-tracker mb-6 md:mb-8 relative overflow-hidden" id="coursera-tracker">
+        <!-- Decorative background accent -->
+        <div class="coursera-tracker-bg-glow"></div>
+        
+        <div class="coursera-tracker-inner">
+          <!-- Left: Certificate Preview -->
+          <div class="coursera-preview" id="coursera-preview">
+            <div class="coursera-preview-frame" id="coursera-preview-frame">
+              <iframe
+                id="coursera-pdf-viewer"
+                class="coursera-pdf-iframe"
+                src="/Coursera/Coursera QSYOSOTAYTLU.pdf"
+                title="Certificate Preview"
+              ></iframe>
+              <div class="coursera-preview-placeholder" id="coursera-preview-placeholder">
+                <div class="coursera-preview-placeholder-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+                <p class="coursera-preview-placeholder-text">{activity.courseraProgressLocked}</p>
+              </div>
+            </div>
+            <a href="https://coursera.org/share/e8cde4d71770bfaa10331a1207dfaf72" target="_blank" rel="noopener noreferrer" class="coursera-verify-link" id="coursera-verify-link">
+              {activity.courseraViewCert}
+            </a>
+          </div>
+
+          <!-- Right: Info + Progress -->
+          <div class="coursera-info">
+            <!-- Header -->
+            <div class="coursera-info-header">
+              <div class="coursera-google-logo" aria-hidden="true">
+                <svg viewBox="0 0 272 92" width="80" height="28">
+                  <path fill="#4285F4" d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/>
+                  <path fill="#EA4335" d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/>
+                  <path fill="#FBBC05" d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z"/>
+                  <path fill="#4285F4" d="M225 3v65h-9.5V3h9.5z"/>
+                  <path fill="#34A853" d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z"/>
+                  <path fill="#EA4335" d="M35.29 41.19V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49-.21z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="coursera-info-title">{activity.courseraProgressTitle}</h3>
+                <p class="coursera-info-subtitle">{activity.courseraProgressSubtitle}</p>
+              </div>
+            </div>
+
+            <!-- Progress counter -->
+            <div class="coursera-progress-counter">
+              <span class="coursera-progress-number">1</span>
+              <span class="coursera-progress-label">{activity.courseraProgressOf} 7 {activity.courseraProgressCourses}</span>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="coursera-progress-bar-wrap">
+              <div class="coursera-progress-bar">
+                <div class="coursera-progress-bar-fill" style="width: 14.28%"></div>
+              </div>
+            </div>
+
+            <!-- Step circles timeline -->
+            <div class="coursera-timeline" id="coursera-timeline">
+              <div class="coursera-timeline-track">
+                <div class="coursera-timeline-track-fill"></div>
+              </div>
+              
+              <button class="coursera-step is-completed is-active" data-step="1" data-pdf="/Coursera/Coursera QSYOSOTAYTLU.pdf" data-link="https://coursera.org/share/e8cde4d71770bfaa10331a1207dfaf72" aria-label={activity.courseraCourse1} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="coursera-step-label">1</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="2" data-pdf="" data-link="" aria-label={activity.courseraCourse2} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">2</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="3" data-pdf="" data-link="" aria-label={activity.courseraCourse3} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">3</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="4" data-pdf="" data-link="" aria-label={activity.courseraCourse4} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">4</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="5" data-pdf="" data-link="" aria-label={activity.courseraCourse5} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">5</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="6" data-pdf="" data-link="" aria-label={activity.courseraCourse6} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">6</span>
+              </button>
+
+              <button class="coursera-step is-locked" data-step="7" data-pdf="" data-link="" aria-label={activity.courseraCourse7} type="button">
+                <span class="coursera-step-dot">
+                  <svg class="coursera-step-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <span class="coursera-step-label">7</span>
+              </button>
+            </div>
+
+            <!-- Course name display -->
+            <div class="coursera-course-name" id="coursera-course-name">
+              <span class="coursera-course-name-text">{activity.courseraCourse1}</span>
+              <span class="coursera-course-status is-completed">✓ {activity.courseraProgressCompleted}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <!-- Stepik MySQL -->
         <a href="https://stepik.org/cert/2820543?lang=en" target="_blank" rel="noopener noreferrer" class="liquid-glass-card p-6 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors group cursor-pointer relative z-10 h-full">
@@ -853,6 +985,87 @@ const { activity, nav } = tr;
       });
     });
 
+    // ───────── Coursera Progress Tracker ─────────
+    const courseNames: Record<string, string> = {};
+    document.querySelectorAll('.coursera-step').forEach(btn => {
+      const step = (btn as HTMLElement).dataset.step;
+      const label = btn.getAttribute('aria-label');
+      if (step && label) courseNames[step] = label;
+    });
+
+    const completedLabel = document.querySelector('.coursera-course-status.is-completed')?.textContent?.trim() || '✓ Completed';
+    const lockedLabel = (() => {
+      const placeholder = document.getElementById('coursera-preview-placeholder');
+      return placeholder?.querySelector('.coursera-preview-placeholder-text')?.textContent?.trim() || 'Not yet completed';
+    })();
+
+    document.querySelectorAll('.coursera-step').forEach(stepBtn => {
+      stepBtn.addEventListener('click', () => {
+        const el = stepBtn as HTMLElement;
+        const step = el.dataset.step || '1';
+        const pdf = el.dataset.pdf || '';
+        const link = el.dataset.link || '';
+        const isCompleted = el.classList.contains('is-completed');
+
+        // Update active step
+        document.querySelectorAll('.coursera-step').forEach(s => s.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        // Update course name + status
+        const courseNameEl = document.getElementById('coursera-course-name');
+        if (courseNameEl) {
+          courseNameEl.classList.add('coursera-course-name-exit');
+          setTimeout(() => {
+            const nameText = courseNameEl.querySelector('.coursera-course-name-text');
+            const statusText = courseNameEl.querySelector('.coursera-course-status');
+            if (nameText) nameText.textContent = courseNames[step] || '';
+            if (statusText) {
+              statusText.textContent = isCompleted ? completedLabel : `🔒 ${lockedLabel}`;
+              statusText.className = `coursera-course-status ${isCompleted ? 'is-completed' : 'is-locked'}`;
+            }
+            courseNameEl.classList.remove('coursera-course-name-exit');
+            courseNameEl.classList.add('coursera-course-name-enter');
+            setTimeout(() => courseNameEl.classList.remove('coursera-course-name-enter'), 350);
+          }, 200);
+        }
+
+        // Update PDF preview
+        const iframe = document.getElementById('coursera-pdf-viewer') as HTMLIFrameElement | null;
+        const placeholder = document.getElementById('coursera-preview-placeholder');
+        const previewFrame = document.getElementById('coursera-preview-frame');
+
+        if (previewFrame) {
+          previewFrame.classList.add('coursera-preview-switching');
+          setTimeout(() => {
+            if (isCompleted && pdf) {
+              if (iframe) {
+                iframe.src = pdf;
+                iframe.style.display = 'block';
+              }
+              if (placeholder) placeholder.style.display = 'none';
+            } else {
+              if (iframe) iframe.style.display = 'none';
+              if (placeholder) placeholder.style.display = 'flex';
+            }
+            previewFrame.classList.remove('coursera-preview-switching');
+          }, 300);
+        }
+
+        // Update verify link
+        const verifyLink = document.getElementById('coursera-verify-link') as HTMLAnchorElement | null;
+        if (verifyLink) {
+          if (isCompleted && link) {
+            verifyLink.href = link;
+            verifyLink.style.opacity = '1';
+            verifyLink.style.pointerEvents = 'auto';
+          } else {
+            verifyLink.style.opacity = '0.3';
+            verifyLink.style.pointerEvents = 'none';
+          }
+        }
+      });
+    });
+
     document.querySelectorAll('.gh-year-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const year = (e.currentTarget as HTMLElement).dataset.year;
@@ -1124,5 +1337,473 @@ const { activity, nav } = tr;
       var(--shadow-card),
       inset 0 1px 0 rgba(255,255,255,0.9),
       0 0 40px rgba(249,115,22,0.08);
+  }
+
+  /* ═══════════════════════════════════════════
+     COURSERA PROGRESS TRACKER
+     ═══════════════════════════════════════════ */
+
+  .coursera-tracker {
+    padding: 0;
+  }
+
+  .coursera-tracker:hover {
+    transform: translateY(-2px);
+  }
+
+  .coursera-tracker-bg-glow {
+    position: absolute;
+    top: -60%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .coursera-tracker-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 0;
+    min-height: 320px;
+  }
+
+  .coursera-preview {
+    flex: 0 0 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-right: 1px solid var(--theme-border);
+    background: var(--theme-overlay);
+    border-radius: 24px 0 0 24px;
+    gap: 12px;
+  }
+
+  .coursera-preview-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--theme-border-dim);
+    background: var(--theme-bg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  .coursera-preview-frame.coursera-preview-switching {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  .coursera-pdf-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .coursera-preview-placeholder {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--theme-text-muted);
+  }
+
+  .coursera-preview-placeholder-icon {
+    opacity: 0.25;
+  }
+
+  .coursera-preview-placeholder-text {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    opacity: 0.5;
+  }
+
+  .coursera-verify-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid rgba(249,115,22,0.2);
+    background: rgba(249,115,22,0.06);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .coursera-verify-link:hover {
+    background: rgba(249,115,22,0.14);
+    border-color: rgba(249,115,22,0.4);
+    box-shadow: 0 0 16px rgba(249,115,22,0.15);
+  }
+
+  .coursera-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 32px;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .coursera-info-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .coursera-google-logo {
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  .coursera-info-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--theme-text);
+    line-height: 1.3;
+  }
+
+  .coursera-info-subtitle {
+    font-size: 0.8125rem;
+    color: var(--theme-text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .coursera-progress-counter {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .coursera-progress-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  .coursera-progress-label {
+    font-size: 0.875rem;
+    color: var(--theme-text-muted);
+    font-weight: 500;
+  }
+
+  .coursera-progress-bar-wrap {
+    width: 100%;
+  }
+
+  .coursera-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--theme-overlay-active);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+
+  .coursera-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(.22,1,.36,1);
+    box-shadow: 0 0 10px rgba(249,115,22,0.4);
+  }
+
+  .coursera-timeline {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .coursera-timeline-track {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 50%;
+    height: 3px;
+    background: var(--theme-overlay-active);
+    border-radius: 9999px;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .coursera-timeline-track-fill {
+    height: 100%;
+    width: calc(100% / 7);
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    border-radius: 9999px;
+    box-shadow: 0 0 8px rgba(249,115,22,0.3);
+    transition: width 0.5s cubic-bezier(.22,1,.36,1);
+  }
+
+  .coursera-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .coursera-step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid var(--theme-border);
+    background: var(--theme-bg);
+    transition: all 0.35s cubic-bezier(.22,1,.36,1);
+    position: relative;
+  }
+
+  .coursera-step-dot::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .coursera-step-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--theme-text-muted);
+    transition: color 0.3s ease;
+  }
+
+  .coursera-step.is-completed .coursera-step-dot {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    border-color: #f97316;
+    box-shadow: 0 0 16px rgba(249,115,22,0.35);
+  }
+
+  .coursera-step.is-completed .coursera-step-label {
+    color: var(--color-primary);
+  }
+
+  .coursera-step-check {
+    width: 18px;
+    height: 18px;
+    color: #fff;
+  }
+
+  .coursera-step.is-locked .coursera-step-dot {
+    opacity: 0.45;
+  }
+
+  .coursera-step-lock {
+    width: 16px;
+    height: 16px;
+    color: var(--theme-text-muted);
+    opacity: 0.5;
+  }
+
+  .coursera-step.is-locked .coursera-step-label {
+    opacity: 0.45;
+  }
+
+  .coursera-step.is-active .coursera-step-dot::before {
+    border-color: rgba(249,115,22,0.5);
+    box-shadow: 0 0 12px rgba(249,115,22,0.2);
+  }
+
+  .coursera-step.is-active.is-completed .coursera-step-dot {
+    box-shadow: 0 0 22px rgba(249,115,22,0.5);
+    transform: scale(1.1);
+  }
+
+  .coursera-step.is-active.is-locked .coursera-step-dot {
+    opacity: 0.7;
+    border-color: rgba(249,115,22,0.4);
+  }
+
+  .coursera-step:hover .coursera-step-dot {
+    transform: scale(1.08);
+  }
+
+  .coursera-step.is-completed:hover .coursera-step-dot {
+    box-shadow: 0 0 24px rgba(249,115,22,0.5);
+  }
+
+  .coursera-step.is-locked:hover .coursera-step-dot {
+    opacity: 0.6;
+    border-color: var(--theme-text-muted);
+  }
+
+  .coursera-step:focus-visible .coursera-step-dot::before {
+    border-color: var(--color-primary);
+  }
+
+  .coursera-course-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--theme-overlay);
+    border: 1px solid var(--theme-border-dim);
+    border-radius: 12px;
+    min-height: 44px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .coursera-course-name-text {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--theme-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .coursera-course-status {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .coursera-course-status.is-completed {
+    color: #22c55e;
+  }
+
+  .coursera-course-status.is-locked {
+    color: var(--theme-text-muted);
+    opacity: 0.6;
+  }
+
+  .coursera-course-name-exit {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .coursera-course-name-enter {
+    animation: courseraNameSlideIn 350ms cubic-bezier(.22,1,.36,1) forwards;
+  }
+
+  @keyframes courseraNameSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .coursera-tracker-inner {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .coursera-preview {
+      flex: none;
+      border-right: none;
+      border-bottom: 1px solid var(--theme-border);
+      border-radius: 24px 24px 0 0;
+      padding: 20px;
+    }
+
+    .coursera-preview-frame {
+      max-width: 360px;
+    }
+
+    .coursera-info {
+      padding: 20px;
+    }
+
+    .coursera-step-dot {
+      width: 34px;
+      height: 34px;
+    }
+
+    .coursera-step-check {
+      width: 15px;
+      height: 15px;
+    }
+
+    .coursera-step-lock {
+      width: 13px;
+      height: 13px;
+    }
+
+    .coursera-course-name {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .coursera-course-name-text {
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .coursera-step-dot {
+      width: 28px;
+      height: 28px;
+    }
+
+    .coursera-step-dot::before {
+      inset: -4px;
+    }
+
+    .coursera-step-check {
+      width: 13px;
+      height: 13px;
+    }
+
+    .coursera-step-lock {
+      width: 11px;
+      height: 11px;
+    }
+
+    .coursera-step-label {
+      font-size: 0.625rem;
+    }
+
+    .coursera-progress-number {
+      font-size: 1.5rem;
+    }
+
+    .coursera-info-header {
+      gap: 10px;
+    }
+
+    .coursera-google-logo svg {
+      width: 60px;
+      height: 21px;
+    }
   }
 </style>
