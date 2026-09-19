@@ -14,12 +14,12 @@ export const biography = {
 
 export const pageMeta = {
   ru: {
-    home: { title: 'Магомедов Магомед — IT Project Manager в Москве', description: 'Магомедов Магомед Расулович — IT Project Manager / Technical PM из Москвы. Java, Spring Boot, управление IT-проектами, портфолио и сертификаты.' },
-    projects: { title: 'Проекты — Магомедов Магомед | Java и JavaScript', description: 'Проекты Магомедова Магомеда: Street Retail Aggregator на Java и Spring Boot, расширение Coursera Subtitles Extension. Описание, демо и исходный код.' },
-    activity: { title: 'Сертификаты и активность — Магомедов Магомед', description: 'Обучение и активность Магомедова Магомеда: прогресс Google Project Management, сертификаты Stepik, проекты GitHub и резюме IT Project Manager.' },
+    home: { title: 'Магомедов Магомед Расулович — IT Project Manager', description: 'Личный сайт Магомедова Магомеда Расуловича — IT Project Manager / Technical PM из Москвы. Проекты на Java и Spring Boot, образование, сертификаты и резюме.' },
+    projects: { title: 'Проекты — Магомедов Магомед Расулович', description: 'Проекты Магомедова Магомеда Расуловича: Street Retail Aggregator на Java и Spring Boot, расширение Coursera Subtitles Extension. Демо и исходный код.' },
+    activity: { title: 'Сертификаты и активность — Магомедов Магомед Расулович', description: 'Обучение и активность Магомедова Магомеда Расуловича: Google Project Management, сертификаты Stepik, GitHub и резюме IT Project Manager.' },
   },
   en: {
-    home: { title: 'Magomed Magomedov — IT Project Manager in Moscow', description: 'Magomed Rasulovich Magomedov — IT Project Manager / Technical PM in Moscow. Java, Spring Boot, enterprise integration, projects and certificates.' },
+    home: { title: 'Magomed Rasulovich Magomedov — IT Project Manager', description: 'Magomed Rasulovich Magomedov — IT Project Manager / Technical PM in Moscow. Java, Spring Boot, enterprise integration, projects and certificates.' },
     projects: { title: 'Projects — Magomed Magomedov | Java & JavaScript', description: 'Explore projects by Magomed Magomedov: Street Retail Aggregator with Java and Spring Boot, and Coursera Subtitles Extension. Demos and source code.' },
     activity: { title: 'Certificates & Activity — Magomed Magomedov', description: 'Magomed Magomedov’s learning and activity: Google Project Management progress, Stepik certificates, GitHub contributions and IT Project Manager resume.' },
   },
