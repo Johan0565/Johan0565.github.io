@@ -79,7 +79,7 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     <meta property="og:locale:alternate" content={locale === 'ru' ? 'en_US' : 'ru_RU'} />
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:alt" content={tr.hero.fullName} />
-    <meta property="og:site_name" content="Magomedov" />
+    <meta property="og:site_name" content={tr.hero.fullName} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
