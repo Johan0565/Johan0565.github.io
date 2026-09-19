@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../i18n/translations';
-import { t, getAlternateUrl } from '../i18n/utils';
+import { t } from '../i18n/utils';
+import { pageMeta, pagePath, structuredData, type PageKey } from '../data/seo';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Toast from '../components/Toast.astro';
@@ -12,15 +13,19 @@ import '../styles/global.css';
 
 interface Props {
   locale: Locale;
+  page?: PageKey;
 }
 
-const { locale } = Astro.props;
+const { locale, page = 'home' } = Astro.props;
 const tr = t(locale);
 const htmlLang = locale === 'ru' ? 'ru' : 'en';
 const alternateLang = locale === 'ru' ? 'en' : 'ru';
-const alternateUrl = getAlternateUrl(Astro.url.pathname, locale);
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const alternateUrl = pagePath(page, alternateLang);
+const canonicalUrl = new URL(pagePath(page, locale), Astro.site);
 const alternateFullUrl = new URL(alternateUrl, Astro.site);
+const meta = pageMeta[locale][page];
+const imageUrl = new URL('/images/avatar.jpg', Astro.site).href;
+const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -52,27 +57,36 @@ const alternateFullUrl = new URL(alternateUrl, Astro.site);
     </script>
 
     <!-- SEO -->
-    <title>{tr.meta.title}</title>
-    <meta name="description" content={tr.meta.description} />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="author" content={tr.hero.fullName} />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href={canonicalUrl.href} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
 
     <!-- i18n alternates -->
     <link rel="alternate" hreflang={htmlLang} href={canonicalUrl.href} />
     <link rel="alternate" hreflang={alternateLang} href={alternateFullUrl.href} />
-    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, 'en'), Astro.site).href} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={tr.meta.title} />
-    <meta property="og:description" content={tr.meta.description} />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
     <meta property="og:url" content={canonicalUrl.href} />
     <meta property="og:locale" content={locale === 'ru' ? 'ru_RU' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'ru' ? 'en_US' : 'ru_RU'} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={tr.hero.fullName} />
     <meta property="og:site_name" content="Magomedov" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={tr.meta.title} />
-    <meta name="twitter:description" content={tr.meta.description} />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={tr.hero.fullName} />
     <meta name="twitter:site" content="@MMagomedovR" />
 
     <!-- Favicons -->

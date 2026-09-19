@@ -1,0 +1,18 @@
+---
+import type { Locale } from '../i18n/translations';
+import { biography, pagePath } from '../data/seo';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isRu = locale === 'ru';
+---
+
+<section id="profile-summary" aria-labelledby="profile-summary-heading" class="section-container pb-10 md:pb-16">
+  <div class="liquid-glass-card p-6 md:p-8">
+    <h2 id="profile-summary-heading" class="text-h2 text-foreground mb-6">{isRu ? 'Кратко обо мне' : 'Profile at a glance'}</h2>
+    <p class="text-body-lg text-muted max-w-3xl">{biography[locale]}</p>
+    <div class="flex flex-wrap gap-6 mt-6 text-primary">
+      <a class="hover:underline" href={pagePath('projects', locale)}>{isRu ? 'Проекты и исходный код' : 'Projects and source code'} →</a>
+      <a class="hover:underline" href={pagePath('activity', locale)}>{isRu ? 'Сертификаты и резюме' : 'Certificates and resume'} →</a>
+    </div>
+  </div>
+</section>

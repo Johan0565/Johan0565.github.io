@@ -14,13 +14,16 @@ const { activity, nav } = tr;
 <section class="relative pb-10 md:pb-16 pt-4 md:pt-8" id="activity">
   <div class="section-container">
     
-    <h2 class="text-h2 text-foreground mb-12 md:mb-16 flex flex-col items-start gap-3">
+    <h1 class="text-h2 text-foreground mb-12 md:mb-16 flex flex-col items-start gap-3">
       <span class="flex items-center gap-3">
         <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
         {nav.activity}
       </span>
       <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
-    </h2>
+    </h1>
+    <p class="text-body-lg text-muted max-w-3xl mb-8">{locale === 'ru'
+      ? 'Обучение и профессиональная активность Магомедова Магомеда Расуловича: прогресс Google Project Management, сертификаты по управлению проектами и MySQL, GitHub и резюме.'
+      : 'Learning and professional activity of Magomed Rasulovich Magomedov: Google Project Management progress, project management and MySQL certificates, GitHub contributions and resume.'}</p>
 
     <!-- GitHub Activity -->
     <div class="mb-12 md:mb-16">
