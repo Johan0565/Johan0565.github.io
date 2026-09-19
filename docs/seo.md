@@ -1,8 +1,8 @@
 # SEO and search AI
 
-The site renders its content and JSON-LD at build time. Crawlers do not need JavaScript to read the biography, project descriptions, certificates or navigation.
+The site renders its content and JSON-LD at build time. The existing introduction, project descriptions, certificates and navigation are present in the HTML. Project details retain the original expandable-card UI.
 
-- Edit localized titles, descriptions and the short biography in `src/data/seo.ts`. The biography is shared by the visible home-page summary and Person structured data. Keep facts consistent with the portfolio.
+- Edit localized titles and descriptions in `src/data/seo.ts`. Person structured data reuses the existing hero description from `src/i18n/translations.ts`; no extra biography block is added to the interface. Keep facts consistent with the portfolio.
 - Each page has its own canonical URL, reciprocal English/Russian alternates and a page-specific English `x-default`. Canonical paths use trailing slashes.
 - `src/pages/sitemap.xml.ts` and `src/pages/robots.txt.ts` generate discovery files using the production URL in `astro.config.mjs`. Update `pageKeys`, page metadata and the SEO check when adding routes.
 - ProfilePage / Person describe the home pages. CollectionPage, BreadcrumbList and SoftwareSourceCode describe the other pages and projects. No unverified credentials or ratings are added.

@@ -8,8 +8,8 @@ export function pagePath(page: PageKey, locale: Locale) {
 }
 
 export const biography = {
-  ru: 'Магомедов Магомед Расулович — IT Project Manager / Technical PM из Москвы с практическим опытом разработки на Java и Spring Boot и интеграции корпоративных систем. Учится в Московском Политехническом Университете по направлению прикладной информатики. Его проекты — Street Retail Aggregator для поиска коммерческой недвижимости и расширение Coursera Subtitles Extension для перевода субтитров.',
-  en: 'Magomed Rasulovich Magomedov is an IT Project Manager / Technical PM based in Moscow, with hands-on experience in Java, Spring Boot, and enterprise systems integration. He studies Applied Computer Science at Moscow Polytechnic University. His projects include Street Retail Aggregator for commercial property search and Coursera Subtitles Extension for translating subtitles.',
+  ru: translations.ru.hero.description,
+  en: translations.en.hero.description,
 } satisfies Record<Locale, string>;
 
 export const pageMeta = {
