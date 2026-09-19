@@ -16,13 +16,16 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
 
 <section class="relative pb-10 md:pb-16 pt-4 md:pt-8" id="projects">
   <div class="section-container">
-    <h2 class="text-h2 text-foreground mb-8 md:mb-16 flex flex-col items-start gap-3">
+    <h1 class="text-h2 text-foreground mb-8 md:mb-16 flex flex-col items-start gap-3">
       <span class="flex items-center gap-3">
         <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_12px_rgba(249,115,22,0.5)]"></span>
         {tr.projects.title}
       </span>
       <span class="block h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-primary/0"></span>
-    </h2>
+    </h1>
+    <p class="text-body-lg text-muted max-w-3xl mb-8">{locale === 'ru'
+      ? 'Проекты Магомедова Магомеда Расуловича: поиск коммерческой недвижимости на Java и Spring Boot и расширение для перевода субтитров Coursera на JavaScript. Ниже — описание, технологии, демо и исходный код.'
+      : 'Projects by Magomed Rasulovich Magomedov: commercial property search with Java and Spring Boot, and a JavaScript extension for translating Coursera subtitles. Explore descriptions, technologies, demos and source code below.'}</p>
 
     <!-- Mobile Alert Notification -->
     <div class="block md:hidden mb-8 p-4 rounded-xl border border-primary/30 bg-[rgba(249,115,22,0.08)] backdrop-blur-md shadow-[0_4px_20px_rgba(249,115,22,0.1)] relative" id="projects-mobile-alert">
@@ -44,7 +47,7 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
           <div class="flex items-center gap-4">
             <span class="text-2xl shrink-0 mt-0.5 text-primary" aria-hidden="true">🏢</span>
             <div>
-              <h3 class="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors">{tr.projects.proj1.title}</h3>
+              <h2 id="street-retail-aggregator" class="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors">{tr.projects.proj1.title}</h2>
             </div>
           </div>
           <div class="flex items-center gap-4">
@@ -57,6 +60,7 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
           </div>
         </div>
 
+        <p class="text-base text-subtle leading-relaxed mt-4">{tr.projects.proj1.desc}</p>
         <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out project-content-wrapper">
           <div class="overflow-hidden">
             <div class="pt-6 mt-4 border-t border-white/10">
@@ -70,7 +74,6 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
                 ))}
               </div>
 
-              <p class="text-base text-subtle leading-relaxed mb-4">{tr.projects.proj1.desc}</p>
               <p class="text-sm text-muted leading-relaxed italic border-l-2 border-primary/50 pl-4 mb-6">{tr.projects.proj1.comment}</p>
               
               <!-- Carousel -->
@@ -109,7 +112,7 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
           <div class="flex items-center gap-4">
             <img src="/demo_2/Logo.png" alt="Coursera Subtitles Logo" class="w-7 h-7 shrink-0 object-contain drop-shadow-md" aria-hidden="true" />
             <div>
-              <h3 class="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors">{tr.projects.proj2.title}</h3>
+              <h2 id="coursera-subtitles" class="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors">{tr.projects.proj2.title}</h2>
             </div>
           </div>
           <div class="flex items-center gap-2 md:gap-4">
@@ -131,6 +134,7 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
           </div>
         </div>
 
+        <p class="text-base text-subtle leading-relaxed mt-4">{tr.projects.proj2.desc}</p>
         <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out project-content-wrapper">
           <div class="overflow-hidden">
             <div class="pt-6 mt-4 border-t border-white/10">
@@ -144,7 +148,6 @@ const proj2Images = ['/demo_2/0.png', '/demo_2/1.png', '/demo_2/2.png', '/demo_2
                 ))}
               </div>
 
-              <p class="text-base text-subtle leading-relaxed mb-4">{tr.projects.proj2.desc}</p>
               <p class="text-sm text-muted leading-relaxed italic border-l-2 border-primary/50 pl-4 mb-6">{tr.projects.proj2.comment}</p>
               
               <!-- Features list -->
