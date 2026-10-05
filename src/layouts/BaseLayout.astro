@@ -33,6 +33,7 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Analytics (production only) -->
@@ -46,24 +47,20 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
         d.classList.add('no-transition');
         var stored;
         try { stored = localStorage.getItem('theme'); } catch {}
-        var systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: light)') : null;
-        var preference = stored === 'dark' || stored === 'light' ? stored : 'system';
+        var preference = stored === 'dark' || stored === 'light' ? stored : 'dark';
         function applyTheme() {
           var choice = d.getAttribute('data-theme-preference');
-          var theme = choice === 'dark' || choice === 'light' ? choice : (systemTheme && systemTheme.matches ? 'light' : 'dark');
+          var theme = choice === 'light' ? 'light' : 'dark';
           d.setAttribute('data-theme', theme);
           d.style.colorScheme = theme;
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'light' ? '#fafafa' : '#000000');
         }
         d.setAttribute('data-theme-preference', preference);
         applyTheme();
-        if (systemTheme) {
-          if (systemTheme.addEventListener) systemTheme.addEventListener('change', applyTheme);
-          else if (systemTheme.addListener) systemTheme.addListener(applyTheme);
-        }
         window.addEventListener('storage', function(event) {
           if (event.key !== 'theme' && event.key !== null) return;
           var choice = event.newValue;
-          d.setAttribute('data-theme-preference', choice === 'dark' || choice === 'light' ? choice : 'system');
+          d.setAttribute('data-theme-preference', choice === 'light' ? 'light' : 'dark');
           applyTheme();
         });
         requestAnimationFrame(function() {
@@ -76,12 +73,11 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
 
     {page === 'home' && <script is:inline>
       (function() {
-        // Explicit localized URLs remain shareable; negotiate only the entry URL.
+        // English is the default; keep an explicitly saved Russian preference.
         if (location.pathname !== '/') return;
         var preferred;
         try { preferred = localStorage.getItem('locale'); } catch {}
-        var language = preferred || ((navigator.languages && navigator.languages[0]) || navigator.language || 'en');
-        if (language.toLowerCase().startsWith('ru')) location.replace('/ru/' + location.search + location.hash);
+        if (preferred === 'ru') location.replace('/ru/' + location.search + location.hash);
       })();
     </script>}
 
@@ -131,8 +127,6 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     />
 
     <!-- Theme color -->
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="dark light" />
   </head>
   <body class="relative">
