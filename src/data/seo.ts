@@ -41,7 +41,7 @@ export function structuredData(site: URL, locale: Locale, page: PageKey) {
     jobTitle: tr.hero.title,
     homeLocation: { '@type': 'City', name: tr.hero.location },
     knowsAbout: ['IT project management', 'Agile', 'Scrum', 'Java', 'Go', 'Technical background'],
-    sameAs: ['https://github.com/Johan0565', 'https://t.me/Magomedov765', 'https://x.com/MMagomedovR', 'https://www.instagram.com/magomedov.online/'],
+    sameAs: ['https://www.instagram.com/magomedov.online/', 'https://t.me/Magomedov765', 'https://github.com/Johan0565'],
   };
   const projects = [
     { ...tr.projects.proj1, id: 'street-retail-aggregator', repository: 'https://github.com/Johan0565/street-retail-aggregator', language: 'Java' },
