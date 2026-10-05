@@ -24,7 +24,7 @@ const alternateUrl = pagePath(page, alternateLang);
 const canonicalUrl = new URL(pagePath(page, locale), Astro.site);
 const alternateFullUrl = new URL(alternateUrl, Astro.site);
 const meta = pageMeta[locale][page];
-const imageUrl = new URL('/images/avatar.jpg', Astro.site).href;
+const imageUrl = new URL('/images/avatar.png', Astro.site).href;
 const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace(/</g, '\\u003c');
 ---
 
