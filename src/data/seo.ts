@@ -8,8 +8,8 @@ export function pagePath(page: PageKey, locale: Locale) {
 }
 
 export const biography = {
-  ru: translations.ru.hero.description,
-  en: translations.en.hero.description,
+  ru: 'Управление проектами · Agile / Scrum',
+  en: 'Project management · Agile / Scrum',
 } satisfies Record<Locale, string>;
 
 export const pageMeta = {
@@ -40,8 +40,8 @@ export function structuredData(site: URL, locale: Locale, page: PageKey) {
     description: biography[locale],
     jobTitle: tr.hero.title,
     homeLocation: { '@type': 'City', name: tr.hero.location },
-    knowsAbout: ['IT project management', 'PMBOK 7', 'Agile', 'Scrum', 'Java', 'Spring Boot', 'Enterprise systems integration'],
-    sameAs: ['https://github.com/Johan0565', 'https://t.me/Magomedov765', 'https://x.com/MMagomedovR'],
+    knowsAbout: ['IT project management', 'Agile', 'Scrum', 'Java', 'Go', 'Technical background'],
+    sameAs: ['https://github.com/Johan0565', 'https://t.me/Magomedov765', 'https://x.com/MMagomedovR', 'https://www.instagram.com/magomedov.online/'],
   };
   const projects = [
     { ...tr.projects.proj1, id: 'street-retail-aggregator', repository: 'https://github.com/Johan0565/street-retail-aggregator', language: 'Java' },

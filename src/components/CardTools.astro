@@ -1,0 +1,18 @@
+---
+import type { Locale } from '../i18n/translations';
+import ThemeToggle from './ThemeToggle.astro';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const ru = locale === 'ru';
+---
+<div class="card-tools">
+  <nav class="card-languages" aria-label={ru ? 'Язык' : 'Language'}>
+    <a href="/ru/" data-card-language="ru" aria-label="Русский" aria-current={ru ? 'page' : undefined} title="Русский">
+      <svg class="flag" viewBox="0 0 24 16" aria-hidden="true"><path fill="#fff" d="M0 0h24v16H0z"/><path fill="#2455bd" d="M0 5.33h24v5.34H0z"/><path fill="#e34949" d="M0 10.67h24V16H0z"/></svg><span>RU</span>
+    </a>
+    <a href="/" data-card-language="en" aria-label="English" aria-current={!ru ? 'page' : undefined} title="English">
+      <svg class="flag" viewBox="0 0 24 16" aria-hidden="true"><path fill="#24427c" d="M0 0h24v16H0z"/><path stroke="#fff" stroke-width="4" d="m0 0 24 16M24 0 0 16"/><path stroke="#e34949" stroke-width="1.5" d="m0 0 24 16M24 0 0 16"/><path stroke="#fff" stroke-width="6" d="M12 0v16M0 8h24"/><path stroke="#e34949" stroke-width="3" d="M12 0v16M0 8h24"/></svg><span>EN</span>
+    </a>
+  </nav>
+  <ThemeToggle locale={locale} />
+</div>

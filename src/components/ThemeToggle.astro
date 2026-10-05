@@ -4,13 +4,16 @@
  * Shows sun icon in dark mode, moon icon in light mode.
  * Persists choice to localStorage; defaults to system preference.
  */
+interface Props { locale?: 'ru' | 'en' }
+const { locale = 'en' } = Astro.props;
+const label = locale === 'ru' ? 'Сменить тему' : 'Toggle theme';
 ---
 
 <button
-  id="theme-toggle"
+  data-theme-toggle
   class="social-btn !w-9 !h-9 !rounded-xl"
-  aria-label="Toggle theme"
-  title="Toggle theme"
+  aria-label={label}
+  title={label}
   type="button"
 >
   <!-- Sun icon (shown in dark → click to switch to light) -->
@@ -32,15 +35,14 @@
 </button>
 
 <script>
-  const toggle = document.getElementById('theme-toggle');
-
-  toggle?.addEventListener('click', () => {
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach(toggle => toggle.addEventListener('click', () => {
     const html = document.documentElement;
     const current = html.getAttribute('data-theme') || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
 
     html.setAttribute('data-theme', next);
+    html.setAttribute('data-theme-preference', next);
     html.style.colorScheme = next;
-    localStorage.setItem('theme', next);
-  });
+    try { localStorage.setItem('theme', next); } catch {}
+  }));
 </script>

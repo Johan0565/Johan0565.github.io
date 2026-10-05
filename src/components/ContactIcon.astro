@@ -1,0 +1,14 @@
+---
+interface Props { name: 'github' | 'telegram' | 'x' | 'instagram' | 'phone' | 'email' | 'projects' | 'activity' }
+const { name } = Astro.props;
+---
+<svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  {name === 'github' && <path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82a9.6 9.6 0 0 1 2.5.34c1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>}
+  {name === 'telegram' && <path fill="currentColor" d="m20.67 4.42-3.14 15.02c-.24 1.06-.86 1.32-1.73.82l-4.79-3.53-2.31 2.23c-.26.26-.47.47-.97.47l.34-4.84 8.82-7.96c.38-.34-.08-.53-.59-.19L5.4 13.3.7 11.83c-1.02-.32-1.04-1.02.22-1.51L19.32 3.2c.85-.31 1.59.2 1.35 1.22Z" transform="translate(1 1) scale(.9)"/>}
+  {name === 'x' && <path fill="currentColor" d="M18.9 3h2.76l-6.03 6.89L22.72 21h-5.55l-4.35-5.68L7.85 21H5.08l6.46-7.38L4.62 3h5.69l3.93 5.19L18.9 3Zm-.97 16.13h1.53L9.48 4.77H7.84l10.09 14.36Z" transform="translate(-1 0)"/>}
+  {name === 'instagram' && <g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></g>}
+  {name === 'phone' && <path d="m7.2 3.5 2.2 4.3-2.1 2a14.1 14.1 0 0 0 6.9 6.9l2-2.1 4.3 2.2v2.8a1.5 1.5 0 0 1-1.6 1.5C10.3 20.5 3.5 13.7 2.9 5.1a1.5 1.5 0 0 1 1.5-1.6h2.8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>}
+  {name === 'email' && <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></g>}
+  {name === 'projects' && <g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></g>}
+  {name === 'activity' && <path d="M3 12h4l3-7 4 14 3-7h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>}
+</svg>

@@ -29,7 +29,7 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
 ---
 
 <!doctype html>
-<html lang={htmlLang}>
+<html lang={htmlLang} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,10 +44,28 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
       (function() {
         var d = document.documentElement;
         d.classList.add('no-transition');
-        var stored = localStorage.getItem('theme');
-        var theme = stored || 'light';
-        d.setAttribute('data-theme', theme);
-        d.style.colorScheme = theme;
+        var stored;
+        try { stored = localStorage.getItem('theme'); } catch {}
+        var systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: light)') : null;
+        var preference = stored === 'dark' || stored === 'light' ? stored : 'system';
+        function applyTheme() {
+          var choice = d.getAttribute('data-theme-preference');
+          var theme = choice === 'dark' || choice === 'light' ? choice : (systemTheme && systemTheme.matches ? 'light' : 'dark');
+          d.setAttribute('data-theme', theme);
+          d.style.colorScheme = theme;
+        }
+        d.setAttribute('data-theme-preference', preference);
+        applyTheme();
+        if (systemTheme) {
+          if (systemTheme.addEventListener) systemTheme.addEventListener('change', applyTheme);
+          else if (systemTheme.addListener) systemTheme.addListener(applyTheme);
+        }
+        window.addEventListener('storage', function(event) {
+          if (event.key !== 'theme' && event.key !== null) return;
+          var choice = event.newValue;
+          d.setAttribute('data-theme-preference', choice === 'dark' || choice === 'light' ? choice : 'system');
+          applyTheme();
+        });
         requestAnimationFrame(function() {
           requestAnimationFrame(function() {
             d.classList.remove('no-transition');
@@ -55,6 +73,17 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
         });
       })();
     </script>
+
+    {page === 'home' && <script is:inline>
+      (function() {
+        // Explicit localized URLs remain shareable; negotiate only the entry URL.
+        if (location.pathname !== '/') return;
+        var preferred;
+        try { preferred = localStorage.getItem('locale'); } catch {}
+        var language = preferred || ((navigator.languages && navigator.languages[0]) || navigator.language || 'en');
+        if (language.toLowerCase().startsWith('ru')) location.replace('/ru/' + location.search + location.hash);
+      })();
+    </script>}
 
     <!-- SEO -->
     <title>{meta.title}</title>
@@ -92,11 +121,13 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="/images/favicon.png" />
 
-    <!-- Fonts: Google Fonts (Golos Text + Inter) -->
+    <!-- Two typefaces per page: display + body. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      href={page === 'home'
+        ? 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap'
+        : 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap'}
       rel="stylesheet"
     />
 
@@ -106,14 +137,14 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     <meta name="color-scheme" content="dark light" />
   </head>
   <body class="relative">
-    <ParticlesBackground />
-    <Header locale={locale} />
+    {page !== 'home' && <ParticlesBackground />}
+    {page !== 'home' && <Header locale={locale} />}
 
     <main>
       <slot />
     </main>
 
-    <Footer locale={locale} />
+    {page !== 'home' && <Footer locale={locale} />}
     <Toast />
   </body>
 </html>

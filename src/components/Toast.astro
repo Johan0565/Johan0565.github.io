@@ -8,7 +8,7 @@
 
 <div
   id="toast-notification"
-  class="fixed top-6 md:top-auto md:bottom-8 left-1/2 z-50 pointer-events-none"
+  class="fixed top-6 md:top-auto md:bottom-8 left-1/2 z-50 pointer-events-none max-w-[calc(100vw-32px)] w-max"
   style="transform: translateX(-50%) translateY(-16px); opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;"
   role="status"
   aria-live="polite"
@@ -17,7 +17,7 @@
     <svg class="w-5 h-5 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
-    <span id="toast-message" class="text-sm font-medium text-foreground whitespace-nowrap"></span>
+    <span id="toast-message" class="text-sm font-medium text-foreground break-words min-w-0"></span>
   </div>
 </div>
 
@@ -53,4 +53,3 @@
     }, 2500);
   }) as EventListener);
 </script>
-
