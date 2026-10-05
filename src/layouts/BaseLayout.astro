@@ -116,7 +116,6 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     <meta name="twitter:description" content={meta.description} />
     <meta name="twitter:image" content={imageUrl} />
     <meta name="twitter:image:alt" content={tr.hero.fullName} />
-    <meta name="twitter:site" content="@MMagomedovR" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="/images/favicon.png" />
@@ -126,7 +125,7 @@ const jsonLd = JSON.stringify(structuredData(Astro.site!, locale, page)).replace
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href={page === 'home'
-        ? 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap'
+        ? 'https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Inter:wght@400;500;600&display=swap'
         : 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap'}
       rel="stylesheet"
     />
