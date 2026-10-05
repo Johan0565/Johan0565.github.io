@@ -36,7 +36,7 @@ export function structuredData(site: URL, locale: Locale, page: PageKey) {
     name: tr.hero.fullName,
     alternateName: ['Магомедов Магомед Расулович', 'Magomed Rasulovich Magomedov', 'Magomed Magomedov', 'Johan0565'],
     url: absolute(pagePath('home', locale)),
-    image: absolute('/images/avatar.jpg'),
+    image: absolute('/images/avatar.png'),
     description: biography[locale],
     jobTitle: tr.hero.title,
     homeLocation: { '@type': 'City', name: tr.hero.location },
