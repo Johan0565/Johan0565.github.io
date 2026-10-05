@@ -1,0 +1,191 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../../public/images/avatar.jpg';
+import signature from '../../public/images/signature.png';
+import type { Locale } from '../i18n/translations';
+import { t } from '../i18n/utils';
+import { biography, pagePath } from '../data/seo';
+import CardTools from './CardTools.astro';
+import ContactIcon from './ContactIcon.astro';
+import ParticlesBackground from './ParticlesBackground.astro';
+import '../styles/calling-card.css';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = t(locale);
+const ru = locale === 'ru';
+const copy = {
+  intro: ru ? 'Связываю бизнес, команду и технологии.' : 'Connecting business, people and technology.',
+  front: ru ? 'Перевернуть карточку' : 'Flip the card',
+  back: ru ? 'Вернуться к лицевой стороне' : 'Back to the front',
+  contact: ru ? 'Всегда на связи' : 'Let’s talk',
+  hint: ru ? 'Другая сторона — больше обо мне' : 'A little more about me, on the other side',
+  skills: biography[locale],
+  technical: ru ? 'Технический бэкграунд · Java / Go' : 'Technical background · Java / Go',
+};
+const socials = [
+  { name: 'GitHub', icon: 'github', handle: 'Johan0565', href: 'https://github.com/Johan0565' },
+  { name: 'Telegram', icon: 'telegram', handle: '@Magomedov765', href: 'https://t.me/Magomedov765' },
+  { name: 'X / Twitter', icon: 'x', handle: '@MMagomedovR', href: 'https://x.com/MMagomedovR' },
+  { name: 'Instagram', icon: 'instagram', handle: '@magomedov.online', href: 'https://www.instagram.com/magomedov.online/' },
+] as const;
+---
+
+<section class="calling-stage" aria-label={ru ? 'Личная визитка' : 'Personal calling card'}>
+  <ParticlesBackground />
+  <div class="card-arrival">
+    <div class="card-scene" data-card data-front-label={copy.front} data-back-label={copy.back}>
+      <div class="card-tilt">
+        <div class="card-rotor">
+          <!-- Keep both native filter spellings: CSS optimization can discard the Safari fallback. -->
+          <article class="card-face card-front" data-face="front" style="-webkit-backdrop-filter: var(--card-backdrop); backdrop-filter: var(--card-backdrop)">
+            <Image class="card-signature" src={signature} alt="" width={148} widths={[108, 148, 296]} sizes="(max-width: 600px) 108px, 148px" format="png" loading="eager" />
+            <CardTools locale={locale} />
+            <div class="card-identity">
+              <div class="card-portrait"><Image src={avatar} alt={tr.hero.fullName} width={160} widths={[108, 160, 320]} sizes="(max-width: 600px) 108px, 160px" format="webp" loading="eager" fetchpriority="high" /></div>
+              <div class="card-name"><p class="card-eyebrow">{tr.hero.greeting}</p><h1>{tr.hero.name.split('\n').map(line => <span><em>{line[0]}</em>{line.slice(1)}</span>)}</h1></div>
+            </div>
+            <div class="card-intro"><p class="card-role">{tr.hero.title}</p><p class="card-location">{tr.hero.location}</p><p class="card-summary">{copy.intro}</p></div>
+            <nav class="card-routes" aria-label={ru ? 'Разделы сайта' : 'Explore'}>
+              <a href={pagePath('projects', locale)}><ContactIcon name="projects"/>{tr.nav.projects}</a>
+              <a href={pagePath('activity', locale)}><ContactIcon name="activity"/>{tr.nav.activity}</a>
+            </nav>
+            <div class="card-bottom"><span>{copy.hint}</span><button type="button" data-flip aria-label={copy.front} aria-expanded="false" aria-controls="card-contact"><span aria-hidden="true">↻</span>{ru ? 'Контакты' : 'Contacts'}</button></div>
+          </article>
+
+          <article class="card-face card-back" data-face="back" id="card-contact" style="-webkit-backdrop-filter: var(--card-backdrop); backdrop-filter: var(--card-backdrop)">
+            <Image class="card-signature" src={signature} alt="" width={148} widths={[108, 148, 296]} sizes="(max-width: 600px) 108px, 148px" format="png" loading="eager" />
+            <CardTools locale={locale} />
+            <div class="card-contact-heading"><p class="card-eyebrow">{tr.hero.title}</p><h2>{copy.contact}<span>.</span></h2></div>
+            <div class="card-skills"><p>{copy.skills}</p><p>{copy.technical}</p></div>
+            <nav class="card-routes" aria-label={ru ? 'Работы и обучение' : 'Work and learning'}>
+              <a href={pagePath('projects', locale)}><ContactIcon name="projects"/>{tr.nav.projects}</a>
+              <a href={pagePath('activity', locale)}><ContactIcon name="activity"/>{tr.nav.activity}</a>
+            </nav>
+            <div class="card-socials">
+              {socials.map(social => <a href={social.href} target="_blank" rel="noopener noreferrer"><span class="contact-symbol"><ContactIcon name={social.icon}/></span><span class="contact-label">{social.name}</span><small>{social.handle}</small></a>)}
+              <a href="tel:+79898924406"><span class="contact-symbol"><ContactIcon name="phone"/></span><span class="contact-label">{ru ? 'Телефон' : 'Phone'}</span><small>+7 989 892-44-06</small></a>
+              <button type="button" data-card-email data-copy-label={ru ? 'Скопировать почту' : 'Copy email'} data-copied-label={ru ? 'Скопировано' : 'Copied'} data-toast-message={tr.toast.emailCopied} aria-label={ru ? 'Скопировать почту magomed@magomedov.online' : 'Copy email magomed@magomedov.online'} title={ru ? 'Скопировать почту' : 'Copy email'}><span class="contact-symbol"><ContactIcon name="email"/></span><span class="contact-label">Email<svg class="copy-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></span><small>magomed@<wbr/>magomedov.online</small></button>
+            </div>
+            <div class="card-bottom"><a class="card-resume" href="/resume/resume.pdf" target="_blank" rel="noopener noreferrer">{tr.activity.resumeBtn} <small>PDF</small></a><button type="button" data-flip aria-label={copy.back}><span aria-hidden="true">↻</span>{ru ? 'Назад' : 'Back'}</button></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const scene = document.querySelector<HTMLElement>('[data-card]');
+  if (scene) {
+    const arrival = scene.closest<HTMLElement>('.card-arrival');
+    // Release the opacity animation's compositing layer so glass can sample the backdrop.
+    arrival?.addEventListener('animationend', () => { arrival.style.animation = 'none'; }, { once: true });
+    const tilt = scene.querySelector<HTMLElement>('.card-tilt')!;
+    const faces = [...scene.querySelectorAll<HTMLElement>('[data-face]')];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+    let flipped = location.hash === '#contact';
+    let turning = false;
+    let turnTimeout: ReturnType<typeof setTimeout>;
+    let targetX = 0, targetY = 0, x = 0, y = 0, frame = 0, previousTime = 0;
+    const updateFace = (restoreFocus = false) => {
+      const focusedInFace = faces.some(face => face.contains(document.activeElement));
+      scene.dataset.flipped = String(flipped);
+      faces.forEach(face => {
+        const hidden = (face.dataset.face === 'back') !== flipped;
+        face.inert = hidden;
+        face.setAttribute('aria-hidden', String(hidden));
+      });
+      scene.querySelector('[aria-expanded]')?.setAttribute('aria-expanded', String(flipped));
+      scene.querySelectorAll<HTMLAnchorElement>('[data-card-language]').forEach(link => {
+        link.hash = flipped ? 'contact' : '';
+      });
+      if (restoreFocus && focusedInFace) {
+        faces[flipped ? 1 : 0].querySelector<HTMLButtonElement>('[data-flip]')?.focus({ preventScroll: true });
+      }
+    };
+    scene.classList.add('card-ready');
+    updateFace();
+    scene.addEventListener('click', event => {
+      const target = event.target as Element;
+      if (target.closest('[data-flip]') || !target.closest('a, button, input, select, textarea')) {
+        // Ignore a second flip while the moving face crosses the pointer.
+        if (turning) return;
+        if (window.getSelection()?.toString()) return;
+        turning = !reduced.matches;
+        clearTimeout(turnTimeout);
+        turnTimeout = setTimeout(() => { turning = false; }, 950);
+        flipped = !flipped;
+        updateFace(true);
+      }
+    });
+    scene.querySelector('.card-rotor')?.addEventListener('transitionend', event => {
+      if ((event as TransitionEvent).propertyName === 'transform') turning = false;
+    });
+    scene.querySelectorAll<HTMLAnchorElement>('[data-card-language]').forEach(link => {
+      link.addEventListener('click', () => {
+        try { localStorage.setItem('locale', link.dataset.cardLanguage!); } catch {}
+      });
+    });
+    const emailButton = scene.querySelector<HTMLButtonElement>('[data-card-email]');
+    let copyTimeout: ReturnType<typeof setTimeout>;
+    emailButton?.addEventListener('click', async () => {
+      const email = 'magomed@magomedov.online';
+      let copied = false;
+      try { await navigator.clipboard.writeText(email); copied = true; } catch {
+        // Support older browsers and contexts where the Clipboard API is denied.
+        const field = document.createElement('textarea');
+        field.value = email;
+        field.style.cssText = 'position:fixed;left:-9999px;top:0';
+        document.body.append(field);
+        field.select();
+        try { copied = document.execCommand('copy'); } catch {}
+        field.remove();
+        emailButton.focus({ preventScroll: true });
+      }
+      const message = copied ? emailButton.dataset.toastMessage : (document.documentElement.lang === 'ru' ? 'Не удалось скопировать. Почта: ' : 'Could not copy. Email: ') + email;
+      document.dispatchEvent(new CustomEvent('show-toast', { detail: { message } }));
+      if (copied) {
+        emailButton.dataset.copied = 'true';
+        emailButton.setAttribute('aria-label', emailButton.dataset.copiedLabel!);
+        clearTimeout(copyTimeout);
+        copyTimeout = setTimeout(() => {
+          emailButton.dataset.copied = 'false';
+          emailButton.setAttribute('aria-label', `${emailButton.dataset.copyLabel} ${email}`);
+        }, 2500);
+      }
+    });
+    const animateTilt = (time: number) => {
+      const delta = previousTime ? Math.min(time - previousTime, 50) : 16;
+      previousTime = time;
+      const easing = 1 - Math.exp(-delta / 95);
+      x += (targetX - x) * easing;
+      y += (targetY - y) * easing;
+      tilt.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+      tilt.style.setProperty('--light-x', `${50 + y * 4}%`);
+      tilt.style.setProperty('--light-y', `${30 - x * 4}%`);
+      tilt.style.setProperty('--shadow-x', `${-y * 2}px`);
+      if (Math.abs(targetX - x) + Math.abs(targetY - y) > 0.015) frame = requestAnimationFrame(animateTilt);
+      else { frame = 0; previousTime = 0; }
+    };
+    const startTilt = () => { if (!frame) frame = requestAnimationFrame(animateTilt); };
+    scene.addEventListener('pointermove', event => {
+      if (!finePointer.matches || reduced.matches || event.pointerType === 'touch') return;
+      // Measure the stationary scene, never the transformed card.
+      const bounds = scene.getBoundingClientRect();
+      targetY = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1)) * 6;
+      targetX = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1)) * -5;
+      startTilt();
+    });
+    scene.addEventListener('pointerleave', () => { targetX = targetY = 0; startTilt(); });
+    const resetTilt = () => {
+      cancelAnimationFrame(frame); frame = 0; previousTime = 0;
+      targetX = targetY = x = y = 0;
+      tilt.style.transform = '';
+      tilt.style.removeProperty('--light-x'); tilt.style.removeProperty('--light-y'); tilt.style.removeProperty('--shadow-x');
+    };
+    reduced.addEventListener('change', resetTilt);
+    finePointer.addEventListener('change', resetTilt);
+  }
+</script>

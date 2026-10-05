@@ -22,6 +22,7 @@ const alternateUrl = getAlternateUrl(Astro.url.pathname, locale);
     ]}
     aria-current={isRu ? 'page' : undefined}
     aria-label="Русский"
+    data-language="ru"
   >
     RU
   </a>
@@ -36,7 +37,16 @@ const alternateUrl = getAlternateUrl(Astro.url.pathname, locale);
     ]}
     aria-current={!isRu ? 'page' : undefined}
     aria-label="English"
+    data-language="en"
   >
     EN
   </a>
 </nav>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-language]').forEach(link => {
+    link.addEventListener('click', () => {
+      try { localStorage.setItem('locale', link.dataset.language!); } catch {}
+    });
+  });
+</script>
