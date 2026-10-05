@@ -45,7 +45,7 @@ const directContacts = [
             <Image class="card-signature" src={signature} alt="" width={148} widths={[108, 148, 296]} sizes="(max-width: 600px) 108px, 148px" format="png" loading="eager" />
             <CardTools locale={locale} />
             <div class="card-identity">
-              <div class="card-portrait"><Image src={avatar} alt={tr.hero.fullName} width={160} widths={[108, 160, 320]} sizes="(max-width: 600px) 108px, 160px" format="webp" loading="eager" fetchpriority="high" /></div>
+              <div class="card-portrait"><Image src={avatar} alt={tr.hero.fullName} width={180} widths={[128, 180, 360]} sizes="(max-width: 350px) 118px, (max-width: 600px) 128px, 180px" format="webp" loading="eager" fetchpriority="high" /></div>
               <div class="card-name"><p class="card-eyebrow">{tr.hero.greeting}</p><h1>{tr.hero.name.split('\n').map(line => <span><em>{line[0]}</em>{line.slice(1)}</span>)}</h1></div>
             </div>
             <div class="card-intro"><p class="card-role">{tr.hero.title}</p><p class="card-location">{tr.hero.location}</p><p class="card-summary">{copy.intro}</p></div>
