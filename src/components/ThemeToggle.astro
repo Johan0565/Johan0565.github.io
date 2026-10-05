@@ -2,7 +2,7 @@
 /**
  * Theme toggle button (dark/light mode).
  * Shows sun icon in dark mode, moon icon in light mode.
- * Persists choice to localStorage; defaults to system preference.
+ * Persists choice to localStorage; defaults to dark.
  */
 interface Props { locale?: 'ru' | 'en' }
 const { locale = 'en' } = Astro.props;
@@ -43,6 +43,7 @@ const label = locale === 'ru' ? 'Сменить тему' : 'Toggle theme';
     html.setAttribute('data-theme', next);
     html.setAttribute('data-theme-preference', next);
     html.style.colorScheme = next;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'light' ? '#fafafa' : '#000000');
     try { localStorage.setItem('theme', next); } catch {}
   }));
 </script>
