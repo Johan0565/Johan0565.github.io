@@ -4,3 +4,22 @@
 
 [functions]
   directory = "netlify/functions"
+
+# Serve the resume directly on the CV domain, preserving the browser URL.
+# Add cv.magomedov.online as a domain alias in Netlify and configure its DNS.
+[[redirects]]
+  from = "https://cv.magomedov.online/*"
+  to = "/resume/resume.pdf"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "http://cv.magomedov.online/*"
+  to = "https://cv.magomedov.online/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/resume/resume.pdf"
+  [headers.values]
+    Content-Disposition = 'inline; filename="Magomed-Magomedov-CV.pdf"'
